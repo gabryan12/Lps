@@ -11,6 +11,8 @@ Carregam automaticamente em qualquer sessão do Claude Code aberta neste reposit
 | `video-use` | browser-use/video-use | Editar vídeo gravado (precisa de chave da ElevenLabs, paga) |
 | `frontend-design` | anthropics/skills | Páginas sem "cara de IA" |
 | `prospeccao-google` | skill-prospeccao.zip (aula) | `prospectar [nicho] em [cidade]`: precisa do conector Apify |
+| `deploy-cloudflare` | deploy-cloudflare.skill (aula) | `publica essa página no ar`: precisa do conector Cloudflare |
+| `quizz-qualificacao` | quizz-qualificacao.skill (aula) | Quizz de 4 perguntas que abre o WhatsApp com as respostas |
 
 Versões registradas em `skills-lock.json`. Para atualizar: `npx skills update -p`.
 
@@ -22,8 +24,8 @@ Baixe e suba em **Personalizar › Habilidades › Adicionar › Fazer upload de
 ou envie os arquivos aqui que eu coloco em `.claude/skills/`:
 
 - [x] `skill-prospeccao.zip`: instalada como `prospeccao-google`
-- [ ] `deploy-cloudflare.skill`
-- [ ] `quizz-qualificacao.skill`
+- [x] `deploy-cloudflare.skill`: instalada
+- [x] `quizz-qualificacao.skill`: instalada
 
 ### Conectores
 Ficam na sua conta, em **Personalizar › Conectores**:
