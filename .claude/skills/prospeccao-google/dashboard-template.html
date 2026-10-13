@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!--
+  COMO USAR (instruções pro agente):
+  0. APAGUE ESTE COMENTÁRIO no arquivo entregue — o aluno mostra esse HTML pro cliente.
+  1. Troque todo {{PLACEHOLDER}}. Não pode sobrar nenhum: {{NOME}} literal na tela é erro.
+  2. Cada lead é um bloco <div class="row">. Duplique por lead, na ordem de AVALIAÇÕES decrescente,
+     dentro de cada seção. TODOS os leads entram, não só os 3 com mensagem. As seções são:
+       "Não tem nada"       -> class="row hot"  chip c-hot
+       "Casa dos outros"    -> class="row hot"  chip c-hot
+       "Página emprestada"  -> class="row mid"  chip c-mid
+     Quem já tem site próprio NÃO entra no quadro — vai só na contagem do funil.
+     Quem ficou NÃO SEI vai só na seção "Conferir na mão", sem mensagem.
+     Seção sem nenhum lead: apague as .row e deixe só o .empty (ou apague a seção inteira).
+  3. O número grande de cada linha é a QUANTIDADE DE AVALIAÇÕES. Não existe nota de site aqui.
+  4. O gancho é uma frase de até 8 palavras dizendo o que aquele lead não tem
+     (ex.: "só Instagram, 162 avaliações" / "cardápio no anota.ai").
+  5. Não mude fontes, cores nem estrutura — consistência entre rodadas é parte do produto.
+     Não acrescente <script> nem link externo: tem que abrir sem internet.
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prospecção — {{NICHO}} · {{CIDADE}} — {{DATA}}</title>
+<!-- Fonte opcional: se não carregar (offline, rede bloqueada), o painel cai no system-ui e continua legível. -->
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Archivo+Narrow:wght@700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#f4f4f5;color:#18181b;min-height:100dvh;padding:0 0 80px;font-family:"Archivo",system-ui,sans-serif}
+  .head{background:#18181b;color:#fafafa;padding:30px 0}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 28px}
+  .league{font:700 12px/1 "Archivo Narrow",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#a1a1aa}
+  h1{font:900 34px/1.05 "Archivo",sans-serif;text-transform:uppercase;letter-spacing:-.01em;margin-top:8px}
+  h1 span{color:#dc2626}
+  .kpirow{display:flex;background:#fff;border:2px solid #18181b;margin-top:24px}
+  .kp{flex:1;padding:16px 20px;border-right:2px solid #18181b;color:#18181b}
+  .kp:last-child{border-right:0}
+  .kp .n{font:900 34px/1 "Archivo",sans-serif}
+  .kp .n em{font-style:normal;color:#dc2626}
+  .kp .l{font:700 10.5px/1.3 "Archivo Narrow",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#71717a;margin-top:6px}
+  h2{font:900 15px/1 "Archivo",sans-serif;text-transform:uppercase;letter-spacing:.06em;margin:40px 0 6px}
+  h2 small{font:700 11px/1 "Archivo Narrow",sans-serif;color:#71717a;letter-spacing:.08em;margin-left:10px}
+  .row{display:grid;grid-template-columns:64px 1fr 200px 130px;align-items:center;background:#fff;
+    border:2px solid #18181b;border-bottom:0;min-height:76px}
+  .row:last-child{border-bottom:2px solid #18181b}
+  .pos{font:900 24px/1 "Archivo",sans-serif;text-align:center;border-right:2px solid #18181b;align-self:stretch;display:flex;align-items:center;justify-content:center}
+  .row.hot .pos{background:#dc2626;color:#fff}
+  .row.mid .pos{background:#f59e0b;color:#fff}
+  .who{padding:12px 18px}
+  .who b{font:700 17px/1.2 "Archivo",sans-serif;display:block}
+  .who span{font-size:12.5px;color:#71717a}
+  .hook{font-size:12.5px;color:#3f3f46;padding:12px 18px;border-left:2px dashed #d4d4d8;line-height:1.45;align-self:stretch;display:flex;align-items:center}
+  .pts{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 18px;text-align:right}
+  .pts .n{font:900 26px/1 "Archivo",sans-serif}
+  .pts .u{font:700 9px/1.2 "Archivo Narrow",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#71717a;display:block;margin-top:3px}
+  .chip{font:700 9.5px/1 "Archivo Narrow",sans-serif;letter-spacing:.1em;padding:5px 8px;color:#fff;text-transform:uppercase}
+  .c-hot{background:#dc2626}.c-mid{background:#f59e0b}
+  .empty{background:#fff;border:2px dashed #a1a1aa;padding:20px;font-size:13.5px;color:#3f3f46;line-height:1.6}
+  .funil{background:#fff;border:2px solid #18181b;padding:18px 20px;max-width:620px}
+  .fl{display:grid;grid-template-columns:150px 1fr 44px;align-items:center;gap:12px;margin-bottom:9px}
+  .fl:last-child{margin-bottom:0}
+  .fl .t{font:700 11px/1.2 "Archivo Narrow",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#3f3f46}
+  .fl .b{height:16px;background:#d4d4d8;min-width:2px}
+  .fl.q .b{background:#dc2626}
+  .fl.m .b{background:#f59e0b}
+  .fl .v{font:900 15px/1 "Archivo",sans-serif;text-align:right}
+  .foot{margin-top:44px;font-size:12px;color:#71717a}
+  @media(max-width:768px){
+    .row{grid-template-columns:48px 1fr 104px}
+    .hook{display:none}
+    .kpirow{flex-wrap:wrap}
+    .kp{flex:1 1 40%;border-bottom:2px solid #18181b}
+    h1{font-size:26px}
+  }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div class="wrap">
+      <p class="league">Quem não tem site de verdade · mais avaliações = negócio maior</p>
+      <h1>{{NICHO}} <span>·</span> {{CIDADE}}</h1>
+      <div class="kpirow">
+        <div class="kp"><div class="n">{{TOTAL_PUXADOS}}</div><div class="l">Puxados do Google</div></div>
+        <div class="kp"><div class="n"><em>{{TOTAL_LEADS}}</em></div><div class="l">Precisam de site</div></div>
+        <div class="kp"><div class="n">{{QTD_COM_EMAIL}}</div><div class="l">Com e-mail</div></div>
+        <div class="kp"><div class="n">{{QTD_JA_TEM_SITE}}</div><div class="l">Já têm site (fora)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <h2>Não tem nada <small>o lead mais quente — nem página existe</small></h2>
+    <!-- Duplique .row por lead, ordem de AVALIAÇÕES decrescente. Se a seção estiver vazia,
+         apague as .row e deixe só o .empty. -->
+    <div class="row hot">
+      <div class="pos">1</div>
+      <div class="who"><b>{{NOME}}</b><span>{{CATEGORIA}} · {{TELEFONE}}</span></div>
+      <div class="hook">{{GANCHO}}</div>
+      <div class="pts"><span><span class="n">{{AVALIACOES}}</span><span class="u">avaliações</span></span><span class="chip c-hot">Quente</span></div>
+    </div>
+    <div class="empty">Nenhum negócio desta busca estava sem site — apague esta linha se a tabela acima tiver leads.</div>
+
+    <h2>Mora na casa dos outros <small>Instagram, WhatsApp, linktree — não é site</small></h2>
+    <div class="row hot">
+      <div class="pos">1</div>
+      <div class="who"><b>{{NOME}}</b><span>{{DOMINIO}} · {{TELEFONE}}</span></div>
+      <div class="hook">{{GANCHO}}</div>
+      <div class="pts"><span><span class="n">{{AVALIACOES}}</span><span class="u">avaliações</span></span><span class="chip c-hot">Quente</span></div>
+    </div>
+
+    <h2>Página emprestada <small>Wix, Lovable, anota.ai, Booksy — o endereço é da plataforma, não dele</small></h2>
+    <div class="row mid">
+      <div class="pos">1</div>
+      <div class="who"><b>{{NOME}}</b><span>{{DOMINIO}} · {{TELEFONE}}</span></div>
+      <div class="hook">{{GANCHO}}</div>
+      <div class="pts"><span><span class="n">{{AVALIACOES}}</span><span class="u">avaliações</span></span><span class="chip c-mid">Morno</span></div>
+    </div>
+
+    <h2>O funil</h2>
+    <!-- Largura de cada barra = contagem / maior contagem × 100, em %. Faça a conta e escreva o número.
+         Se um bloco der zero, mantenha a linha com 0 — o zero é informação. -->
+    <div class="funil">
+      <div class="fl q"><span class="t">Não tem nada</span><span class="b" style="width:{{PCT_SEM_NADA}}%"></span><span class="v">{{QTD_SEM_NADA}}</span></div>
+      <div class="fl q"><span class="t">Casa dos outros</span><span class="b" style="width:{{PCT_CASA_DOS_OUTROS}}%"></span><span class="v">{{QTD_CASA_DOS_OUTROS}}</span></div>
+      <div class="fl m"><span class="t">Página emprestada</span><span class="b" style="width:{{PCT_EMPRESTADA}}%"></span><span class="v">{{QTD_EMPRESTADA}}</span></div>
+      <div class="fl"><span class="t">Já tem site</span><span class="b" style="width:{{PCT_JA_TEM_SITE}}%"></span><span class="v">{{QTD_JA_TEM_SITE}}</span></div>
+      <div class="fl"><span class="t">Conferir na mão</span><span class="b" style="width:{{PCT_CONFERIR}}%"></span><span class="v">{{QTD_CONFERIR}}</span></div>
+    </div>
+
+    <h2>Conferir na mão <small>o domínio não deu pra classificar — abra e veja antes de mandar qualquer coisa</small></h2>
+    <!-- Uma linha por lead NÃO SEI. Se não houve nenhum, apague esta seção inteira e o título acima. -->
+    <div class="empty">{{NOME}} — {{SITE}} — {{TELEFONE}}</div>
+
+    <p class="foot">Gerado pela Skill de Prospecção no Google em {{DATA}} · mensagens prontas no arquivo .md</p>
+  </div>
+</body>
+</html>

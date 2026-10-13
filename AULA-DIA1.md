@@ -10,6 +10,7 @@ Carregam automaticamente em qualquer sessão do Claude Code aberta neste reposit
 | `remotion-best-practices` | remotion-dev/skills | Vídeo a partir de texto (Reels, manchete, gerador "saas") |
 | `video-use` | browser-use/video-use | Editar vídeo gravado (precisa de chave da ElevenLabs, paga) |
 | `frontend-design` | anthropics/skills | Páginas sem "cara de IA" |
+| `prospeccao-google` | skill-prospeccao.zip (aula) | `prospectar [nicho] em [cidade]`: precisa do conector Apify |
 
 Versões registradas em `skills-lock.json`. Para atualizar: `npx skills update -p`.
 
@@ -20,7 +21,7 @@ Os links de download não vieram no texto copiado e o site da aula não abre daq
 Baixe e suba em **Personalizar › Habilidades › Adicionar › Fazer upload de habilidade**,
 ou envie os arquivos aqui que eu coloco em `.claude/skills/`:
 
-- [ ] `skill-prospeccao.zip`
+- [x] `skill-prospeccao.zip`: instalada como `prospeccao-google`
 - [ ] `deploy-cloudflare.skill`
 - [ ] `quizz-qualificacao.skill`
 
