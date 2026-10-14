@@ -5,55 +5,63 @@ description: Skill orquestradora do time de conteúdo — recebe só o tema e co
 
 # /time-de-conteudo — orquestradora
 
-Você é o coordenador. Não pesquise, não escreva e não desenhe por conta própria: **chame
-cada skill na ordem**, passe o resultado de uma para a outra e só intervenha se uma etapa
-falhar.
+Você é o coordenador. Não pesquise, não escreva e não desenhe por conta própria: **use cada
+skill na ordem**, seguindo o SKILL.md dela, e passe o arquivo que uma salva para a próxima.
 
 ```
-tema → /tendencias → TENDÊNCIA ESCOLHIDA → /carrossel-viral → CARROSSEL PRONTO → /carrossel-viral-arte → PNGs
+tema ─▶ /tendencias ─▶ ~/pesquisas/pesquisa-tendencias-<nicho>-<data>.md
+     ─▶ /carrossel-viral ─▶ ~/carrosseis/<perfil>/<data>-<assunto>/carrossel.json
+     ─▶ /carrossel-viral-arte ─▶ .../design/slide-01.png …
 ```
 
-## 0. Entrada
+## 0. Entrada — pergunte tudo de uma vez
 
-Precisa só do **tema**. Se o usuário já tiver um `marca.md` (cor, fonte, @, tom, público)
-na pasta de trabalho, leia e use em todas as etapas. Se não tiver, pergunte **uma vez, no
-começo, tudo junto**: público, tom, cor da marca, @ do perfil. Depois não interrompa mais.
-Ofereça salvar as respostas em `marca.md` para as próximas rodadas.
+Precisa do **tema**. Numa única mensagem, pergunte só o que faltar:
+- **perfil** que vai postar (@ ou "o meu perfil");
+- **onde está o público** (Brasil inteiro, ou estado/cidade se for negócio local);
+- **cor da marca** (hex, ou um tema: neutro, quente, verde, rosa, mono);
+- **quer foto de IA** em alguns slides? (padrão: não — precisa da chave do Gemini).
 
-## 1. Pesquisa — use a skill `tendencias`
+Se já existir `~/carrosseis/<perfil>/perfil.md`, leia e não pergunte de novo. Depois desta
+mensagem, **não interrompa mais** até a entrega, salvo nos pontos de parada abaixo.
 
-- Passe o tema, o público e a janela (padrão: 7 dias). Não deixe a skill perguntar de novo
-  o que você já sabe.
-- Escolha você mesmo a tendência mais forte (a "aposta" da skill) e monte o bloco
-  `TENDÊNCIA ESCOLHIDA` com fato, data, links e cuidados.
-- Se a pesquisa não achar nada com fonte: **pare** e diga isso. Nunca siga com tema
-  inventado.
+## 1. Pesquisa — skill `tendencias`
 
-## 2. Copy — use a skill `carrossel-viral`
+- Rode com o tema, o público e a janela padrão (semana). Não refaça as perguntas do Passo 1
+  dela que já foram respondidas.
+- Escolha você a tendência com **✅ Vai** mais forte (prefira 🥇 Lacuna). Se nenhuma for
+  ✅ Vai, **pare** e mostre o radar: a decisão é da pessoa.
+- Guarde o caminho do relatório salvo em `~/pesquisas/`.
 
-- Entrada: o bloco `TENDÊNCIA ESCOLHIDA` + tom.
-- Use o gancho marcado com ⭐.
-- Confira a checagem de fatos: se algum item estiver ❌, ele precisa ter saído do texto.
+## 2. Copy — skill `carrossel-viral`
 
-## 3. Design — use a skill `carrossel-viral-arte`
+- Entrada: o relatório da etapa 1 + o perfil.
+- Use a capa marcada como `recomendada`.
+- Só siga quando o `conferir.py` dela der **APROVADO**. Reprovou → corte o texto e confira
+  de novo (é trabalho da copy, não do design).
 
-- Entrada: o bloco `CARROSSEL PRONTO` + marca.
-- Só texto, a menos que o usuário tenha pedido foto (aí a `carrossel-viral-arte` chama a
-  `nanobanana`).
-- Se o Playwright falhar: instale (`pip install playwright && python -m playwright install
-  chromium`) e tente de novo. **Nunca refaça o texto por erro de imagem.**
+## 3. Design — skill `carrossel-viral-arte`
+
+- Entrada: o `carrossel.json` aprovado + a cor da marca.
+- Foto só se a pessoa pediu: a etapa usa a `nanobanana` (precisa de `GEMINI_API_KEY` no
+  `.env` e cobrança ativa no Google). Falhou → siga só com texto e diga isso.
+- Se o Playwright falhar: instale (`pip install playwright pillow && python3 -m playwright
+  install chromium`) e gere de novo. **Nunca refaça o texto por erro de imagem.**
+- Só entregue com **APROVADO** e depois de abrir a capa, um slide do meio e o CTA.
 
 ## 4. Entrega
 
-1. Envie as imagens (`carrossel/slide-01.png`…).
+1. Envie a capa e 2 slides (SendUserFile) e diga a pasta com todos.
 2. Legenda + hashtags prontas para copiar.
-3. Um resumo **"o que cada etapa produziu"**:
-   - Pesquisa: quantas tendências achou, qual escolheu e por quê (com link).
-   - Copy: os 5 ganchos, qual foi usado, quantos fatos checados.
-   - Design: quantos slides, cor/fonte usadas, com ou sem foto.
-4. O que ficou pendente (fonte que não abriu, foto que falhou etc.).
+3. **O que cada etapa produziu:**
+   - Pesquisa: quantos candidatos checou, qual escolheu, diagnóstico e nota (com link do relatório).
+   - Copy: os 5 ganchos, qual foi usado, quantos itens checados e o resultado do `conferir.py`.
+   - Design: quantos slides, cor/fontes, com ou sem foto, resultado do APROVADO.
+4. O que ficou de fora (fonte não medida, foto que falhou, item "confirmar com a pessoa").
+
+Termine com uma pergunta: aprova ou quer trocar capa/cor.
 
 ## Modo passo a passo
 
-Se o usuário pedir para ver cada etapa antes de seguir ("me mostra antes"), pause depois
-da pesquisa e depois da copy, esperando o "pode seguir".
+Se a pessoa pedir para ver cada etapa ("me mostra antes de seguir"), pare depois da pesquisa
+e depois da copy, esperando o "pode seguir".

@@ -7,17 +7,20 @@ time de conteúdo (pesquisa → copy → design) comandado por uma skill orquest
 
 | Skill | Origem | Para quê |
 |---|---|---|
-| `skill-creator` | anthropics/skills (oficial) | Diagnostica e cria skills com você: entrevista, escreve e testa |
-| `tendencias` | versão própria, feita a partir do prompt da aula | **Pesquisa**: o que está em alta no nicho, cruzando Google, YouTube, Instagram, TikTok, Reddit e imprensa |
-| `carrossel-viral` | versão própria, feita a partir do prompt da aula | **Copy**: 5 ganchos de capa, slides que puxam o próximo, legenda e checagem de fatos |
-| `carrossel-viral-arte` | versão própria, feita a partir do prompt da aula | **Design**: PNGs 1080×1350 com a cor da marca; texto desenhado em código (`scripts/render.py`) |
-| `nanobanana` | versão própria | Fotos com a IA de imagem do Google (opcional, precisa de chave + cobrança) |
-| `time-de-conteudo` | versão própria (orquestradora) | Recebe só o tema e roda pesquisa → copy → design sozinha |
+| `skill-creator` | anthropics/skills (oficial, igual ao `skill-creator.skill` da aula) | Diagnostica e cria skills com você: entrevista, escreve e testa |
+| `tendencias` | `tendencias.skill` da aula (original) | **Pesquisa**: Google Trends, YouTube, TikTok/Instagram, Reddit, imprensa e Amazon, com mapa de cruzamento, diagnóstico e nota. Salva em `~/pesquisas/` |
+| `carrossel-viral` | `carrossel-viral.skill` da aula (original) | **Copy**: 5 ganchos, slides com cliffhanger, legenda e checagem. Salva `carrossel.json` em `~/carrosseis/` e confere com `conferir.py` |
+| `carrossel-viral-arte` | `carrossel-viral-arte.skill` da aula (original) | **Design**: PNGs 1080×1350 com a cor da marca, texto em código, checagem de estouro/letra/contraste |
+| `nanobanana` | `nanobanana.skill` da aula (original) | Fotos com a IA de imagem do Google (opcional, precisa de chave + cobrança) |
+| `time-de-conteudo` | orquestradora escrita aqui, a partir do prompt da aula | Recebe só o tema e roda pesquisa → copy → design sozinha |
 
-> Os links de download dos `.skill` da aula (`tendencias`, `carrossel-viral`,
-> `carrossel-viral-arte`, `nanobanana`) não vieram no texto copiado. Por isso essas são
-> versões escritas aqui seguindo os prompts e as regras da página. Se quiser as originais,
-> envie os arquivos que eu troco.
+Única alteração nas originais: os comandos que apontavam para `~/.claude/skills/...` agora
+apontam para `.claude/skills/...`, porque aqui elas moram dentro do projeto. Rode o Claude
+Code a partir da pasta do projeto.
+
+**Testado aqui:** o `conferir.py` da copy e o `render.py` do design rodaram e geraram os
+slides (APROVADO). A pesquisa e a nanobanana dependem do Firecrawl e da chave do Gemini, que
+só existem no seu computador.
 
 ## Rotinas (o Claude trabalhando sem você)
 
@@ -78,14 +81,16 @@ Pesquise sobre [TEMA] usando a skill de pesquisa e, com o resultado, escreva o c
 ## Ainda falta (só você consegue fazer)
 
 - [ ] **Conector Google** (para as rotinas de e-mail/agenda): Personalizar › Conectores › Descobrir › Google › **+**
-- [ ] **Firecrawl** (recomendado para a `/tendencias`): crie a conta grátis em firecrawl.dev,
+- [ ] **Firecrawl** (a `/tendencias` usa em quase toda busca): crie a conta grátis em firecrawl.dev,
       pegue a chave e peça: *"instale e configure o Firecrawl pra mim"*. Sem ele a skill roda com menos fontes.
 - [ ] **Playwright** (para a `/carrossel-viral-arte` no seu computador), na primeira vez peça:
       *"instala o Playwright e o Chromium e gera as imagens de novo"*.
 - [ ] **Chave do Gemini** (opcional, só para fotos com a `nanobanana`): aistudio.google.com/apikey ›
       Criar chave de API › salve num arquivo `.env` na pasta de trabalho como `GEMINI_API_KEY=...`.
       Gerar imagem exige cobrança ativa (~US$ 0,07 por foto). **Chave é senha:** não cole no chat.
-      O `.env` já está no `.gitignore`.
+      O `.env` já está no `.gitignore`. (A nanobanana original diz "cole aqui" — não cole: use o `.env`.)
+- [ ] **yt-dlp** (opcional, para a `/tendencias` ler comentários do YouTube): peça *"instala o yt-dlp"*.
+- [ ] **Apify** (opcional, para a `/carrossel-viral` ler a voz de um @ do Instagram): conector do Dia 1.
 - [ ] **Criar as 3 rotinas** no app (acima).
 
 ## A pergunta que fica
