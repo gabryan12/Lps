@@ -19,6 +19,12 @@
       "skillPath": "skills/remotion-best-practices/SKILL.md",
       "computedHash": "5622d2809a04d655a2f89de7f480fcdd4eec827a417af6709a8e6e566784a48a"
     },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "computedHash": "5ea13a6d9f0d4bb694405d79acd00cadec0d21bb138c4dd10fcf3c500cb835c2"
+    },
     "video-use": {
       "source": "browser-use/video-use",
       "sourceType": "github",
