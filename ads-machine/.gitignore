@@ -1,0 +1,4 @@
+# Saídas de cada anúncio (vídeos, áudios, renders) ficam fora do git
+projetos/*
+!projetos/.gitkeep
+.venv

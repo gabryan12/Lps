@@ -13,6 +13,7 @@ Carregam automaticamente em qualquer sessão do Claude Code aberta neste reposit
 | `prospeccao-google` | skill-prospeccao.zip (aula) | `prospectar [nicho] em [cidade]`: precisa do conector Apify |
 | `deploy-cloudflare` | deploy-cloudflare.skill (aula) | `publica essa página no ar`: precisa do conector Cloudflare |
 | `quizz-qualificacao` | quizz-qualificacao.skill (aula) | Quizz de 4 perguntas que abre o WhatsApp com as respostas |
+| `ads-machine` | criada aqui (`ads-machine/`) | Time de vídeo grátis: orquestradora + agentes de vídeo, corte, insert, legenda e revisor |
 
 Versões registradas em `skills-lock.json`. Para atualizar: `npx skills update -p`.
 
@@ -41,6 +42,7 @@ Ficam na sua conta, em **Personalizar › Conectores**:
 
 ## Comandos rápidos da aula
 
+- Anúncio pronto: `Faz um anúncio. Script: "...". Comando: ... Áudio: anexo` (skill ads-machine)
 - Vídeo: `Use a skill remotion-best-practices. Crie um vídeo vertical 1080x1920...`
 - Prospecção: `prospectar [dentistas] em [Belo Horizonte]` (precisa da skill-prospeccao + Apify)
 - Página: `Use a skill frontend-design. Crie um site de uma página para [NEGÓCIO]...`
