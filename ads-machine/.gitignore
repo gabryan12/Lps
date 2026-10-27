@@ -2,3 +2,4 @@
 projetos/*
 !projetos/.gitkeep
 .venv
+__pycache__
