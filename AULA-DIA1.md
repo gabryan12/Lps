@@ -13,6 +13,8 @@ Carregam automaticamente em qualquer sessão do Claude Code aberta neste reposit
 | `prospeccao-google` | skill-prospeccao.zip (aula) | `prospectar [nicho] em [cidade]`: precisa do conector Apify |
 | `deploy-cloudflare` | deploy-cloudflare.skill (aula) | `publica essa página no ar`: precisa do conector Cloudflare |
 | `quizz-qualificacao` | quizz-qualificacao.skill (aula) | Quizz de 4 perguntas que abre o WhatsApp com as respostas |
+| `instagram-carrossel` | criada neste repo | Carrossel completo: roteiro, PNGs 1080x1350 e legenda |
+| `instagram-post` | criada neste repo | Post de feed, story, legenda e calendário de conteúdo |
 
 Versões registradas em `skills-lock.json`. Para atualizar: `npx skills update -p`.
 
@@ -45,5 +47,7 @@ Ficam na sua conta, em **Personalizar › Conectores**:
 - Prospecção: `prospectar [dentistas] em [Belo Horizonte]` (precisa da skill-prospeccao + Apify)
 - Página: `Use a skill frontend-design. Crie um site de uma página para [NEGÓCIO]...`
 - Publicar: `publica essa página no ar` (precisa de deploy-cloudflare + conector Cloudflare)
+- Carrossel: `Cria um carrossel de 8 slides sobre [TEMA] para o @[PERFIL], CTA: comentar [PALAVRA]`
+- Post/Pauta: `Monta o calendário de posts da semana para [NEGÓCIO]` ou `Cria um post de feed sobre [OFERTA]`
 - Quizz: `Cria um quizz de diagnóstico de 4 perguntas nesta página para [NEGÓCIO]...`
 - CRM: cole o prompt do CRM usando o modo **Planejar**.
