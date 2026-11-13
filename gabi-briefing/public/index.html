@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Briefing do site | Gabriel Diniz Tráfego</title>
+<meta name="description" content="Formulário de briefing para o site institucional e as landing pages do escritório.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#04060C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304060C'/%3E%3Crect x='3' y='3' width='58' height='58' rx='11' fill='none' stroke='%232F6BFF' stroke-width='3'/%3E%3Cpath d='M41 25a11 11 0 1 0 0 14v-7H32' fill='none' stroke='%235B9BFF' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04060C; --surface:#090E1B; --surface-2:#0D1426; --line:#1B2748; --line-2:#26376A;
+  --text:#EAF0FF; --muted:#9BA9C9; --blue:#2F6BFF; --blue-2:#5B9BFF; --err:#FF8A97; --ok:#6FE3A8;
+  --font-title:"Sora",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.65 var(--font-body);min-height:100vh;overflow-x:hidden}
+body::before{ /* grade discreta */
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:linear-gradient(rgba(91,155,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(91,155,255,.045) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 20%,transparent 75%);
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 20%,transparent 75%);
+}
+h1,h2,h3{font-family:var(--font-title);margin:0;line-height:1.15;letter-spacing:-.02em}
+p{margin:0}
+a{color:var(--blue-2)}
+.wrap{width:min(100% - 32px,960px);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--blue-2);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:16px;top:-60px;background:var(--blue);color:#fff;padding:10px 14px;border-radius:8px;z-index:50;text-decoration:none}
+.skip:focus{top:12px}
+
+/* topo */
+.top{padding:22px 0}
+.brand{display:inline-flex;align-items:center;gap:10px;font:600 1rem var(--font-title);color:var(--text);letter-spacing:-.01em}
+.brand svg{width:30px;height:30px}
+
+/* hero */
+.hero{position:relative;overflow-x:clip;padding:clamp(48px,10vw,110px) 0 clamp(48px,8vw,84px)}
+.hero::before{
+  content:"";position:absolute;left:50%;top:-120px;width:min(1000px,140vw);aspect-ratio:1.6;transform:translateX(-50%);z-index:-1;
+  background:radial-gradient(closest-side,rgba(47,107,255,.34),rgba(47,107,255,.10) 55%,transparent 75%);filter:blur(10px);
+}
+.hero h1{font-size:clamp(2.25rem,6.6vw,4.4rem);font-weight:700;max-width:15ch;text-wrap:balance}
+.hero .lead{margin-top:22px;max-width:52ch;font-size:clamp(1.05rem,2.2vw,1.2rem);color:var(--muted)}
+.hero .actions{margin-top:34px}
+.hero>.wrap>*{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.hero>.wrap>.lead{animation-delay:.12s}
+.hero>.wrap>.actions{animation-delay:.24s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;border-radius:12px;border:1px solid transparent;
+  font:600 1rem var(--font-body);cursor:pointer;text-decoration:none;color:#fff;transition:background .2s,border-color .2s,box-shadow .2s}
+.btn-primary{background:linear-gradient(180deg,#3F79FF,#2F6BFF);box-shadow:0 8px 28px -8px rgba(47,107,255,.75),inset 0 1px 0 rgba(255,255,255,.22)}
+.btn-primary:hover{background:linear-gradient(180deg,#5589FF,#3A75FF)}
+.btn-ghost{background:transparent;border-color:var(--line-2);color:var(--text)}
+.btn-ghost:hover{border-color:var(--blue-2)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+
+/* benefícios */
+.benefits{display:grid;gap:14px;grid-template-columns:repeat(3,1fr);padding-bottom:clamp(40px,7vw,72px)}
+.benefit{background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:18px;padding:22px}
+.benefit svg{width:26px;height:26px;color:var(--blue-2);margin-bottom:14px}
+.benefit h3{font-size:1.05rem;font-weight:600;margin-bottom:6px}
+.benefit p{color:var(--muted);font-size:.95rem}
+
+/* como funciona */
+.section-title{font-size:clamp(1.5rem,3.6vw,2.1rem);font-weight:600;margin-bottom:28px}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:s}
+.steps li{position:relative;padding:20px 20px 20px 0;border-top:2px solid var(--line-2);counter-increment:s}
+.steps li::before{content:counter(s);display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;font:600 .95rem var(--font-title);margin:-37px 0 14px;box-shadow:0 0 0 6px var(--bg),0 0 24px rgba(47,107,255,.6)}
+.steps strong{display:block;font:600 1.05rem var(--font-title);margin-bottom:4px}
+.steps span{color:var(--muted);font-size:.95rem}
+.how{padding-bottom:clamp(40px,7vw,72px)}
+
+/* sigilo */
+.notice{display:flex;gap:16px;align-items:flex-start;background:rgba(47,107,255,.09);border:1px solid var(--line-2);border-left:4px solid var(--blue);border-radius:14px;padding:20px 22px;margin-bottom:clamp(40px,7vw,72px)}
+.notice svg{flex:none;width:28px;height:28px;color:var(--blue-2);margin-top:2px}
+.notice h2{font-size:1.1rem;font-weight:600;margin-bottom:6px}
+.notice p{color:#C7D3EF}
+
+/* formulário */
+.form-area{padding-bottom:80px}
+.card{background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:22px;padding:0 clamp(18px,4vw,36px) clamp(22px,4vw,36px);box-shadow:0 30px 80px -40px rgba(47,107,255,.35)}
+.progress{position:sticky;top:0;z-index:10;margin:0 calc(-1 * clamp(18px,4vw,36px));padding:16px clamp(18px,4vw,36px) 14px;background:rgba(9,14,27,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);border-radius:22px 22px 0 0}
+.progress-row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:10px;flex-wrap:wrap}
+.progress-row b{font:600 .95rem var(--font-title)}
+.progress-row span{color:var(--muted);font-size:.92rem}
+.track{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:99px;transition:width .35s ease}
+.resume{margin-top:24px;padding:12px 14px;border:1px dashed var(--line-2);border-radius:12px;color:var(--muted);font-size:.92rem}
+.resume button{background:none;border:0;color:var(--blue-2);font:inherit;text-decoration:underline;cursor:pointer;padding:0 0 0 4px}
+.panel{padding-top:28px;scroll-margin-top:90px}
+.panel h2{font-size:clamp(1.3rem,3vw,1.7rem);font-weight:600;margin-bottom:6px;outline:none}
+.panel .intro{color:var(--muted);margin-bottom:26px;font-size:.95rem}
+.panel[hidden]{display:none}
+
+.field{margin:0 0 28px;padding:0;border:0;min-width:0}
+.field[hidden]{display:none}
+.field>label,.field>legend{display:block;font:500 1rem/1.45 var(--font-body);color:var(--text);margin-bottom:6px;padding:0}
+.field>label.opt{display:flex;margin-bottom:0}
+.req{color:var(--blue-2)}
+.optional{color:var(--muted);font-weight:400;font-size:.88rem}
+.hint{color:var(--muted);font-size:.9rem;margin-bottom:10px;max-width:62ch}
+input[type=text],input[type=email],input[type=tel],textarea{
+  width:100%;background:#060B17;color:var(--text);border:1px solid var(--line-2);border-radius:12px;padding:13px 15px;font:400 1rem/1.5 var(--font-body);transition:border-color .2s,box-shadow .2s}
+textarea{min-height:116px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#62709a}
+input[type=text]:hover,input[type=email]:hover,input[type=tel]:hover,textarea:hover{border-color:#34498a}
+input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,textarea:focus{outline:none;border-color:var(--blue-2);box-shadow:0 0 0 3px rgba(91,155,255,.28)}
+[aria-invalid=true]{border-color:var(--err)!important}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line-2);border-radius:12px;background:#060B17;cursor:pointer;line-height:1.45;transition:border-color .2s,background .2s}
+.opt:hover{border-color:#34498a}
+.opt:has(input:checked){border-color:var(--blue-2);background:rgba(47,107,255,.14)}
+.opt:has(input:focus-visible){outline:2px solid var(--blue-2);outline-offset:2px}
+.opt input{flex:none;width:19px;height:19px;margin:2px 0 0;accent-color:var(--blue)}
+input.other{margin:-2px 0 4px 31px;width:calc(100% - 31px)}
+.opt.confirm{padding:16px}
+.err{color:var(--err);font-size:.9rem;margin-top:8px}
+.err:empty,.note:empty{display:none}
+.note{color:var(--blue-2);font-size:.9rem;margin-top:8px}
+.field-err{outline:none}
+
+/* landing pages */
+.lp-skip{margin-bottom:22px}
+.lp-block{border:1px solid var(--line-2);border-radius:16px;padding:20px;margin-bottom:18px;background:rgba(47,107,255,.05)}
+.lp-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.lp-head h3{font-size:1.1rem;font-weight:600}
+.btn-sm{min-height:38px;padding:0 14px;font-size:.9rem;border-radius:10px}
+.lp-add{margin-bottom:6px}
+
+/* navegação */
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;padding-top:24px;border-top:1px solid var(--line)}
+.nav .btn{min-width:140px}
+.nav .back[hidden]{display:block;visibility:hidden}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+/* envio */
+.send-error{margin-top:22px;padding:18px;border:1px solid #5b2a35;background:rgba(255,138,151,.08);border-radius:14px}
+.send-error p{margin-bottom:14px}
+.send-error .row{display:flex;gap:10px;flex-wrap:wrap}
+.copy-status{margin-top:10px;color:var(--ok);font-size:.9rem}
+.done{text-align:center;padding:clamp(40px,8vw,80px) 8px 40px}
+.done .check{width:68px;height:68px;margin:0 auto 24px;border-radius:50%;display:grid;place-items:center;background:rgba(47,107,255,.15);border:1px solid var(--blue);color:var(--blue-2);box-shadow:0 0 40px rgba(47,107,255,.45)}
+.done h2{font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:14px;outline:none}
+.done p{color:var(--muted);max-width:52ch;margin:0 auto}
+
+footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:.9rem}
+footer .wrap{display:grid;gap:6px}
+
+@media (max-width:760px){
+  .benefits,.steps{grid-template-columns:1fr}
+  .steps li{padding-right:0}
+  .nav{flex-direction:row}
+  .nav .btn{flex:1;min-width:0;padding:0 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#briefing">Ir para o formulário</a>
+
+<header class="top"><div class="wrap">
+  <span class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#2F6BFF" stroke-width="3.5"/><path d="M41 25a11 11 0 1 0 0 14v-7H32" fill="none" stroke="#5B9BFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Gabriel Diniz Tráfego
+  </span>
+</div></header>
+
+<main>
+<section class="hero" aria-labelledby="h-hero"><div class="wrap">
+  <h1 id="h-hero">Conte sobre o escritório. O site é com a gente.</h1>
+  <p class="lead">Um único formulário, em sete etapas curtas. Com as respostas, montamos a estrutura do site institucional e das landing pages.</p>
+  <div class="actions"><a class="btn btn-primary" href="#briefing" id="start">Começar briefing</a></div>
+</div></section>
+
+<section class="wrap" aria-label="Vantagens">
+  <div class="benefits">
+    <div class="benefit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <h3>Cerca de 20 a 30 minutos</h3><p>Perguntas diretas, pensadas para quem tem a agenda cheia.</p>
+    </div>
+    <div class="benefit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>
+      <h3>Salva automaticamente, continue depois</h3><p>Feche a página quando quiser. Suas respostas ficam neste navegador.</p>
+    </div>
+    <div class="benefit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>
+      <h3>Sem termos técnicos</h3><p>Linguagem simples. Quando algo for técnico, explicamos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap how" aria-labelledby="h-how">
+  <h2 class="section-title" id="h-how">Como funciona</h2>
+  <ol class="steps">
+    <li><strong>Preencha o briefing</strong><span>Responda uma etapa por vez, no seu ritmo.</span></li>
+    <li><strong>Analisamos as respostas</strong><span>Lemos tudo e identificamos o que falta definir.</span></li>
+    <li><strong>Montamos a estrutura do site</strong><span>Organizamos páginas e seções antes de começar o visual.</span></li>
+  </ol>
+</section>
+
+<div class="wrap">
+  <aside class="notice" role="note" aria-labelledby="h-sigilo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    <div>
+      <h2 id="h-sigilo">Sigilo profissional em primeiro lugar</h2>
+      <p>Não informe nomes de clientes, números de processos, senhas ou informações protegidas por sigilo profissional. Se algo ainda não estiver definido, responda “a definir”.</p>
+    </div>
+  </aside>
+</div>
+
+<section class="wrap form-area" id="briefing" aria-label="Formulário de briefing" tabindex="-1">
+  <div class="card" id="card">
+    <div class="progress">
+      <div class="progress-row"><b id="stepLabel">Etapa 1 de 7</b><span id="stepName"></span></div>
+      <div class="track" role="progressbar" aria-label="Progresso do briefing" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" id="track"><div class="bar" id="bar"></div></div>
+    </div>
+    <div class="resume" id="resume" hidden>Retomamos de onde você parou. <button type="button" id="reset">Limpar e recomeçar</button></div>
+
+    <form id="form" novalidate autocomplete="on">
+      <div class="hp" aria-hidden="true"><label>Não preencha este campo<input type="text" name="website" id="website" tabindex="-1" autocomplete="off"></label></div>
+      <div id="panels"></div>
+
+      <div class="send-error" id="sendError" role="alert" hidden>
+        <p>Não foi possível enviar agora. Suas respostas continuam salvas neste navegador. Tente novamente em instantes ou copie as respostas para enviar de outra forma.</p>
+        <div class="row">
+          <button type="button" class="btn btn-primary btn-sm" id="retry">Tentar novamente</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="copy">Copiar respostas</button>
+        </div>
+        <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+      </div>
+
+      <div class="nav">
+        <button type="button" class="btn btn-ghost back" id="back">Voltar</button>
+        <button type="button" class="btn btn-primary" id="next">Continuar</button>
+      </div>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <div class="check"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h2 id="doneTitle" tabindex="-1">Recebemos suas informações!</h2>
+      <p>Vamos analisar as respostas e organizar a estrutura do site e das landing pages. Se precisarmos confirmar algum conteúdo, material ou detalhe técnico, entraremos em contato pelo WhatsApp informado.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <p>© <span id="year">2026</span> Gabriel Diniz Tráfego</p>
+  <p>Privacidade: os dados enviados são usados somente para o desenvolvimento do seu projeto.</p>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- utilidades ---------- */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const SPEC=/\s*\(especificar\)/;
+const reduce=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const KEY="gdt-briefing-v1";
+
+/* ---------- definição do formulário ---------- */
+const AREAS=["Direito Civil","Direito de Família e Sucessões","Direito Trabalhista","Direito Previdenciário","Direito Empresarial","Direito Tributário","Direito do Consumidor","Direito Imobiliário","Direito Criminal","Direito Médico e da Saúde","Outra (especificar)"];
+const STEPS=[
+ {title:"Sobre o escritório",fields:[
+  {id:"q1",n:1,q:"Nome do escritório",type:"text",req:1,auto:"organization"},
+  {id:"q2",n:2,q:"Nome e cargo do responsável pelo projeto",type:"text",req:1,hint:"Ex.: Maria Souza, sócia",auto:"name"},
+  {id:"q3",n:3,q:"WhatsApp do responsável",type:"tel",req:1,hint:"Com DDD.",auto:"tel"},
+  {id:"q4",n:4,q:"E-mail do responsável",type:"email",req:1,auto:"email"},
+  {id:"q5",n:5,q:"Em quais áreas do Direito o escritório atua?",type:"checks",req:1,options:AREAS},
+  {id:"q6",n:6,q:"Quais áreas devem ter mais destaque no site?",type:"textarea",req:1,hint:"Indique prioridades e, se possível, a ordem de importância."},
+  {id:"q7",n:7,q:"Em quais cidades ou regiões o escritório atende?",type:"text",req:1,hint:"Informe também se atende on-line."},
+  {id:"q8",n:8,q:"Quais profissionais devem aparecer no site?",type:"textarea",req:1,hint:"Nome completo, função, área de atuação e número da OAB com UF. Biografias e fotos podem ser enviadas depois."}
+ ]},
+ {title:"Público e posicionamento",fields:[
+  {id:"q9",n:9,q:"Quem o escritório deseja alcançar prioritariamente?",type:"textarea",req:1,hint:"Ex.: pessoas físicas, empresas, profissionais de um segmento, público de uma região."},
+  {id:"q10",n:10,q:"Quais necessidades ou situações levam esse público a procurar o escritório?",type:"textarea",req:1,hint:"Descreva de forma geral, sem casos identificáveis."},
+  {id:"q11",n:11,q:"Como o escritório deseja ser percebido?",type:"checks",req:1,max:3,hint:"Escolha até 3 opções.",options:["Técnico e especializado","Confiável e transparente","Acolhedor e próximo","Tradicional e institucional","Moderno e acessível","Sofisticado e discreto","Didático e objetivo","Outra (especificar)"]},
+  {id:"q12",n:12,q:"Quais características do escritório ou da atuação importa apresentar?",type:"textarea",req:1,hint:"Ex.: trajetória, formação, especializações, estrutura, forma de trabalho. Apenas dados verificáveis e que possam ser divulgados."},
+  {id:"q13",n:13,q:"Quais dúvidas o público costuma ter antes de contratar um advogado?",type:"textarea",hint:"Perguntas que o escritório recebe com frequência. Serão usadas em seções de perguntas frequentes. Sem casos identificáveis."},
+  {id:"q14",n:14,q:"Existe algo que NÃO deve aparecer no site?",type:"textarea",hint:"Temas, termos ou estilos de comunicação a evitar."},
+  {id:"q15",n:15,q:"Há alguma mensagem ou orientação que precisa aparecer no site?",type:"textarea"}
+ ]},
+ {title:"Site institucional",fields:[
+  {id:"q16",n:16,q:"O escritório já possui um site?",type:"radio",req:1,options:["Sim — queremos reformular","Sim — queremos atualizar ou ampliar","Não — será desenvolvido do zero"]},
+  {id:"q17",n:17,q:"Qual é o endereço do site atual?",type:"text",show:a=>/^Sim/.test(a.q16||""),inputmode:"url"},
+  {id:"q18",n:18,q:"Quais páginas ou seções devem fazer parte do novo site?",type:"checks",req:1,options:["Página inicial","Sobre o escritório","Áreas de atuação","Página individual dos profissionais","Artigos ou conteúdos informativos","Contato e localização","Perguntas frequentes","Política de privacidade","Outra (especificar)"]},
+  {id:"q19",n:19,q:"Algum site de referência cuja organização ou visual agrade?",type:"textarea",hint:"Links e o que chamou atenção. Servem de inspiração, não de cópia."},
+  {id:"q20",n:20,q:"Quais canais de contato devem estar no site?",type:"checks",req:1,options:["WhatsApp","Telefone","E-mail","Formulário de contato","Endereço e mapa","Outro (especificar)"]},
+  {id:"q21",n:21,q:"Quais dados de contato devem aparecer no site?",type:"textarea",req:1,hint:"Razão social e CNPJ, endereço completo, telefone, e-mail público, horário de atendimento."},
+  {id:"q22",n:22,q:"Links das redes sociais e do Google Meu Negócio, se houver",type:"textarea"},
+  {id:"q23",n:23,q:"Quem responde pela proteção de dados (LGPD) no escritório?",type:"text",hint:"Será usado na Política de Privacidade. Se não souber, escreva “não sei”."}
+ ]},
+ {title:"Landing pages",intro:"Uma landing page é uma página focada em um único serviço, feita para levar o visitante a entrar em contato.",fields:[{id:"lp",type:"landing"}]},
+ {title:"Identidade visual e materiais",fields:[
+  {id:"q24",n:24,q:"Quais materiais o escritório já possui e pode disponibilizar?",type:"checks",req:1,options:["Logotipo em boa resolução","Manual ou arquivos da identidade visual","Fotos profissionais do escritório","Fotos profissionais dos advogados","Biografias e currículos dos profissionais","Textos institucionais","Textos sobre as áreas de atuação","Artigos ou conteúdos já publicados","Vídeos institucionais","Ainda precisamos produzir ou organizar os materiais","Outro (especificar)"]},
+  {id:"q25",n:25,q:"Existe alguma preferência visual ou algo a evitar?",type:"textarea",hint:"Cores, estilo, imagens, símbolos."},
+  {id:"q26",n:26,q:"Onde estão os materiais?",type:"text",hint:"Link de pasta compartilhada. Não envie senhas nem documentos de clientes.",inputmode:"url"}
+ ]},
+ {title:"Estrutura técnica",intro:"Pode responder em linguagem simples. Se não souber, “não sei” é uma resposta válida.",fields:[
+  {id:"q27",n:27,q:"O escritório já tem domínio (o endereço do site, como seuescritorio.com.br)?",type:"radio",req:1,options:["Sim","Não","Não sei"]},
+  {id:"q28",n:28,q:"Qual é o domínio, ou qual gostaria de usar?",type:"text"},
+  {id:"q29",n:29,q:"Quer e-mails profissionais no domínio (ex.: nome@seuescritorio.com.br)?",type:"radio",options:["Sim","Não","Não sei"]},
+  {id:"q30",n:30,q:"Quem cuida hoje do domínio, do site e das ferramentas digitais?",type:"text",hint:"Pessoa ou empresa. “Não sei” é aceito. Não envie senhas: os acessos serão combinados de forma segura."},
+  {id:"q31",n:31,q:"Alguma ferramenta que deva ser ligada ao site?",type:"checks",options:["Sistema onde guarda contatos de clientes (CRM)","Agenda ou sistema de agendamento","WhatsApp Business","Ferramenta de e-mail","Não há nada previsto","Não sei, preciso de orientação","Outro (especificar)"]},
+  {id:"q32",n:32,q:"Quer acompanhar quantas pessoas visitam as páginas e quantas entram em contato?",type:"radio",req:1,options:["Sim, queremos acompanhar","Já usamos alguma ferramenta para isso","Não sei, preciso de orientação"]}
+ ]},
+ {title:"Finalização",fields:[
+  {id:"q33",n:33,q:"Quem vai fornecer e validar as informações institucionais e jurídicas?",type:"text",req:1,hint:"Nome, função e contato. Se for a mesma pessoa do início, escreva “o mesmo”."},
+  {id:"q34",n:34,q:"Qual o prazo ou data desejada para publicação?",type:"text",req:1,hint:"Se houver datas diferentes por página, informe nas observações."},
+  {id:"q35",n:35,q:"Alguma observação importante que não foi contemplada?",type:"textarea"},
+  {id:"q36",n:36,q:"Confirmo que não incluí nomes de clientes, números de processos, senhas ou informações protegidas por sigilo profissional, e autorizo o uso destas informações para o desenvolvimento do site e das landing pages.",type:"confirm",req:1}
+ ]}
+];
+const LP_FIELDS=[
+ {k:"tema",l:"a",q:"Tema ou serviço jurídico desta página",type:"text",req:1,hint:"Ex.: Direito Empresarial"},
+ {k:"publico",l:"b",q:"Quem a página quer alcançar e qual necessidade jurídica ela aborda?",type:"textarea",req:1,hint:"Sem clientes ou casos identificáveis."},
+ {k:"acao",l:"c",q:"Qual ação o visitante deve realizar?",type:"checks",req:1,options:["Entrar em contato pelo WhatsApp","Preencher um formulário","Solicitar um agendamento","Ligar para o escritório","Outra (especificar)"]},
+ {k:"info",l:"d",q:"Há informações específicas para esta página?",type:"textarea",hint:"Ex.: etapas gerais do atendimento, dúvidas frequentes sobre o serviço. O conteúdo jurídico será validado pelo advogado responsável."},
+ {k:"destino",l:"e",q:"Para onde os contatos desta página devem ir?",type:"text",req:1,hint:"WhatsApp, e-mail, agenda ou sistema. Informe número ou endereço."}
+];
+
+/* ---------- estado ---------- */
+const S={step:0,a:{},lp:{skip:false,items:[{}]},restored:false};
+let saveT=null,finished=false;
+
+function load(){
+  try{
+    const raw=localStorage.getItem(KEY); if(!raw) return;
+    const d=JSON.parse(raw); if(!d||typeof d!=="object") return;
+    if(d.a&&typeof d.a==="object") S.a=d.a;
+    if(d.lp&&typeof d.lp==="object"){S.lp.skip=!!d.lp.skip; if(Array.isArray(d.lp.items)&&d.lp.items.length) S.lp.items=d.lp.items.slice(0,20);}
+    S.step=Math.min(Math.max(parseInt(d.step,10)||0,0),STEPS.length-1);
+    S.restored=S.step>0||Object.values(S.a).some(v=>!isEmpty(v))||S.lp.items.some(it=>Object.values(it).some(v=>!isEmpty(v)));
+  }catch(e){}
+}
+function save(){
+  if(finished) return;
+  try{localStorage.setItem(KEY,JSON.stringify({step:S.step,a:S.a,lp:S.lp,t:Date.now()}));}catch(e){}
+}
+function scheduleSave(){clearTimeout(saveT);saveT=setTimeout(()=>{collect();save();},250);}
+function isEmpty(v){
+  if(v==null) return true;
+  if(typeof v==="string") return v.trim()==="";
+  if(typeof v==="boolean") return !v;
+  if(typeof v==="object") return !(v.sel&&v.sel.length);
+  return false;
+}
+
+/* ---------- renderização ---------- */
+function renderField(f,name,label){
+  const hint=f.hint?`<p class="hint" id="${name}__h">${esc(f.hint)}</p>`:"";
+  const desc=(f.hint?name+"__h ":"")+(f.max?name+"__note ":"")+name+"__err";
+  const mark=f.req?`<span class="req" aria-hidden="true"> *</span><span class="sr"> (obrigatória)</span>`:` <span class="optional">(opcional)</span>`;
+  const text=`${label?esc(label)+". ":""}${esc(f.q)}${f.type==="confirm"?"":mark}`;
+  const err=`<p class="err" id="${name}__err" aria-live="polite"></p>`;
+  const note=f.max?`<p class="note" id="${name}__note" aria-live="polite"></p>`:"";
+  const hid=f.show?" hidden":"";
+  const data=`data-name="${name}" data-fid="${f.id||f.k}"`;
+
+  if(f.type==="checks"||f.type==="radio"){
+    const radio=f.type==="radio";
+    const opts=f.options.map((o,i)=>{
+      const oid=`${name}__o${i}`, sp=SPEC.test(o);
+      return `<label class="opt" for="${oid}"><input type="${radio?"radio":"checkbox"}" id="${oid}" name="${name}" value="${esc(o)}"${sp?' data-specify="1"':""}><span>${esc(o)}</span></label>`+
+        (sp?`<input type="text" class="other" id="${name}__other" name="${name}__other" maxlength="200" placeholder="Especifique" aria-label="Especifique: ${esc(o.replace(SPEC,""))}" hidden>`:"");
+    }).join("");
+    return `<fieldset class="field" ${data}${hid} aria-describedby="${desc}"><legend>${text}</legend>${hint}<div class="opts"${radio?' role="radiogroup"':""}>${opts}</div>${note}${err}</fieldset>`;
+  }
+  if(f.type==="confirm"){
+    return `<div class="field" ${data}${hid}><label class="opt confirm" for="${name}"><input type="checkbox" id="${name}" name="${name}" value="1" aria-describedby="${name}__err"><span>${esc(label)}. ${esc(f.q)}<span class="req" aria-hidden="true"> *</span><span class="sr"> (obrigatória)</span></span></label>${err}</div>`;
+  }
+  let ctrl;
+  if(f.type==="textarea") ctrl=`<textarea id="${name}" name="${name}" rows="4" maxlength="3000" aria-describedby="${desc}"></textarea>`;
+  else{
+    const t=f.type==="email"?"email":f.type==="tel"?"tel":"text";
+    ctrl=`<input type="${t}" id="${name}" name="${name}" maxlength="300" aria-describedby="${desc}"${f.auto?` autocomplete="${f.auto}"`:""}${f.inputmode?` inputmode="${f.inputmode}"`:""}${t==="tel"?' inputmode="tel"':""}>`;
+  }
+  return `<div class="field" ${data}${hid}><label for="${name}">${text}</label>${hint}${ctrl}${err}</div>`;
+}
+
+function lpBlock(i,canRemove){
+  const fields=LP_FIELDS.map(f=>renderField(f,`lp${i}_${f.k}`,f.l)).join("");
+  return `<div class="lp-block" data-i="${i}"><div class="lp-head"><h3>Landing page ${i+1}</h3>${canRemove?`<button type="button" class="btn btn-ghost btn-sm lp-remove" data-i="${i}" aria-label="Remover landing page ${i+1}">Remover</button>`:""}</div>${fields}</div>`;
+}
+function renderLp(){
+  const n=S.lp.items.length;
+  $("#lpList").innerHTML=S.lp.items.map((_,i)=>lpBlock(i,n>1)).join("");
+  S.lp.items.forEach((it,i)=>LP_FIELDS.forEach(f=>setField(f,`lp${i}_${f.k}`,it[f.k])));
+  $("#lpBody").hidden=S.lp.skip;
+}
+
+function renderAll(){
+  let n=0;
+  $("#panels").innerHTML=STEPS.map((s,si)=>{
+    let inner="";
+    s.fields.forEach(f=>{
+      if(f.type==="landing"){
+        inner+=`<div class="lp-skip"><label class="opt confirm" for="lpSkip"><input type="checkbox" id="lpSkip" name="lpSkip"><span>Ainda não vou contratar landing pages neste momento</span></label></div>
+          <div id="lpBody"><div id="lpList"></div><button type="button" class="btn btn-ghost lp-add" id="lpAdd">+ Adicionar outra landing page</button></div>`;
+      } else inner+=renderField(f,f.id,f.n);
+    });
+    return `<section class="panel" id="panel${si}" data-step="${si}" aria-labelledby="ph${si}" hidden><h2 id="ph${si}" tabindex="-1">${esc(s.title)}</h2>${s.intro?`<p class="intro">${esc(s.intro)}</p>`:`<p class="intro"></p>`}${inner}</section>`;
+  }).join("");
+  STEPS.forEach(s=>s.fields.forEach(f=>{if(f.type!=="landing") setField(f,f.id,S.a[f.id]);}));
+  $("#lpSkip").checked=!!S.lp.skip;
+  renderLp();
+  applyConditions();
+}
+
+/* ---------- leitura e escrita dos campos ---------- */
+function readField(f,name){
+  if(f.type==="checks"){
+    const sel=$$(`input[name="${name}"]:checked`).map(i=>i.value);
+    const o=$(`[name="${name}__other"]`);
+    return {sel,other:o?o.value.trim():""};
+  }
+  if(f.type==="radio"){const c=$(`input[name="${name}"]:checked`);return c?c.value:"";}
+  if(f.type==="confirm"){const c=$(`[name="${name}"]`);return !!(c&&c.checked);}
+  const el=$(`[name="${name}"]`);return el?el.value.trim():"";
+}
+function setField(f,name,val){
+  if(f.type==="checks"){
+    const sel=(val&&val.sel)||[];
+    $$(`input[name="${name}"]`).forEach(i=>i.checked=sel.includes(i.value));
+    const o=$(`[name="${name}__other"]`);
+    if(o){o.value=(val&&val.other)||"";o.hidden=!$$(`input[name="${name}"]`).some(i=>i.dataset.specify&&i.checked);}
+  }else if(f.type==="radio"){
+    $$(`input[name="${name}"]`).forEach(i=>i.checked=(i.value===val));
+  }else if(f.type==="confirm"){
+    const c=$(`[name="${name}"]`);if(c)c.checked=!!val;
+  }else{
+    const el=$(`[name="${name}"]`);if(el)el.value=typeof val==="string"?val:"";
+  }
+}
+function collect(){
+  STEPS.forEach(s=>s.fields.forEach(f=>{if(f.type!=="landing"&&$(`[data-name="${f.id}"]`)) S.a[f.id]=readField(f,f.id);}));
+  const skip=$("#lpSkip"); if(skip) S.lp.skip=skip.checked;
+  const blocks=$$(".lp-block");
+  if(blocks.length) S.lp.items=blocks.map((b,i)=>{const o={};LP_FIELDS.forEach(f=>o[f.k]=readField(f,`lp${i}_${f.k}`));return o;});
+}
+function applyConditions(){
+  STEPS.forEach(s=>s.fields.forEach(f=>{
+    if(!f.show) return;
+    const w=$(`[data-name="${f.id}"]`); if(!w) return;
+    const vis=f.show(S.a); w.hidden=!vis;
+  }));
+}
+const visible=f=>!f.show||f.show(S.a);
+
+/* ---------- validação ---------- */
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+function validateValue(f,val){
+  if(f.type==="checks"){
+    const sel=(val&&val.sel)||[];
+    if(f.req&&!sel.length) return "Selecione pelo menos uma opção.";
+    const sp=f.options.find(o=>SPEC.test(o));
+    if(sp&&sel.includes(sp)&&!(val.other||"").trim()) return "Descreva a opção marcada no campo “Especifique”.";
+    if(f.max&&sel.length>f.max) return `Selecione no máximo ${f.max} opções.`;
+    return "";
+  }
+  if(f.type==="radio") return f.req&&!val?"Selecione uma opção.":"";
+  if(f.type==="confirm") return f.req&&!val?"Marque esta confirmação para enviar.":"";
+  const v=(val||"").trim();
+  if(!v) return f.req?"Preencha este campo.":"";
+  if(f.type==="email"&&!EMAIL_RE.test(v)) return "Informe um e-mail válido, como nome@exemplo.com.br.";
+  if(f.type==="tel"&&v.replace(/\D/g,"").length<10) return "Informe um telefone com DDD, com pelo menos 10 dígitos.";
+  return "";
+}
+function setError(name,msg){
+  const w=$(`[data-name="${name}"]`),e=$(`#${name}__err`); if(!w||!e) return;
+  e.textContent=msg||"";
+  const ctrl=$(`#${name}`)||null;
+  if(ctrl) ctrl.setAttribute("aria-invalid",msg?"true":"false");
+  else $$(`[name="${name}__other"]`).forEach(o=>msg&&!o.hidden&&!o.value.trim()?o.setAttribute("aria-invalid","true"):o.removeAttribute("aria-invalid"));
+}
+function validateStep(si){
+  collect(); applyConditions();
+  const errs=[];
+  STEPS[si].fields.forEach(f=>{
+    if(f.type==="landing"){
+      if(S.lp.skip) return;
+      S.lp.items.forEach((it,i)=>LP_FIELDS.forEach(lf=>{
+        const name=`lp${i}_${lf.k}`,m=validateValue(lf,it[lf.k]);
+        setError(name,m); if(m) errs.push({name,msg:m});
+      }));
+      return;
+    }
+    if(!visible(f)){setError(f.id,"");return;}
+    const m=validateValue(f,S.a[f.id]); setError(f.id,m); if(m) errs.push({name:f.id,msg:m});
+  });
+  return errs;
+}
+function focusError(name){
+  const w=$(`[data-name="${name}"]`); if(!w) return;
+  w.scrollIntoView({behavior:reduce()?"auto":"smooth",block:"center"});
+  const t=$(`input:not([hidden]),textarea`,w);
+  const bad=$(`.other[aria-invalid="true"]`,w);
+  (bad||t||w).focus({preventScroll:true});
+}
+
+/* ---------- navegação ---------- */
+function showStep(n,opts){
+  opts=opts||{};
+  S.step=n;
+  $$(".panel").forEach((p,i)=>p.hidden=(i!==n));
+  $("#stepLabel").textContent=`Etapa ${n+1} de ${STEPS.length}`;
+  $("#stepName").textContent=STEPS[n].title;
+  $("#bar").style.width=((n+1)/STEPS.length*100)+"%";
+  const t=$("#track");t.setAttribute("aria-valuenow",n+1);t.setAttribute("aria-valuetext",`Etapa ${n+1} de ${STEPS.length}: ${STEPS[n].title}`);
+  $("#back").hidden=(n===0);
+  const last=n===STEPS.length-1;
+  $("#next").textContent=last?"Enviar briefing":"Continuar";
+  $("#sendError").hidden=true;
+  save();
+  if(!opts.silent){
+    $("#card").scrollIntoView({behavior:reduce()?"auto":"smooth",block:"start"});
+    $(`#ph${n}`).focus({preventScroll:true});
+  }
+}
+function next(){
+  const errs=validateStep(S.step);
+  if(errs.length){focusError(errs[0].name);return;}
+  if(S.step<STEPS.length-1) showStep(S.step+1); else submit();
+}
+function back(){collect();if(S.step>0) showStep(S.step-1);}
+
+/* ---------- montagem das respostas ---------- */
+function fmt(f,val){
+  if(f.type==="checks"){
+    const sel=(val&&val.sel)||[]; if(!sel.length) return "";
+    return sel.map(s=>SPEC.test(s)?`${s.replace(SPEC,"")}: ${val.other}`:s).join("; ");
+  }
+  if(f.type==="confirm") return val?"Confirmado":"";
+  return typeof val==="string"?val.trim():"";
+}
+function buildItems(){
+  collect(); applyConditions();
+  const items=[];
+  STEPS.forEach(s=>s.fields.forEach(f=>{
+    if(f.type==="landing"){
+      if(S.lp.skip){items.push({sec:s.title,n:"LP",q:"Landing pages",a:"Ainda não vou contratar landing pages neste momento"});return;}
+      S.lp.items.forEach((it,i)=>{
+        const tema=fmt(LP_FIELDS[0],it.tema);
+        LP_FIELDS.forEach(lf=>{
+          const a=fmt(lf,it[lf.k]); if(!a) return;
+          items.push({sec:s.title,n:`LP${i+1}.${lf.l}`,q:`Landing page ${i+1}${tema?" — "+tema:""}: ${lf.q}`,a});
+        });
+      });
+      return;
+    }
+    if(!visible(f)) return;
+    const a=fmt(f,S.a[f.id]); if(!a) return;
+    items.push({sec:s.title,n:String(f.n),q:f.q,a});
+  }));
+  return items;
+}
+function toText(items){
+  const name=(items.find(i=>i.n==="1")||{}).a||"";
+  const out=[`BRIEFING — ${name}`];
+  let last=null;
+  items.forEach(it=>{
+    if(it.sec!==last){out.push("",`== ${it.sec} ==`,"");last=it.sec;}
+    out.push(`${it.n}. ${it.q}`,"   "+it.a.split("\n").join("\n   "),"");
+  });
+  return out.join("\n");
+}
+
+/* ---------- envio ---------- */
+let sending=false;
+async function submit(){
+  if(sending) return;
+  // valida todas as etapas; leva o usuário à primeira com erro
+  for(let i=0;i<STEPS.length;i++){
+    const errs=validateStep(i);
+    if(errs.length){ if(i!==S.step) showStep(i,{silent:true}); setTimeout(()=>focusError(errs[0].name),50); return; }
+  }
+  sending=true;
+  const btn=$("#next"),retry=$("#retry");
+  btn.disabled=true;retry.disabled=true;btn.textContent="Enviando…";
+  $("#sendError").hidden=true;$("#copyStatus").textContent="";
+  const items=buildItems();
+  const ctrl=new AbortController(),to=setTimeout(()=>ctrl.abort(),20000);
+  try{
+    const res=await fetch("/api/briefing",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items,website:$("#website").value}),signal:ctrl.signal});
+    let data=null;try{data=await res.json();}catch(e){}
+    if(!res.ok||!data||data.ok!==true) throw new Error("fail");
+    finished=true;clearTimeout(saveT);
+    try{localStorage.removeItem(KEY);}catch(e){}
+    $("#form").hidden=true;$("#resume").hidden=true;$(".progress").hidden=true;$("#done").hidden=false;
+    $("#card").scrollIntoView({behavior:reduce()?"auto":"smooth",block:"start"});
+    $("#doneTitle").focus({preventScroll:true});
+  }catch(e){
+    $("#sendError").hidden=false;
+    $("#sendError").scrollIntoView({behavior:reduce()?"auto":"smooth",block:"center"});
+  }finally{
+    clearTimeout(to);sending=false;btn.disabled=false;retry.disabled=false;
+    btn.textContent=S.step===STEPS.length-1?"Enviar briefing":"Continuar";
+  }
+}
+async function copyAnswers(){
+  const text=toText(buildItems()),st=$("#copyStatus");
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    const ta=document.createElement("textarea");ta.value=text;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand("copy");}catch(_){}
+    ta.remove();
+    if(!ok){st.style.color="var(--err)";st.textContent="Não foi possível copiar automaticamente. Tente novamente ou use outro navegador.";return;}
+  }
+  st.style.color="";st.textContent="Respostas copiadas.";
+}
+
+/* ---------- eventos ---------- */
+const form=$("#form");
+form.addEventListener("input",e=>{
+  const t=e.target;
+  const w=t.closest&&t.closest("[data-name]"); if(w&&t.type!=="checkbox"&&t.type!=="radio") setError(w.dataset.name,"");
+  scheduleSave();
+});
+form.addEventListener("change",e=>{
+  const t=e.target,w=t.closest("[data-name]");
+  if(t.dataset&&t.dataset.specify){
+    const o=$(`[name="${t.name}__other"]`);
+    if(o){o.hidden=!t.checked; if(t.checked) o.focus(); else {o.value="";o.removeAttribute("aria-invalid");}}
+  }
+  if(t.type==="checkbox"&&w){
+    const f=STEPS.flatMap(s=>s.fields).find(x=>x.id===w.dataset.fid);
+    if(f&&f.max&&t.checked&&$$(`input[name="${t.name}"]:checked`).length>f.max){
+      t.checked=false;
+      const o=$(`[name="${t.name}__other"]`); if(o&&t.dataset.specify) o.hidden=true;
+      $(`#${t.name}__note`).textContent=`Você já escolheu ${f.max} opções. Desmarque uma para escolher outra.`;
+      return;
+    }
+    if(f&&f.max) $(`#${t.name}__note`).textContent="";
+  }
+  if(w) setError(w.dataset.name,"");
+  if(t.id==="lpSkip"){$("#lpBody").hidden=t.checked;}
+  collect();applyConditions();scheduleSave();
+});
+form.addEventListener("click",e=>{
+  const rm=e.target.closest(".lp-remove");
+  if(rm){
+    collect();
+    if(S.lp.items.length>1){S.lp.items.splice(+rm.dataset.i,1);renderLp();save();$("#lpAdd").focus();}
+    return;
+  }
+  if(e.target.closest("#lpAdd")){
+    collect();S.lp.items.push({});renderLp();save();
+    const i=S.lp.items.length-1;
+    const first=$(`#lp${i}_tema`);if(first){first.scrollIntoView({behavior:reduce()?"auto":"smooth",block:"center"});first.focus({preventScroll:true});}
+  }
+});
+form.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&e.target.tagName==="INPUT"&&e.target.type!=="checkbox"&&e.target.type!=="radio"){e.preventDefault();next();}
+});
+form.addEventListener("submit",e=>e.preventDefault());
+$("#next").addEventListener("click",next);
+$("#back").addEventListener("click",back);
+$("#retry").addEventListener("click",submit);
+$("#copy").addEventListener("click",copyAnswers);
+$("#reset").addEventListener("click",()=>{
+  if(!confirm("Apagar as respostas salvas e recomeçar do zero?")) return;
+  try{localStorage.removeItem(KEY);}catch(e){}
+  location.reload();
+});
+$("#start").addEventListener("click",e=>{
+  e.preventDefault();
+  $("#briefing").scrollIntoView({behavior:reduce()?"auto":"smooth",block:"start"});
+  history.replaceState(null,"","#briefing");
+});
+window.addEventListener("pagehide",()=>{try{collect();save();}catch(e){}});
+$("#year").textContent=new Date().getFullYear();
+
+/* ---------- início ---------- */
+load();
+renderAll();
+showStep(S.step,{silent:true});
+if(S.restored) $("#resume").hidden=false;
+})();
+</script>
+</body>
+</html>
