@@ -1,0 +1,5 @@
+/forms
+  X-Robots-Tag: noindex, nofollow
+
+/forms/*
+  X-Robots-Tag: noindex, nofollow

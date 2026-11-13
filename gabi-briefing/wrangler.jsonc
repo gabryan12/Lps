@@ -6,7 +6,9 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*"]
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+    "run_worker_first": ["/forms/api/*"]
   },
   "send_email": [
     {
@@ -14,8 +16,13 @@
       "destination_address": "sagatrafego@gmail.com"
     }
   ],
+  // O id é criado sozinho no primeiro "wrangler deploy". Para criar à mão, veja o README.
+  "kv_namespaces": [{ "binding": "BRIEFINGS" }],
+  // Só /forms e /forms/*: a raiz do domínio continua livre para o site da agência.
   "routes": [
-    { "pattern": "gabrieldiniztrafego.com.br", "custom_domain": true },
-    { "pattern": "www.gabrieldiniztrafego.com.br", "custom_domain": true }
+    { "pattern": "gabrieldiniztrafego.com.br/forms", "zone_name": "gabrieldiniztrafego.com.br" },
+    { "pattern": "gabrieldiniztrafego.com.br/forms/*", "zone_name": "gabrieldiniztrafego.com.br" },
+    { "pattern": "www.gabrieldiniztrafego.com.br/forms", "zone_name": "gabrieldiniztrafego.com.br" },
+    { "pattern": "www.gabrieldiniztrafego.com.br/forms/*", "zone_name": "gabrieldiniztrafego.com.br" }
   ]
 }

@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Briefing do projeto | Gabriel Diniz Tráfego</title>
+<meta name="description" content="Formulário para enviar as informações do seu site e das suas landing pages.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0A0B0F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230A0B0F'/%3E%3Crect x='4' y='4' width='56' height='56' rx='9' fill='none' stroke='%231F3DFF' stroke-width='4'/%3E%3Cpath d='M41 25a11 11 0 1 0 0 14v-7H32' fill='none' stroke='%23F1EEE7' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Mono:wght@400&display=swap"></noscript>
+<style>
+:root{
+  --ink:#0A0B0F; --cobalt:#1F3DFF; --cobalt-2:#3B5BFF; --cobalt-3:#5B73FF; --paper:#F1EEE7;
+  --muted:rgba(241,238,231,.74); --faint:rgba(241,238,231,.55);
+  --line:rgba(241,238,231,.16); --line-2:rgba(241,238,231,.2); --field:rgba(241,238,231,.42);
+  --surface:rgba(241,238,231,.045); --err:#FF8F7A;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --font:"Bricolage Grotesque",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);font:400 1.0625rem/1.6 var(--font);overflow-x:clip;min-height:100vh}
+h1,h2,h3{margin:0;font-weight:800;line-height:1.02;letter-spacing:-.03em}
+p{margin:0}
+button,input,textarea{font:inherit;color:inherit}
+.mono{font-family:var(--mono);font-weight:400;font-size:.8125rem;letter-spacing:.02em;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--cobalt-3);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:16px;top:-64px;background:var(--cobalt);color:var(--paper);padding:12px 16px;border-radius:6px;z-index:60;text-decoration:none}
+.skip:focus{top:12px}
+.wrap{width:min(100% - 40px,1160px);margin-inline:auto}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:6px;border:1px solid transparent;font:600 1rem var(--font);cursor:pointer;text-decoration:none;transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
+.btn svg{width:18px;height:18px;flex:none;transition:transform .25s var(--ease)}
+.btn-primary{background:var(--cobalt);color:var(--paper)}
+.btn-primary:hover{background:var(--cobalt-2)}
+.btn-primary:hover svg{transform:translateX(3px)}
+.btn-line{background:transparent;border-color:var(--line-2);color:var(--paper)}
+.btn-line:hover{border-color:var(--cobalt-3)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-sm{min-height:44px;padding:0 16px;font-size:.9375rem}
+
+/* ---------- abertura ---------- */
+#intro{transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#intro.leaving{opacity:0;transform:translateY(-12px)}
+.top{padding:22px 0;border-bottom:1px solid var(--line)}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+.brand svg{width:26px;height:26px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;padding:clamp(40px,7vw,88px) 0 clamp(40px,6vw,72px)}
+.hero h1{font-size:clamp(2.5rem,5vw,4.3rem);margin:16px 0 22px}
+.hero h1 span{display:block;color:var(--cobalt-3)}
+.greet{font-size:1.25rem;font-weight:600;margin-bottom:14px}
+.hero .lead{max-width:34rem;font-size:1.1875rem;color:var(--muted)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-meta{margin-top:20px;font-size:.9375rem;color:var(--faint)}
+.peek{margin-top:22px;padding:18px 20px;border:1px solid var(--line-2);border-radius:6px;max-width:34rem}
+.peek[hidden]{display:none}
+.peek ol{margin:0;padding:0;list-style:none;display:grid;gap:8px;counter-reset:p}
+.peek li{counter-increment:p;display:flex;gap:14px;align-items:baseline}
+.peek li::before{content:counter(p);font:400 .8125rem var(--mono);color:var(--cobalt-3);min-width:1.2em}
+
+/* órbita */
+.orbit{--s:min(78vw,480px);position:relative;width:var(--s);height:var(--s);margin-inline:auto}
+.ring{position:absolute;left:50%;top:50%;border-radius:50%;transform:translate(-50%,-50%);border:1px solid var(--line-2)}
+.ring.r1{width:calc(var(--s)*.46);height:calc(var(--s)*.46)}
+.ring.r2{width:calc(var(--s)*.68);height:calc(var(--s)*.68);border:1px dashed var(--cobalt-3)}
+.ring.r3{width:calc(var(--s)*.92);height:calc(var(--s)*.92)}
+.core{position:absolute;left:50%;top:50%;width:72px;height:72px;transform:translate(-50%,-50%);border:1.5px solid var(--cobalt);border-radius:16px;display:grid;place-items:center;background:var(--ink)}
+.core svg{width:34px;height:34px;color:var(--paper)}
+.spin{position:absolute;inset:0;animation:spin 80s linear infinite}
+.spin.rev{animation:spin-r 120s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spin-r{to{transform:rotate(-360deg)}}
+.pos{position:absolute;left:50%;top:50%;width:0;height:0}
+.pos.t{transform:rotate(var(--a)) translateY(calc(var(--s)*-.46))}
+.pos.d{transform:rotate(var(--a)) translateY(calc(var(--s)*-.34))}
+.counter{position:absolute;left:0;top:0;width:0;height:0;animation:spin-r 80s linear infinite}
+.tag{position:absolute;left:0;top:0;transform:translate(-50%,-50%) rotate(calc(var(--a)*-1));white-space:nowrap;background:var(--ink);border:1px solid var(--line-2);border-radius:6px;padding:7px 11px;font-size:.8125rem;font-weight:600}
+.dot{position:absolute;left:0;top:0;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:50%;border:1.5px solid var(--cobalt-3);background:var(--ink)}
+.dot.on{background:var(--cobalt);border-color:var(--cobalt)}
+
+/* faixa de baixo */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.flow div{padding:20px 20px 20px 0;display:flex;gap:14px;align-items:baseline;font-weight:600;font-size:1.0625rem}
+.flow div+div{padding-left:20px;border-left:1px solid var(--line)}
+.flow .mono{color:var(--cobalt-3)}
+.note-s{margin:26px 0 clamp(44px,7vw,80px);max-width:46rem;color:var(--muted);font-size:1rem;padding-left:16px;border-left:2px solid var(--cobalt)}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--faint);font-size:.9375rem}
+.reveal{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- assistente ---------- */
+#app{min-height:100vh;display:flex;flex-direction:column;opacity:0;transition:opacity .4s var(--ease)}
+#app.show{opacity:1}
+#app[hidden],#done[hidden],#intro[hidden]{display:none}
+.bar{position:sticky;top:0;z-index:20;background:var(--ink);border-bottom:1px solid var(--line)}
+.bar-in{width:min(100% - 40px,760px);margin-inline:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 12px;flex-wrap:wrap}
+.bar-step{font-weight:600;font-size:.9375rem}
+.prog{height:3px;background:var(--line)}
+.prog i{display:block;height:100%;width:0;background:var(--cobalt);transition:width .5s var(--ease)}
+.resume{width:min(100% - 40px,760px);margin:18px auto 0;padding:12px 14px;border:1px dashed var(--line-2);border-radius:6px;color:var(--muted);font-size:.9375rem}
+.resume button{background:none;border:0;color:var(--cobalt-3);text-decoration:underline;cursor:pointer;padding:6px 0 6px 4px;min-height:44px}
+.stage-wrap{flex:1;width:min(100% - 40px,760px);margin-inline:auto;padding:clamp(28px,6vw,64px) 0 80px}
+.stage{transition:opacity .38s var(--ease),transform .38s var(--ease)}
+.stage.leaving{opacity:0;transform:translateY(-10px);transition-duration:.18s}
+.stage.entering{opacity:0;transform:translateY(18px);transition:none}
+.stage.entering.back{transform:translateY(-14px)}
+.kicker{margin-bottom:18px}
+.intro-line{font-size:1.1875rem;color:var(--cobalt-3);font-weight:600;margin-bottom:26px}
+
+.field{margin:0 0 34px;padding:0;border:0;min-width:0}
+.field[hidden]{display:none}
+.field>label.q,.field>legend.q{display:block;padding:0;margin-bottom:10px;font-weight:700;letter-spacing:-.02em;line-height:1.12;font-size:1.375rem}
+.big>label.q,.big>legend.q{font-weight:800;letter-spacing:-.03em;line-height:1.02;font-size:clamp(1.9rem,5.4vw,3rem);margin-bottom:14px}
+.qn{font:400 .8125rem var(--mono);color:var(--cobalt-3);margin-right:8px;letter-spacing:.02em;vertical-align:.18em}
+.req{color:var(--cobalt-3)}
+.optional{font:400 .8125rem var(--mono);color:var(--faint);margin-left:8px;white-space:nowrap}
+.hint{color:var(--muted);font-size:1rem;margin:0 0 16px;max-width:40rem}
+input[type=text],input[type=email],input[type=tel],textarea{width:100%;background:var(--surface);border:1px solid var(--field);border-radius:6px;padding:14px 16px;font-size:1.1875rem;line-height:1.45;min-height:56px;transition:border-color .2s var(--ease),background .2s var(--ease)}
+textarea{min-height:140px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--faint)}
+input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,textarea:focus{outline:none;border-color:var(--cobalt-3);background:rgba(91,115,255,.08);box-shadow:0 0 0 1px var(--cobalt-3)}
+[aria-invalid=true]{border-color:var(--err)!important}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{position:relative;display:inline-flex;align-items:center;min-height:48px;padding:10px 16px;border:1px solid var(--field);border-radius:6px;background:transparent;cursor:pointer;line-height:1.3;transition:background .18s var(--ease),border-color .18s var(--ease)}
+.chip input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.chip:hover{border-color:var(--cobalt-3)}
+.chip:has(input:checked){background:var(--cobalt);border-color:var(--cobalt);color:var(--paper);font-weight:600}
+.chip:has(input:focus-visible){outline:2px solid var(--cobalt-3);outline-offset:3px}
+.chips .other{flex-basis:100%;max-width:34rem}
+.chip.confirm{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;width:100%}
+.chip.confirm::before{content:"";flex:none;width:22px;height:22px;margin-top:2px;border:1.5px solid var(--field);border-radius:4px}
+.chip.confirm:has(input:checked)::before{background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231F3DFF' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E") center/16px no-repeat;border-color:var(--paper)}
+.err{color:var(--err);font-size:.9375rem;margin-top:10px}
+.err:empty,.note-l:empty{display:none}
+.note-l{color:var(--cobalt-3);font-size:.9375rem;margin-top:10px}
+.callout{border-left:2px solid var(--cobalt);padding:2px 0 2px 16px;margin:0 0 22px;color:var(--muted);font-size:1rem;max-width:40rem}
+.consent{margin:-10px 0 28px;padding:14px 16px;border:1px solid var(--line-2);border-radius:6px;color:var(--muted);font-size:1rem}
+.consent[hidden]{display:none}
+
+.lp-skip{margin-bottom:26px}
+.lp-block{border:1px solid var(--line-2);border-radius:6px;padding:22px 20px 4px;margin-bottom:20px}
+.lp-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.lp-head h3{font-size:1.5rem}
+.lp-block .field{margin-bottom:26px}
+.lp-block .field>label.q,.lp-block .field>legend.q{font-size:1.1875rem}
+
+.actions{display:flex;align-items:center;gap:12px;margin-top:40px;flex-wrap:wrap}
+.actions .keyhint{margin-left:auto;font:400 .8125rem var(--mono);color:var(--faint)}
+.send-error{margin-top:26px;padding:18px;border:1px solid var(--err);border-radius:6px}
+.send-error p{margin-bottom:14px}
+.send-error .row{display:flex;gap:10px;flex-wrap:wrap}
+.copy-status{margin-top:10px;color:var(--cobalt-3);font-size:.9375rem}
+
+/* conclusão */
+#done{width:min(100% - 40px,760px);margin:0 auto;padding:clamp(40px,8vw,88px) 0 80px;animation:rise .6s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#done h2{font-size:clamp(2.2rem,6vw,3.6rem);margin:12px 0 18px;outline:none}
+#done .msg{font-size:1.1875rem;color:var(--muted);max-width:36rem}
+.done-actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 40px}
+.summary{border-top:1px solid var(--line)}
+.summary h3{font-size:1.125rem;margin:28px 0 8px;letter-spacing:-.02em}
+.summary dl{margin:0}
+.summary dt{margin-top:14px;font:400 .8125rem var(--mono);color:var(--muted)}
+.summary dd{margin:2px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:34px}
+  .orbit{--s:min(64vw,400px)}
+  .flow{grid-template-columns:1fr}
+  .flow div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .tag{font-size:.75rem;padding:6px 9px}
+  .actions .keyhint{display:none}
+  .hint{font-size:1rem}
+}
+@media (max-width:520px){
+  .btn{flex:1}
+  .actions{flex-wrap:nowrap}
+  .hero-actions .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
+@media print{
+  body{background:#fff;color:#000}
+  #intro,#app,.done-actions,.skip{display:none!important}
+  #done{width:100%;padding:0;animation:none}
+  #done h2,.summary h3{color:#000}
+  .mono,.summary dt,#done .msg{color:#333}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#start">Ir para o início</a>
+<div class="hp" aria-hidden="true"><label>Não preencha este campo<input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+<!-- ABERTURA -->
+<div id="intro">
+  <header class="top"><div class="wrap">
+    <span class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="10" fill="none" stroke="#1F3DFF" stroke-width="4"/><path d="M41 25a11 11 0 1 0 0 14v-7H32" fill="none" stroke="#F1EEE7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Gabriel Diniz Tráfego
+    </span>
+  </div></header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero" aria-labelledby="h1">
+        <div>
+          <p class="greet" id="greet" hidden></p>
+          <p class="mono">briefing do projeto · 8 etapas</p>
+          <h1 id="h1">Conte sobre o seu negócio.<span>O resto é comigo.</span></h1>
+          <p class="lead">Responda no seu ritmo. Eu leio tudo e volto com a estrutura do seu site e das suas páginas.</p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary" id="start">
+              <span id="startLabel">Começar o briefing</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <button type="button" class="btn btn-line" id="peekBtn" aria-expanded="false" aria-controls="peek">Ver o que vou perguntar</button>
+          </div>
+          <div class="peek" id="peek" hidden><ol id="peekList"></ol></div>
+          <p class="hero-meta">Cerca de 20 a 30 minutos · salva sozinho · sem compromisso</p>
+        </div>
+
+        <div class="orbit" aria-hidden="true">
+          <div class="ring r3"></div><div class="ring r2"></div><div class="ring r1"></div>
+          <div class="spin">
+            <div class="pos t" style="--a:0deg"><div class="counter"><span class="tag" style="--a:0deg">Seu negócio</span></div></div>
+            <div class="pos t" style="--a:90deg"><div class="counter"><span class="tag" style="--a:90deg">Seu público</span></div></div>
+            <div class="pos t" style="--a:180deg"><div class="counter"><span class="tag" style="--a:180deg">Seu site</span></div></div>
+            <div class="pos t" style="--a:270deg"><div class="counter"><span class="tag" style="--a:270deg">Seus materiais</span></div></div>
+          </div>
+          <div class="spin rev" id="dots"></div>
+          <div class="core"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5c2.8 2.7 4.2 5.9 4.2 9.5s-1.4 6.8-4.2 9.5c-2.8-2.7-4.2-5.9-4.2-9.5S9.2 5.2 12 2.5z"/></svg></div>
+        </div>
+      </section>
+
+      <div class="flow reveal">
+        <div><span class="mono">01</span>Você responde</div>
+        <div><span class="mono">02</span>Eu analiso tudo</div>
+        <div><span class="mono">03</span>Nasce a estrutura do site</div>
+      </div>
+      <p class="note-s reveal">Não informe nomes de clientes, números de processos, senhas ou informações protegidas por sigilo. Se algo ainda não estiver definido, responda “a definir”.</p>
+    </div>
+  </main>
+  <footer><div class="wrap">© <span id="year">2026</span> Gabriel Diniz Tráfego. Os dados são usados só para desenvolver o seu projeto.</div></footer>
+</div>
+
+<!-- ASSISTENTE -->
+<div id="app" hidden>
+  <header class="bar">
+    <div class="bar-in">
+      <span class="bar-step" id="barStep">Etapa 1 de 8</span>
+      <span class="mono" id="barTime"></span>
+    </div>
+    <div class="prog" role="progressbar" aria-label="Progresso do briefing" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="prog"><i id="progFill"></i></div>
+  </header>
+  <div class="resume" id="resume" hidden>Retomei de onde você parou. <button type="button" id="reset">Limpar e recomeçar</button></div>
+  <main class="stage-wrap" id="main">
+    <form id="stage" class="stage" novalidate autocomplete="on"></form>
+  </main>
+  <p class="sr" id="live" aria-live="polite"></p>
+</div>
+
+<!-- CONCLUSÃO -->
+<section id="done" hidden aria-labelledby="doneTitle">
+  <p class="mono" id="doneKicker">briefing enviado</p>
+  <h2 id="doneTitle" tabindex="-1">Recebemos suas informações!</h2>
+  <p class="msg">Vamos analisar as respostas e organizar a estrutura do site e das landing pages. Se precisarmos confirmar algum conteúdo, material ou detalhe técnico, entraremos em contato pelo WhatsApp informado.</p>
+  <div class="done-actions">
+    <button type="button" class="btn btn-primary" id="dl">Baixar cópia</button>
+    <button type="button" class="btn btn-line" id="print">Imprimir / salvar em PDF</button>
+  </div>
+  <div class="summary" id="summary"></div>
+</section>
+
+<script>
+(function(){
+"use strict";
+document.documentElement.classList.add("js");
+
+/* ---------- utilidades ---------- */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const SPEC=/\s*\(especificar\)/;
+const reduce=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait=ms=>new Promise(r=>setTimeout(r,reduce()?0:ms));
+const KEY="gdt-briefing-v3";
+const pad=n=>String(n).padStart(2,"0");
+const pick=v=>(v&&v.sel&&v.sel[0])||"";
+const has=(v,x)=>!!(v&&v.sel&&v.sel.includes(x));
+
+/* ---------- nome ---------- */
+const PART=new Set(["da","de","do","das","dos","e","di","du","del","la","van","von"]);
+function normName(s){
+  s=String(s||"").replace(/[<>]/g,"").replace(/\s+/g," ").trim().slice(0,80);
+  if(!s) return "";
+  const bad=s.split(" ").some((w,i)=>!(i>0&&PART.has(w))&&!PART.has(w.toLocaleLowerCase("pt-BR"))&&(w[0]!==w[0].toLocaleUpperCase("pt-BR")||(w.length>1&&w===w.toLocaleUpperCase("pt-BR"))));
+  if(!bad) return s; // já tem capitalização própria (ex.: McDonald)
+  return s.toLocaleLowerCase("pt-BR").split(" ").map((w,i)=>(i>0&&PART.has(w))?w:w.replace(/(^|[-'’.])(\p{L})/gu,(m,p,c)=>p+c.toLocaleUpperCase("pt-BR"))).join(" ");
+}
+function firstName(){
+  const t=String(S.a.nome||"").trim().split(/\s+/).filter(Boolean); if(!t.length) return "";
+  return /^(dr|dra|sr|sra|prof|profa)\.?$/i.test(t[0])&&t[1]?t[0]+" "+t[1]:t[0];
+}
+const withName=(t,fallback)=>{const n=firstName();return n?t.replace("{n}",n):fallback};
+
+/* ---------- campos ---------- */
+const OUTRO="Outro (especificar)", OUTRA="Outra (especificar)";
+const YNN=["Sim","Não","Não sei"];
+const F={
+ nome:{q:"Seu nome",type:"text",req:1,auto:"name",hint:"Pode escrever o nome completo.",show:()=>!S.nomeLocked},
+ negocio:{q:"Nome do negócio ou marca",type:"text",req:1,auto:"organization",hint:"Se ainda não houver, escreva “a definir”."},
+ whatsapp:{q:"Seu WhatsApp",type:"tel",req:1,auto:"tel",hint:"Com DDD."},
+ email:{q:"Seu e-mail",type:"email",req:1,auto:"email"},
+ segmento:{q:"Qual é o segmento?",type:"radio",req:1,options:["Advocacia e serviços jurídicos","Saúde e bem-estar (clínicas, consultórios)","Estética e beleza","Educação e cursos","Alimentação (restaurante, delivery, cafeteria)","Comércio e loja","Serviços para empresas (B2B)","Imóveis e construção","Tecnologia e software","Indústria",OUTRO]},
+ registro:{q:"Registro profissional (OAB, CRM, CRO, CRP etc.)",type:"textarea",req:1,hint:"Nome e número de cada profissional que vai aparecer.",
+   note:"Esses segmentos têm regras de publicidade do conselho da categoria (por exemplo, OAB e Provimento 205/2021, CFM, CRO). O conteúdo precisa respeitá-las e deve ser validado por você.",
+   show:a=>/^(Advocacia|Saúde)/.test(pick(a.segmento))},
+ descricao:{q:"O que o negócio faz, em poucas palavras",type:"textarea",req:1,hint:"Como você explicaria para quem não conhece."},
+ historia:{q:"Qual é a história do negócio?",type:"textarea",hint:"Como começou, há quanto tempo existe, marcos. Só fatos verificáveis."},
+ atendimento:{q:"Como o negócio atende os clientes?",type:"checks",req:1,options:["Presencial, em local físico","Na casa ou no local do cliente","On-line","Por entrega ou envio",OUTRO]},
+ regiao:{q:"Em quais cidades ou regiões atende?",type:"text",req:1,hint:"Se atende o Brasil todo ou só on-line, escreva isso."},
+ equipe:{q:"Quem deve aparecer no site?",type:"textarea",hint:"Nome, função e uma breve descrição. Fotos e biografias podem vir depois."},
+
+ publico:{q:"Quem você quer alcançar?",type:"textarea",req:1},
+ necessidade:{q:"O que leva essa pessoa a procurar você?",type:"textarea",req:1,hint:"Situações, desejos ou problemas, sem casos identificáveis."},
+ duvidas:{q:"Que dúvidas ou receios ela costuma ter antes de comprar ou contratar?",type:"textarea",hint:"Vou usar nas perguntas frequentes e nos textos."},
+ percepcao:{q:"Como quer ser percebido?",type:"checks",req:1,max:3,hint:"Escolha até 3.",options:["Técnico e especializado","Confiável e transparente","Acolhedor e próximo","Tradicional e institucional","Moderno e acessível","Sofisticado e discreto","Didático e objetivo","Divertido e descontraído",OUTRA]},
+ diferencial:{q:"O que torna o negócio diferente?",type:"textarea",req:1,hint:"Apenas fatos verificáveis e que possam ser divulgados."},
+ mensagens:{q:"Há mensagens que precisam aparecer ou assuntos a evitar?",type:"textarea"},
+
+ ofertas:{q:"O que o negócio vende ou oferece?",type:"textarea",req:1,hint:"Um item por linha, com uma frase sobre cada."},
+ destaque:{q:"O que deve ter mais destaque?",type:"textarea",req:1,hint:"Prioridade, ou o que mais vende e dá lucro."},
+ contratacao:{q:"Como funciona a contratação ou a compra?",type:"textarea",hint:"Etapas, do primeiro contato até a entrega."},
+ precos:{q:"Pode divulgar preços?",type:"radio",req:1,options:["Sim, mostrar valores","Só “a partir de”","Não, só sob consulta","Ainda não decidi"]},
+ provas:{q:"Que provas já existem?",type:"checks",hint:"Em alguns segmentos (advocacia, saúde) há restrições. Indique o que existe e verificamos o que pode ser usado.",options:["Depoimentos de clientes","Números e resultados","Casos atendidos","Certificações e prêmios","Parcerias e clientes conhecidos","Aparições na mídia","Ainda não temos"]},
+ objetivo:{q:"Qual é o principal objetivo do site?",type:"radio",req:1,options:["Receber contatos pelo WhatsApp","Receber pedidos de orçamento","Receber agendamentos","Vender online","Passar credibilidade","Mostrar portfólio",OUTRO]},
+
+ site:{q:"Já tem site?",type:"radio",req:1,options:["Sim, queremos reformular","Sim, queremos atualizar ou ampliar","Não, será feito do zero"]},
+ site_url:{q:"Qual é o endereço do site atual?",type:"text",inputmode:"url",show:a=>/^Sim/.test(pick(a.site))},
+ paginas:{q:"Quais páginas devem existir?",type:"checks",req:1,options:["Página inicial","Sobre","Serviços ou produtos","Página individual da equipe ou dos profissionais","Portfólio ou casos","Artigos ou blog","Contato e localização","Perguntas frequentes","Política de privacidade","Termos de uso",OUTRA]},
+ artigos:{q:"Quem vai produzir os artigos?",type:"radio",options:["Eu mesmo ou minha equipe","Quero que produzam para mim","Ainda não sei"],show:a=>has(a.paginas,"Artigos ou blog")},
+ canais:{q:"Quais canais de contato devem aparecer?",type:"checks",req:1,options:["WhatsApp","Telefone","E-mail","Formulário de contato","Endereço e mapa","Redes sociais",OUTRO]},
+ contato_dados:{q:"Quais dados de contato devem ser publicados?",type:"textarea",req:1,hint:"Razão social e CNPJ, endereço completo, telefone, e-mail público, horário de atendimento."},
+ redes:{q:"Links das redes sociais e do Google Meu Negócio",type:"textarea"},
+ lgpd:{q:"Quem responde pela proteção de dados (LGPD) no negócio?",type:"text",hint:"Usado na política de privacidade. Se não souber, escreva “não sei”."},
+ idiomas:{q:"O site precisa de outro idioma além do português?",type:"radio",options:["Só português","Português e inglês","Português e espanhol",OUTRO]},
+
+ identidade:{q:"Já tem identidade visual?",type:"radio",req:1,options:["Sim, completa (logo, cores e fontes)","Só tenho o logo","Ainda não tenho"]},
+ materiais:{q:"Quais materiais você já possui e pode enviar?",type:"checks",req:1,options:["Logotipo em boa resolução","Manual ou arquivos da identidade visual","Fotos profissionais do negócio","Fotos da equipe","Biografias e currículos","Textos institucionais","Textos dos serviços ou produtos","Artigos ou conteúdos já publicados","Vídeos","Ainda precisamos produzir ou organizar os materiais",OUTRO]},
+ estilo:{q:"Cores, estilo, o que você gosta ou quer evitar",type:"textarea"},
+ referencias:{q:"Sites de referência e concorrentes",type:"textarea",hint:"Links e o que chamou atenção, quem faz bem no seu mercado. Serve de inspiração, não de cópia."},
+ producao:{q:"Precisa de produção de fotos ou vídeos?",type:"radio",options:["Sim, fotos","Sim, vídeos","Fotos e vídeos","Não","Não sei"]},
+ link_materiais:{q:"Onde estão os materiais?",type:"text",inputmode:"url",hint:"Link de pasta compartilhada. Não envie senhas nem documentos de clientes."},
+
+ dominio_tem:{q:"Já tem domínio (o endereço do site, como seunegocio.com.br)?",type:"radio",req:1,options:YNN},
+ dominio:{q:"Qual é o domínio, ou qual gostaria de usar?",type:"text"},
+ emails_prof:{q:"Quer e-mails profissionais no domínio (ex.: nome@seunegocio.com.br)?",type:"radio",options:YNN},
+ resp_tec:{q:"Quem cuida hoje do domínio, do site e das ferramentas digitais?",type:"text",hint:"Pessoa ou empresa. “Não sei” é aceito. Não envie senhas: os acessos serão combinados de forma segura."},
+ contas:{q:"Quais contas já existem?",type:"checks",options:["Google Analytics","Google Tag Manager","Meta (Facebook e Instagram) Business e Pixel","Google Ads","Google Meu Negócio","Nenhuma","Não sei"]},
+ ferramentas:{q:"Alguma ferramenta deve ser ligada ao site?",type:"checks",options:["Sistema onde guarda contatos de clientes (CRM)","Agenda ou agendamento","WhatsApp Business","E-mail marketing","Loja ou pagamento online","Não há nada previsto","Não sei, preciso de orientação",OUTRO]},
+ metricas:{q:"Quer acompanhar quantas pessoas visitam as páginas e quantas entram em contato?",type:"radio",req:1,options:["Sim, queremos acompanhar","Já usamos alguma ferramenta","Não sei, preciso de orientação"]},
+ anuncios:{q:"Vai usar essas páginas em anúncios?",type:"radio",options:["Sim, já anuncio","Sim, quero começar","Não por enquanto","Não sei"]},
+
+ validador:{q:"Quem vai fornecer e validar as informações?",type:"text",req:1,hint:"Nome, função e contato. Se for a mesma pessoa, escreva “o mesmo”."},
+ prazo:{q:"Qual é o prazo ou a data desejada para publicar?",type:"text",req:1,hint:"Datas diferentes por página? Informe nas observações."},
+ obs:{q:"Alguma observação importante?",type:"textarea"},
+ confirma:{q:"Confirmo que não incluí nomes de clientes, números de processos, senhas ou informações protegidas por sigilo, e autorizo o uso destas informações para o desenvolvimento do site e das landing pages.",type:"confirm",req:1}
+};
+const LP_FIELDS=[
+ {k:"tema",l:"a",q:"Tema ou oferta desta página",type:"text",req:1},
+ {k:"publico",l:"b",q:"Quem a página quer alcançar e qual necessidade ou desejo ela atende?",type:"textarea",req:1,hint:"Sem pessoas ou casos identificáveis."},
+ {k:"acao",l:"c",q:"Qual ação o visitante deve realizar?",type:"checks",req:1,options:["Entrar em contato pelo WhatsApp","Preencher um formulário","Solicitar agendamento ou orçamento","Ligar para o negócio","Comprar online",OUTRA]},
+ {k:"oferta",l:"d",q:"Há condição ou oferta especial?",type:"textarea"},
+ {k:"info",l:"e",q:"Informações, dúvidas e provas específicas desta página",type:"textarea",hint:"Etapas do atendimento, perguntas frequentes sobre esta oferta, provas que podem ser usadas."},
+ {k:"destino",l:"f",q:"Para onde os contatos desta página devem ir?",type:"text",req:1,hint:"WhatsApp, e-mail, agenda ou sistema. Informe número ou endereço."}
+];
+Object.keys(F).forEach(k=>{F[k].k=k;});
+
+/* ---------- etapas e telas ---------- */
+const STEPS=[
+ {t:"Você e o negócio",intro:"{n}, vamos começar pelo seu negócio.",intro0:"Vamos começar pelo seu negócio.",screens:[["nome","negocio"],["whatsapp","email"],["segmento"],["registro"],["descricao"],["historia"],["atendimento","regiao"],["equipe"]]},
+ {t:"Público e tom",intro:"Agora quero entender com quem o seu site vai conversar.",screens:[["publico"],["necessidade"],["duvidas"],["percepcao"],["diferencial"],["mensagens"]]},
+ {t:"Serviços e objetivo",intro:"Aqui preciso saber o que você vende e o que espera do site.",screens:[["ofertas"],["destaque"],["contratacao"],["precos"],["provas"],["objetivo"]]},
+ {t:"Site institucional",intro:"Vamos desenhar as páginas do site.",screens:[["site","site_url"],["paginas","artigos"],["canais"],["contato_dados"],["redes","lgpd"],["idiomas"]]},
+ {t:"Landing pages",intro:"Uma landing page é uma página focada em uma única oferta, feita para levar a pessoa a uma ação.",screens:[["lp"]]},
+ {t:"Visual e materiais",intro:"O que já existe de visual e o que você gosta.",screens:[["identidade"],["materiais"],["estilo"],["referencias"],["producao","link_materiais"]]},
+ {t:"Estrutura técnica",intro:"Pode responder em linguagem simples. “Não sei” é uma resposta válida.",screens:[["dominio_tem","dominio","emails_prof"],["resp_tec"],["contas"],["ferramentas"],["metricas","anuncios"]]},
+ {t:"Finalização",intro:"Falta pouco.",screens:[["validador","prazo"],["obs"],["confirma"]]}
+];
+const SCREENS=STEPS.flatMap((s,si)=>s.screens.map((keys,i)=>({id:"s"+si+"_"+i,step:si,first:i===0,keys})));
+
+/* ---------- estado ---------- */
+const S={id:"",startedAt:0,cur:SCREENS[0].id,a:{},lp:{skip:false,items:[{}]},ref:"",inicioSent:false,maxStep:0,lastBeacon:0,nomeLocked:false,restored:false,finished:false};
+let saveT=null;
+const vis=k=>{const f=F[k];return !f.show||f.show(S.a)};
+const isEmpty=v=>{if(v==null)return true;if(typeof v==="string")return v.trim()==="";if(typeof v==="boolean")return !v;if(typeof v==="object")return !(v.sel&&v.sel.length);return false};
+
+function newId(){try{return crypto.randomUUID()}catch(e){return "id-"+Date.now().toString(36)+Math.random().toString(36).slice(2,10)}}
+function load(){
+  try{
+    const raw=localStorage.getItem(KEY); if(!raw) return;
+    const d=JSON.parse(raw); if(!d||typeof d!=="object") return;
+    if(typeof d.id==="string"&&/^[A-Za-z0-9-]{8,64}$/.test(d.id)) S.id=d.id;
+    if(d.a&&typeof d.a==="object") S.a=d.a;
+    if(d.lp&&typeof d.lp==="object"){S.lp.skip=!!d.lp.skip;if(Array.isArray(d.lp.items)&&d.lp.items.length)S.lp.items=d.lp.items.slice(0,20);}
+    if(SCREENS.some(s=>s.id===d.cur)) S.cur=d.cur;
+    S.startedAt=Number(d.startedAt)||0; S.ref=typeof d.ref==="string"?d.ref:""; S.inicioSent=!!d.inicioSent; S.maxStep=Number(d.maxStep)||0; S.lastBeacon=Number(d.lastBeacon)||0;
+    S.restored=idxOf(S.cur)>0||Object.values(S.a).some(v=>!isEmpty(v));
+  }catch(e){}
+}
+function save(){
+  if(S.finished) return;
+  try{localStorage.setItem(KEY,JSON.stringify({id:S.id,startedAt:S.startedAt,cur:S.cur,a:S.a,lp:S.lp,ref:S.ref,inicioSent:S.inicioSent,maxStep:S.maxStep,lastBeacon:S.lastBeacon,t:Date.now()}));}catch(e){}
+}
+function scheduleSave(){clearTimeout(saveT);saveT=setTimeout(()=>{collect();save();},250);}
+function readUrl(){
+  const q=new URLSearchParams(location.search);
+  const n=normName(q.get("n")||q.get("nome")||"");
+  if(n){S.a.nome=n;S.nomeLocked=true;}
+  const r=(q.get("ref")||"").replace(/[^\w.\-@ ]/g,"").trim().slice(0,60);
+  if(r) S.ref=r;
+}
+
+/* ---------- navegação entre telas ---------- */
+const idxOf=id=>SCREENS.findIndex(s=>s.id===id);
+const screenVisible=sc=>sc.keys.some(k=>k==="lp"||vis(k));
+function nextIdx(i){for(let j=i+1;j<SCREENS.length;j++)if(screenVisible(SCREENS[j]))return j;return -1}
+function prevIdx(i){for(let j=i-1;j>=0;j--)if(screenVisible(SCREENS[j]))return j;return -1}
+function numbering(){const map={};let n=0;STEPS.forEach(s=>s.screens.forEach(sc=>sc.forEach(k=>{if(k!=="lp"&&vis(k))map[k]=++n;})));return{map,total:n};}
+
+/* ---------- renderização ---------- */
+function hintHTML(f,name){return f.hint?`<p class="hint" id="${name}__h">${esc(f.hint)}</p>`:"";}
+function fieldHTML(f,name,label,mode){
+  // mode: "big" (pergunta sozinha), "mid" (várias na tela)
+  const desc=(f.hint?name+"__h ":"")+(f.max?name+"__note ":"")+name+"__err";
+  const mark=f.req?`<span class="req" aria-hidden="true"> *</span><span class="sr"> (obrigatória)</span>`:`<span class="optional">opcional</span>`;
+  const qn=label?`<span class="qn">${esc(label)}</span>`:"";
+  const err=`<p class="err" id="${name}__err" aria-live="polite"></p>`;
+  const note=f.max?`<p class="note-l" id="${name}__note" aria-live="polite"></p>`:"";
+  const hid=f.show&&!vis(f.k)?" hidden":"";
+  const cls="field"+(mode==="big"?" big":"");
+  const data=`data-name="${name}" data-key="${f.k}"`;
+  if(f.type==="checks"||f.type==="radio"){
+    const radio=f.type==="radio";
+    const chips=f.options.map((o,i)=>{
+      const oid=`${name}__o${i}`,sp=SPEC.test(o);
+      return `<label class="chip" for="${oid}"><input type="${radio?"radio":"checkbox"}" id="${oid}" name="${name}" value="${esc(o)}"${sp?' data-specify="1"':""}><span>${esc(o)}</span></label>`+
+        (sp?`<input type="text" class="other" id="${name}__other" name="${name}__other" maxlength="200" placeholder="Especifique" aria-label="Especifique: ${esc(o.replace(SPEC,""))}" hidden>`:"");
+    }).join("");
+    return `<fieldset class="${cls}" ${data}${hid} aria-describedby="${desc}"><legend class="q">${qn}${esc(f.q)}${mark}</legend>${hintHTML(f,name)}<div class="chips">${chips}</div>${note}${err}</fieldset>`;
+  }
+  if(f.type==="confirm"){
+    return `<div class="${cls}" ${data}${hid}><label class="chip confirm" for="${name}"><input type="checkbox" id="${name}" name="${name}" value="1" aria-describedby="${name}__err"><span>${esc(f.q)}<span class="req" aria-hidden="true"> *</span><span class="sr"> (obrigatória)</span></span></label>${err}</div>`;
+  }
+  let ctrl;
+  if(f.type==="textarea") ctrl=`<textarea id="${name}" name="${name}" rows="5" maxlength="3000" aria-describedby="${desc}"></textarea>`;
+  else{
+    const t=f.type==="email"?"email":f.type==="tel"?"tel":"text";
+    ctrl=`<input type="${t}" id="${name}" name="${name}" maxlength="300" aria-describedby="${desc}"${f.auto?` autocomplete="${f.auto}"`:' autocomplete="off"'}${f.inputmode?` inputmode="${f.inputmode}"`:""}${t==="tel"?' inputmode="tel"':""}>`;
+  }
+  return `<div class="${cls}" ${data}${hid}><label class="q" for="${name}">${qn}${esc(f.q)}${mark}</label>${hintHTML(f,name)}${ctrl}${err}</div>`;
+}
+function lpBlock(i,canRemove){
+  const fields=LP_FIELDS.map(f=>fieldHTML(f,`lp${i}_${f.k}`,f.l,"mid")).join("");
+  return `<div class="lp-block" data-i="${i}"><div class="lp-head"><h3>Landing page ${i+1}</h3>${canRemove?`<button type="button" class="btn btn-line btn-sm lp-remove" data-i="${i}" aria-label="Remover landing page ${i+1}">Remover</button>`:""}</div>${fields}</div>`;
+}
+function renderLp(){
+  const n=S.lp.items.length;
+  $("#lpList").innerHTML=S.lp.items.map((_,i)=>lpBlock(i,n>1)).join("");
+  S.lp.items.forEach((it,i)=>LP_FIELDS.forEach(f=>setField(f,`lp${i}_${f.k}`,it[f.k])));
+  $("#lpBody").hidden=S.lp.skip;
+}
+function screenHTML(sc){
+  const {map,total}=numbering();
+  const st=STEPS[sc.step];
+  const arrow='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const isLast=nextIdx(idxOf(sc.id))===-1;
+  let kicker="",body="";
+  let intro="";
+  if(sc.first){
+    const t=sc.step===0?withName(st.intro,st.intro0):st.intro;
+    intro=`<p class="intro-line">${esc(t)}</p>`;
+  }
+  if(sc.keys[0]==="lp"){
+    kicker=`etapa ${sc.step+1} de ${STEPS.length}`;
+    body=`<div class="lp-skip"><label class="chip confirm" for="lpSkip"><input type="checkbox" id="lpSkip" name="lpSkip"><span>Ainda não vou contratar landing pages neste momento</span></label></div>
+      <div id="lpBody"><div id="lpList"></div><button type="button" class="btn btn-line" id="lpAdd">+ Adicionar outra landing page</button></div>`;
+  }else{
+    const vk=sc.keys.filter(k=>vis(k));
+    const firstN=map[vk[0]]||1;
+    kicker=`pergunta ${pad(firstN)} de ${total}`;
+    let prev=firstN-1;
+    sc.keys.forEach((k,ix)=>{
+      const f=F[k];
+      let n=map[k]; if(!n) n=prev+1; else prev=n;
+      const mode=sc.keys.length===1?"big":(ix===0?"mid":"mid");
+      if(f.note) body+=`<p class="callout">${esc(f.note)}</p>`;
+      body+=fieldHTML(f,k,sc.keys.length===1?"":pad(n),mode);
+    });
+    if(sc.keys.includes("whatsapp")) body+=`<p class="consent" id="consent" hidden>Ao continuar, você autoriza o uso destes dados para o desenvolvimento do projeto.</p>`;
+    if(sc.keys.includes("confirma")) intro=`<p class="intro-line">${esc(withName("{n}, falta só confirmar e enviar.","Falta só confirmar e enviar."))}</p>`;
+  }
+  return `<div class="screen" data-sc="${sc.id}" tabindex="-1">
+    <p class="kicker mono">${kicker}</p>${intro}${body}
+    <div class="send-error" id="sendError" role="alert" hidden>
+      <p>Não foi possível enviar agora. Suas respostas continuam salvas neste navegador. Tente novamente em instantes ou copie as respostas para enviar de outra forma.</p>
+      <div class="row"><button type="button" class="btn btn-primary btn-sm" id="retry">Tentar novamente</button><button type="button" class="btn btn-line btn-sm" id="copy">Copiar respostas</button></div>
+      <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+    </div>
+    <div class="actions">
+      ${prevIdx(idxOf(sc.id))>=0?'<button type="button" class="btn btn-line" id="back">Voltar</button>':""}
+      <button type="button" class="btn btn-primary" id="next"><span>${isLast?"Enviar briefing":"Continuar"}</span>${isLast?"":arrow}</button>
+      <span class="keyhint" aria-hidden="true">pressione Enter ↵</span>
+    </div>
+  </div>`;
+}
+
+/* ---------- leitura e escrita dos campos ---------- */
+const defOf=(k)=>F[k]||LP_FIELDS.find(f=>f.k===k);
+function readField(f,name){
+  if(f.type==="checks"||f.type==="radio"){
+    const sel=$$(`input[name="${name}"]:checked`).map(i=>i.value);
+    const o=$(`[name="${name}__other"]`);
+    return {sel,other:o?o.value.trim():""};
+  }
+  if(f.type==="confirm"){const c=$(`[name="${name}"]`);return !!(c&&c.checked);}
+  const el=$(`[name="${name}"]`);return el?el.value.trim():"";
+}
+function setField(f,name,val){
+  if(f.type==="checks"||f.type==="radio"){
+    const sel=(val&&val.sel)||[];
+    $$(`input[name="${name}"]`).forEach(i=>i.checked=sel.includes(i.value));
+    const o=$(`[name="${name}__other"]`);
+    if(o){o.value=(val&&val.other)||"";o.hidden=!$$(`input[name="${name}"]`).some(i=>i.dataset.specify&&i.checked);}
+  }else if(f.type==="confirm"){
+    const c=$(`[name="${name}"]`);if(c)c.checked=!!val;
+  }else{
+    const el=$(`[name="${name}"]`);if(el)el.value=typeof val==="string"?val:"";
+  }
+}
+function collect(){
+  $$(".field[data-key]").forEach(w=>{
+    const name=w.dataset.name; if(/^lp\d+_/.test(name)) return;
+    const f=F[w.dataset.key]; if(f) S.a[f.k]=readField(f,name);
+  });
+  const skip=$("#lpSkip"); if(skip) S.lp.skip=skip.checked;
+  const blocks=$$(".lp-block");
+  if(blocks.length) S.lp.items=blocks.map((b,i)=>{const o={};LP_FIELDS.forEach(f=>o[f.k]=readField(f,`lp${i}_${f.k}`));return o;});
+  if(typeof S.a.nome==="string") {/* normaliza só ao sair do campo */}
+}
+function applyConditions(){
+  $$(".field[data-key]").forEach(w=>{const f=F[w.dataset.key];if(f&&f.show) w.hidden=!vis(f.k);});
+}
+
+/* ---------- validação ---------- */
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+function validateValue(f,val){
+  if(f.type==="checks"||f.type==="radio"){
+    const sel=(val&&val.sel)||[];
+    if(f.req&&!sel.length) return f.type==="radio"?"Escolha uma opção para continuar.":"Escolha pelo menos uma opção para continuar.";
+    const sp=f.options.find(o=>SPEC.test(o));
+    if(sp&&sel.includes(sp)&&!(val.other||"").trim()) return "Descreva a opção marcada no campo “Especifique”.";
+    if(f.max&&sel.length>f.max) return `Escolha no máximo ${f.max} opções.`;
+    return "";
+  }
+  if(f.type==="confirm") return f.req&&!val?"Marque esta confirmação para enviar.":"";
+  const v=(val||"").trim();
+  if(!v) return f.req?"Falta preencher este campo. Se ainda não estiver definido, escreva “a definir”.":"";
+  if(f.type==="email"&&!EMAIL_RE.test(v)) return "Informe um e-mail válido, como nome@exemplo.com.br.";
+  if(f.type==="tel"&&v.replace(/\D/g,"").length<10) return "Informe um telefone com DDD, com pelo menos 10 dígitos.";
+  return "";
+}
+function setError(name,msg){
+  const e=$(`#${name}__err`); if(!e) return;
+  e.textContent=msg||"";
+  const c=$(`#${name}`); if(c) c.setAttribute("aria-invalid",msg?"true":"false");
+  $$(`[name="${name}__other"]`).forEach(o=>(msg&&!o.hidden&&!o.value.trim())?o.setAttribute("aria-invalid","true"):o.removeAttribute("aria-invalid"));
+}
+function validateScreen(sc,silent){
+  const errs=[];
+  if(sc.keys[0]==="lp"){
+    if(!S.lp.skip) S.lp.items.forEach((it,i)=>LP_FIELDS.forEach(lf=>{
+      const name=`lp${i}_${lf.k}`,m=validateValue(lf,it[lf.k]); if(!silent) setError(name,m); if(m) errs.push({name,msg:m});
+    }));
+    return errs;
+  }
+  sc.keys.forEach(k=>{
+    if(!vis(k)){if(!silent)setError(k,"");return;}
+    const m=validateValue(F[k],S.a[k]); if(!silent) setError(k,m); if(m) errs.push({name:k,msg:m});
+  });
+  return errs;
+}
+function focusError(name){
+  const w=$(`[data-name="${name}"]`); if(!w) return;
+  w.scrollIntoView({behavior:reduce()?"auto":"smooth",block:"center"});
+  const bad=$(`.other[aria-invalid="true"]`,w);
+  (bad||$(`input:not([hidden]),textarea`,w)||w).focus({preventScroll:true});
+}
+
+/* ---------- progresso e tempo ---------- */
+function secondsFor(f){return (f.type==="textarea"&&f.req)?90:30;}
+function remainingMinutes(){
+  const cur=idxOf(S.cur); let sec=0;
+  for(let i=cur;i<SCREENS.length;i++){
+    const sc=SCREENS[i];
+    if(sc.keys[0]==="lp"){ if(!S.lp.skip) sec+=240*S.lp.items.length; continue; }
+    sc.keys.forEach(k=>{ if(vis(k)&&(i===cur||isEmpty(S.a[k]))) sec+=secondsFor(F[k]); });
+  }
+  return Math.ceil(sec/60);
+}
+function updateBar(){
+  const sc=SCREENS[idxOf(S.cur)], st=STEPS[sc.step];
+  $("#barStep").textContent=`Etapa ${sc.step+1} de ${STEPS.length} · ${st.t}`;
+  const vs=SCREENS.filter(screenVisible), pos=vs.findIndex(s=>s.id===S.cur);
+  const pct=Math.round(Math.max(pos,0)/vs.length*100);
+  $("#progFill").style.width=pct+"%"; const p=$("#prog"); p.setAttribute("aria-valuenow",pct);
+  const m=remainingMinutes();
+  $("#barTime").textContent=m<=1?"menos de 1 min restante":`cerca de ${m} min restantes`;
+  S.maxStep=Math.max(S.maxStep,sc.step+1);
+}
+
+/* ---------- troca de tela ---------- */
+let busy=false;
+async function showScreen(id,opts){
+  opts=opts||{};
+  const stage=$("#stage"); busy=true;
+  S.cur=id; const sc=SCREENS[idxOf(id)];
+  if(!opts.first){stage.classList.add("leaving");await wait(190);}
+  stage.innerHTML=screenHTML(sc);
+  stage.classList.remove("leaving");
+  // valores
+  sc.keys.forEach(k=>{ if(k==="lp"){$("#lpSkip").checked=!!S.lp.skip;renderLp();} else setField(F[k],k,S.a[k]); });
+  applyConditions(); updateConsent(); updateBar(); save();
+  if(!reduce()){
+    stage.classList.add("entering"); if(opts.back) stage.classList.add("back");
+    void stage.offsetWidth;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{stage.classList.remove("entering","back");}));
+  }
+  const n=numbering(), first=sc.keys.find(k=>k!=="lp"&&vis(k));
+  $("#live").textContent=`Etapa ${sc.step+1} de ${STEPS.length}: ${STEPS[sc.step].t}.`+(first?` Pergunta ${n.map[first]} de ${n.total}.`:"");
+  if(!opts.first||opts.focus){
+    const el=$("input[type=text]:not([hidden]):not(.other),input[type=email],input[type=tel],textarea",stage);
+    if(el&&!/^(true)$/.test(el.getAttribute("aria-hidden")||"")&&window.matchMedia("(hover:hover)").matches) el.focus({preventScroll:true}); else $(".screen",stage).focus({preventScroll:true});
+  }
+  if(!opts.first) window.scrollTo({top:0,behavior:reduce()?"auto":"smooth"});
+  busy=false;
+}
+async function go(dir){
+  if(busy) return;
+  collect();
+  const cur=idxOf(S.cur);
+  if(dir<0){const p=prevIdx(cur);if(p>=0)await showScreen(SCREENS[p].id,{back:true});return;}
+  const sc=SCREENS[cur], errs=validateScreen(sc);
+  if(errs.length){focusError(errs[0].name);return;}
+  if(sc.keys.includes("nome")&&S.a.nome) S.a.nome=normName(S.a.nome);
+  if(sc.keys.includes("email")) sendInicio();
+  const n=nextIdx(cur);
+  if(n>=0) await showScreen(SCREENS[n].id); else submit();
+}
+
+/* ---------- aviso de início e progresso ---------- */
+function api(path,payload,keepalive){
+  return fetch("/forms/api/"+path,{method:"POST",headers:{"Content-Type":"application/json"},keepalive:!!keepalive,body:JSON.stringify(payload)});
+}
+function sendInicio(){
+  if(S.inicioSent) return;
+  S.inicioSent=true; save();
+  api("inicio",{id:S.id,nome:firstFull("nome"),negocio:txt("negocio"),whatsapp:txt("whatsapp"),email:txt("email"),ref:S.ref,website:$("#website").value},true)
+    .then(r=>{if(!r.ok){S.inicioSent=false;save();}}).catch(()=>{S.inicioSent=false;save();});
+}
+const txt=k=>typeof S.a[k]==="string"?S.a[k].trim():"";
+const firstFull=k=>normName(txt(k));
+function beacon(){
+  if(S.finished||!S.inicioSent||!S.id||S.maxStep<=S.lastBeacon) return;
+  try{
+    const ok=navigator.sendBeacon&&navigator.sendBeacon("/forms/api/progresso",new Blob([JSON.stringify({id:S.id,step:S.maxStep,total:STEPS.length})],{type:"application/json"}));
+    if(ok){S.lastBeacon=S.maxStep;save();}
+  }catch(e){}
+}
+
+/* ---------- respostas ---------- */
+function fmt(f,val){
+  if(f.type==="checks"||f.type==="radio"){
+    const sel=(val&&val.sel)||[]; if(!sel.length) return "";
+    return sel.map(s=>SPEC.test(s)?`${s.replace(SPEC,"")}: ${val.other}`:s).join("; ");
+  }
+  if(f.type==="confirm") return val?"Confirmado":"";
+  return typeof val==="string"?val.trim():"";
+}
+function buildItems(){
+  collect();
+  const {map}=numbering(), items=[];
+  STEPS.forEach(s=>s.screens.forEach(sc=>sc.forEach(k=>{
+    if(k==="lp"){
+      if(S.lp.skip){items.push({sec:s.t,n:"LP",q:"Landing pages",a:"Ainda não vou contratar landing pages neste momento"});return;}
+      S.lp.items.forEach((it,i)=>{
+        const tema=fmt(LP_FIELDS[0],it.tema);
+        LP_FIELDS.forEach(lf=>{const a=fmt(lf,it[lf.k]);if(!a)return;
+          items.push({sec:s.t,n:`LP${i+1}.${lf.l}`,q:`Landing page ${i+1}${tema?" — "+tema:""}: ${lf.q}`,a});});
+      });
+      return;
+    }
+    if(!vis(k)) return;
+    const a=fmt(F[k],S.a[k]); if(!a) return;
+    items.push({sec:s.t,n:String(map[k]),q:F[k].q,a});
+  })));
+  return items;
+}
+function toText(items){
+  const out=[`BRIEFING — ${txt("negocio")||txt("nome")}`,`Nome: ${txt("nome")}`];
+  if(S.ref) out.push(`Origem: ${S.ref}`);
+  let last=null;
+  items.forEach(it=>{
+    if(it.sec!==last){out.push("",`== ${it.sec} ==`,"");last=it.sec;}
+    out.push(`${it.n}. ${it.q}`,"   "+it.a.split("\n").join("\n   "),"");
+  });
+  return out.join("\n");
+}
+
+/* ---------- envio ---------- */
+let sending=false,lastItems=[];
+async function submit(){
+  if(sending) return;
+  collect();
+  for(let i=0;i<SCREENS.length;i++){
+    const sc=SCREENS[i]; if(!screenVisible(sc)) continue;
+    const errs=validateScreen(sc,true);
+    if(errs.length){ if(sc.id!==S.cur) await showScreen(sc.id,{back:true}); const e2=validateScreen(sc); setTimeout(()=>focusError(e2[0].name),60); return; }
+  }
+  sending=true;
+  const btn=$("#next"),retry=$("#retry");
+  if(btn){btn.disabled=true;btn.firstElementChild.textContent="Enviando…";}
+  if(retry) retry.disabled=true;
+  const box=$("#sendError"); if(box) box.hidden=true;
+  S.a.nome=normName(S.a.nome||"");
+  const items=buildItems(); lastItems=items;
+  const ctrl=new AbortController(),to=setTimeout(()=>ctrl.abort(),20000);
+  try{
+    const res=await fetch("/forms/api/briefing",{method:"POST",headers:{"Content-Type":"application/json"},signal:ctrl.signal,
+      body:JSON.stringify({id:S.id,items,website:$("#website").value,ref:S.ref,started:S.startedAt,nome:txt("nome"),negocio:txt("negocio"),email:txt("email")})});
+    let data=null;try{data=await res.json();}catch(e){}
+    if(!res.ok||!data||data.ok!==true) throw new Error("fail");
+    S.finished=true; clearTimeout(saveT);
+    try{localStorage.removeItem(KEY);}catch(e){}
+    showDone(items);
+  }catch(e){
+    const b=$("#sendError"); if(b){b.hidden=false;b.scrollIntoView({behavior:reduce()?"auto":"smooth",block:"center"});}
+    const n=$("#next"); if(n){n.disabled=false;n.firstElementChild.textContent="Enviar briefing";}
+    const r=$("#retry"); if(r) r.disabled=false;
+  }finally{clearTimeout(to);sending=false;}
+}
+function showDone(items){
+  $("#app").hidden=true;$("#intro").hidden=true;$("#done").hidden=false;
+  const n=firstName();
+  $("#doneKicker").textContent=n?`tudo certo, ${n}`:"briefing enviado";
+  const by={}; items.forEach(it=>{(by[it.sec]=by[it.sec]||[]).push(it);});
+  $("#summary").innerHTML=Object.keys(by).map(sec=>`<h3>${esc(sec)}</h3><dl>${by[sec].map(it=>`<dt>${esc(it.n)}. ${esc(it.q)}</dt><dd>${esc(it.a)}</dd>`).join("")}</dl>`).join("");
+  window.scrollTo(0,0);
+  $("#doneTitle").focus({preventScroll:true});
+}
+function download(){
+  const text=toText(lastItems.length?lastItems:buildItems());
+  const slug=(txt("negocio")||"briefing").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"briefing";
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));
+  a.download=`briefing-${slug}.txt`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+async function copyAnswers(){
+  const text=toText(buildItems()),st=$("#copyStatus");
+  try{await navigator.clipboard.writeText(text);}
+  catch(e){
+    const ta=document.createElement("textarea");ta.value=text;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();
+    let ok=false;try{ok=document.execCommand("copy");}catch(_){}
+    ta.remove();
+    if(!ok){st.style.color="var(--err)";st.textContent="Não foi possível copiar automaticamente. Tente de novo ou use outro navegador.";return;}
+  }
+  st.style.color="";st.textContent="Respostas copiadas.";
+}
+
+/* ---------- eventos do formulário ---------- */
+function updateConsent(){
+  const c=$("#consent"); if(!c) return;
+  const ok=txt("nome")&&txt("negocio")&&txt("whatsapp").replace(/\D/g,"").length>=10&&EMAIL_RE.test(txt("email"));
+  c.hidden=!ok;
+}
+const stage=$("#stage");
+stage.addEventListener("input",e=>{
+  const t=e.target,w=t.closest&&t.closest("[data-name]");
+  if(w&&t.type!=="checkbox"&&t.type!=="radio") setError(w.dataset.name,"");
+  collect(); updateConsent(); scheduleSave();
+});
+stage.addEventListener("focusout",e=>{
+  if(e.target.name==="nome"){const v=normName(e.target.value);e.target.value=v;S.a.nome=v;}
+});
+stage.addEventListener("change",e=>{
+  const t=e.target,w=t.closest("[data-name]");
+  if(t.dataset&&t.dataset.specify){
+    const o=$(`[name="${t.name}__other"]`);
+    if(o){const any=$$(`input[name="${t.name}"]`).some(i=>i.dataset.specify&&i.checked);o.hidden=!any;if(any)o.focus();else{o.value="";o.removeAttribute("aria-invalid");}}
+  }else if(t.type==="radio"){
+    const o=$(`[name="${t.name}__other"]`); if(o){o.hidden=true;o.value="";}
+  }
+  if(t.type==="checkbox"&&w){
+    const f=F[w.dataset.key];
+    if(f&&f.max&&t.checked&&$$(`input[name="${t.name}"]:checked`).length>f.max){
+      t.checked=false;
+      const o=$(`[name="${t.name}__other"]`); if(o&&t.dataset.specify) o.hidden=true;
+      $(`#${t.name}__note`).textContent=`Você já escolheu ${f.max}. Desmarque uma para escolher outra.`;
+      return;
+    }
+    if(f&&f.max) $(`#${t.name}__note`).textContent="";
+  }
+  if(w) setError(w.dataset.name,"");
+  if(t.id==="lpSkip") $("#lpBody").hidden=t.checked;
+  collect(); applyConditions(); updateConsent(); updateBar(); scheduleSave();
+});
+stage.addEventListener("click",e=>{
+  const t=e.target;
+  if(t.closest("#next")) {go(1);return;}
+  if(t.closest("#back")) {go(-1);return;}
+  if(t.closest("#retry")){submit();return;}
+  if(t.closest("#copy")){copyAnswers();return;}
+  const rm=t.closest(".lp-remove");
+  if(rm){collect();if(S.lp.items.length>1){S.lp.items.splice(+rm.dataset.i,1);renderLp();save();updateBar();$("#lpAdd").focus();}return;}
+  if(t.closest("#lpAdd")){
+    collect();S.lp.items.push({});renderLp();save();updateBar();
+    const first=$(`#lp${S.lp.items.length-1}_tema`);if(first){first.scrollIntoView({behavior:reduce()?"auto":"smooth",block:"center"});first.focus({preventScroll:true});}
+  }
+});
+stage.addEventListener("submit",e=>e.preventDefault());
+document.addEventListener("keydown",e=>{
+  if($("#app").hidden||e.altKey||e.metaKey&&e.key!=="Enter") return;
+  const t=e.target,tag=t.tagName;
+  if(e.key==="Enter"){
+    if(tag==="TEXTAREA"&&!(e.ctrlKey||e.metaKey)) return;
+    if(tag==="BUTTON"&&!t.closest(".chip")) return; // deixa o botão focado agir
+    e.preventDefault(); go(1); return;
+  }
+  if((e.key==="ArrowRight"||e.key==="ArrowLeft")&&tag!=="INPUT"&&tag!=="TEXTAREA"&&tag!=="BUTTON"){e.preventDefault();go(e.key==="ArrowRight"?1:-1);}
+});
+$("#reset").addEventListener("click",()=>{
+  if(!confirm("Apagar as respostas salvas e recomeçar do zero?")) return;
+  try{localStorage.removeItem(KEY);}catch(e){}
+  location.reload();
+});
+$("#dl").addEventListener("click",download);
+$("#print").addEventListener("click",()=>window.print());
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden"){try{collect();save();}catch(e){}beacon();}});
+window.addEventListener("pagehide",()=>{try{collect();save();}catch(e){}beacon();});
+
+/* ---------- abertura ---------- */
+function renderIntro(){
+  const n=firstName(); const g=$("#greet");
+  if(n){g.textContent=`Olá, ${n}.`;g.hidden=false;}
+  $("#peekList").innerHTML=STEPS.map(s=>`<li>${esc(s.t)}</li>`).join("");
+  // pontos da órbita = etapas concluídas
+  const done=Math.max(0,SCREENS[idxOf(S.cur)].step);
+  $("#dots").innerHTML=STEPS.map((_,i)=>`<div class="pos d" style="--a:${i*45}deg"><i class="dot${i<done?" on":""}"></i></div>`).join("");
+  $("#startLabel").textContent=S.restored?"Continuar o briefing":"Começar o briefing";
+}
+$("#peekBtn").addEventListener("click",()=>{
+  const p=$("#peek"),open=p.hidden; p.hidden=!open; $("#peekBtn").setAttribute("aria-expanded",String(open));
+});
+async function enter(){
+  if(!S.id) S.id=newId();
+  if(!S.startedAt) S.startedAt=Date.now();
+  const intro=$("#intro"); intro.classList.add("leaving"); await wait(380);
+  intro.hidden=true; $("#app").hidden=false; window.scrollTo(0,0);
+  if(S.restored) $("#resume").hidden=false;
+  await showScreen(visibleStart(),{first:true,focus:true});
+  requestAnimationFrame(()=>$("#app").classList.add("show"));
+  if(reduce()) $("#app").classList.add("show");
+}
+function visibleStart(){
+  let i=idxOf(S.cur); if(!screenVisible(SCREENS[i])){const n=nextIdx(i);i=n>=0?n:0;}
+  return SCREENS[i].id;
+}
+$("#start").addEventListener("click",enter);
+$("#year").textContent=new Date().getFullYear();
+
+// revelação ao rolar
+(function(){
+  const els=$$(".reveal");
+  if(!("IntersectionObserver" in window)||reduce()){els.forEach(e=>e.classList.add("in"));return;}
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}}),{threshold:.2});
+  els.forEach(e=>io.observe(e));
+})();
+
+/* ---------- início ---------- */
+load();
+readUrl();
+if(!SCREENS.some(s=>s.id===S.cur)) S.cur=SCREENS[0].id;
+renderIntro();
+})();
+</script>
+</body>
+</html>
