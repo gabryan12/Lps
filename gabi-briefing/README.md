@@ -1,6 +1,6 @@
 # Briefing do site — Gabriel Diniz Tráfego
 
-Página de briefing para escritórios de advocacia (gabrieldiniztrafego.com.br). O cliente preenche um formulário em 7 etapas e as respostas chegam por e-mail em `sagatrafego@gmail.com`.
+Página de briefing para clientes de qualquer segmento (gabrieldiniztrafego.com.br). O cliente digita o nome logo na abertura, e ele é repetido nas orientações para o projeto parecer exclusivo. O formulário tem 9 etapas e as respostas chegam por e-mail em `sagatrafego@gmail.com`.
 
 ```
 public/index.html   a página inteira (HTML, CSS e JS)

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Briefing do site | Gabriel Diniz Tráfego</title>
-<meta name="description" content="Formulário de briefing para o site institucional e as landing pages do escritório.">
+<title>Briefing do projeto | Gabriel Diniz Tráfego</title>
+<meta name="description" content="Formulário para captar as informações do seu projeto: site e landing pages feitos sob medida.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#04060C">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304060C'/%3E%3Crect x='3' y='3' width='58' height='58' rx='11' fill='none' stroke='%232F6BFF' stroke-width='3'/%3E%3Cpath d='M41 25a11 11 0 1 0 0 14v-7H32' fill='none' stroke='%235B9BFF' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -48,12 +48,19 @@ a{color:var(--blue-2)}
   content:"";position:absolute;left:50%;top:-120px;width:min(1000px,140vw);aspect-ratio:1.6;transform:translateX(-50%);z-index:-1;
   background:radial-gradient(closest-side,rgba(47,107,255,.34),rgba(47,107,255,.10) 55%,transparent 75%);filter:blur(10px);
 }
-.hero h1{font-size:clamp(2.25rem,6.6vw,4.4rem);font-weight:700;max-width:15ch;text-wrap:balance}
+.hero h1{font-size:clamp(2.1rem,6vw,3.9rem);font-weight:700;max-width:19ch;text-wrap:balance}
 .hero .lead{margin-top:22px;max-width:52ch;font-size:clamp(1.05rem,2.2vw,1.2rem);color:var(--muted)}
-.hero .actions{margin-top:34px}
+.gate{margin-top:34px;max-width:560px;padding:22px;border:1px solid var(--line-2);border-radius:18px;background:linear-gradient(180deg,rgba(13,20,38,.92),rgba(9,14,27,.92));box-shadow:0 24px 60px -30px rgba(47,107,255,.6)}
+.gate label{display:block;font:600 1.05rem var(--font-title);margin-bottom:12px}
+.gate-row{display:flex;gap:10px}
+.gate-row input{flex:1;min-width:0;font-size:1.05rem;padding:14px 16px}
+.gate-row .btn{white-space:nowrap}
+.gate .hint{margin:12px 0 0}
+.gate .welcome{margin-top:12px;color:var(--blue-2);font-weight:500}
+.gate .welcome:empty{display:none}
 .hero>.wrap>*{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
 .hero>.wrap>.lead{animation-delay:.12s}
-.hero>.wrap>.actions{animation-delay:.24s}
+.hero>.wrap>.gate{animation-delay:.24s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* botões */
@@ -158,6 +165,8 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);f
 footer .wrap{display:grid;gap:6px}
 
 @media (max-width:760px){
+  .gate-row{flex-direction:column}
+  .gate-row .btn{width:100%}
   .benefits,.steps{grid-template-columns:1fr}
   .steps li{padding-right:0}
   .nav{flex-direction:row}
@@ -170,7 +179,7 @@ footer .wrap{display:grid;gap:6px}
 </style>
 </head>
 <body>
-<a class="skip" href="#briefing">Ir para o formulário</a>
+<a class="skip" href="#heroNome">Ir para o início do formulário</a>
 
 <header class="top"><div class="wrap">
   <span class="brand">
@@ -181,34 +190,43 @@ footer .wrap{display:grid;gap:6px}
 
 <main>
 <section class="hero" aria-labelledby="h-hero"><div class="wrap">
-  <h1 id="h-hero">Conte sobre o escritório. O site é com a gente.</h1>
-  <p class="lead">Um único formulário, em sete etapas curtas. Com as respostas, montamos a estrutura do site institucional e das landing pages.</p>
-  <div class="actions"><a class="btn btn-primary" href="#briefing" id="start">Começar briefing</a></div>
+  <h1 id="h-hero" data-t="{n}, conte sobre o seu negócio. Vamos construir algo só seu."></h1>
+  <p class="lead" data-t="{n}, este é um formulário para reunir as informações do seu projeto. Com elas, criamos um site e landing pages exclusivos, feitos sob medida para você, sem modelo pronto."></p>
+  <div class="gate">
+    <label for="heroNome">Antes de tudo, como podemos chamar você?</label>
+    <div class="gate-row">
+      <input type="text" id="heroNome" autocomplete="given-name" maxlength="120" placeholder="Digite o seu nome" aria-describedby="nomeHint nomeErr">
+      <button type="button" class="btn btn-primary" id="start">Começar briefing</button>
+    </div>
+    <p class="err" id="nomeErr" aria-live="polite"></p>
+    <p class="welcome" id="welcome" aria-live="polite" data-t="Prazer, {n}! A partir daqui, tudo será pensado só para o seu projeto."></p>
+    <p class="hint" id="nomeHint">Vamos usar o seu nome ao longo do formulário para deixar claro que este projeto é só seu.</p>
+  </div>
 </div></section>
 
 <section class="wrap" aria-label="Vantagens">
   <div class="benefits">
     <div class="benefit">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <h3>Cerca de 20 a 30 minutos</h3><p>Perguntas diretas, pensadas para quem tem a agenda cheia.</p>
+      <h3>Cerca de 25 a 35 minutos</h3><p data-t="{n}, responda no seu ritmo. Cada etapa leva poucos minutos."></p>
     </div>
     <div class="benefit">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg>
-      <h3>Salva automaticamente, continue depois</h3><p>Feche a página quando quiser. Suas respostas ficam neste navegador.</p>
+      <h3>Salva automaticamente, continue depois</h3><p data-t="Feche a página quando quiser, {n}. Suas respostas ficam neste navegador."></p>
     </div>
     <div class="benefit">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg>
-      <h3>Sem termos técnicos</h3><p>Linguagem simples. Quando algo for técnico, explicamos.</p>
+      <h3>Sem termos técnicos</h3><p data-t="Linguagem simples. Se algo for técnico, explicamos, {n}."></p>
     </div>
   </div>
 </section>
 
 <section class="wrap how" aria-labelledby="h-how">
-  <h2 class="section-title" id="h-how">Como funciona</h2>
+  <h2 class="section-title" id="h-how" data-t="Como vai funcionar o projeto de {n}"></h2>
   <ol class="steps">
-    <li><strong>Preencha o briefing</strong><span>Responda uma etapa por vez, no seu ritmo.</span></li>
-    <li><strong>Analisamos as respostas</strong><span>Lemos tudo e identificamos o que falta definir.</span></li>
-    <li><strong>Montamos a estrutura do site</strong><span>Organizamos páginas e seções antes de começar o visual.</span></li>
+    <li><strong data-t="{n} preenche o briefing"></strong><span>Uma etapa por vez, no seu ritmo. Quanto mais detalhes, mais exclusivo fica o resultado.</span></li>
+    <li><strong>Analisamos o seu caso</strong><span data-t="Lemos tudo com atenção e identificamos o que é específico do negócio de {n}."></span></li>
+    <li><strong>Montamos o seu projeto</strong><span data-t="Organizamos páginas, textos e estrutura pensando só em {n}, antes de começar o visual."></span></li>
   </ol>
 </section>
 
@@ -216,8 +234,8 @@ footer .wrap{display:grid;gap:6px}
   <aside class="notice" role="note" aria-labelledby="h-sigilo">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9-4.8-1.2-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
     <div>
-      <h2 id="h-sigilo">Sigilo profissional em primeiro lugar</h2>
-      <p>Não informe nomes de clientes, números de processos, senhas ou informações protegidas por sigilo profissional. Se algo ainda não estiver definido, responda “a definir”.</p>
+      <h2 id="h-sigilo">Cuide dos dados sensíveis</h2>
+      <p data-t="{n}, não informe senhas, nem dados pessoais de terceiros (clientes, pacientes, alunos) ou informações protegidas por sigilo profissional. Se algo ainda não estiver definido, responda “a definir”."></p>
     </div>
   </aside>
 </div>
@@ -225,17 +243,17 @@ footer .wrap{display:grid;gap:6px}
 <section class="wrap form-area" id="briefing" aria-label="Formulário de briefing" tabindex="-1">
   <div class="card" id="card">
     <div class="progress">
-      <div class="progress-row"><b id="stepLabel">Etapa 1 de 7</b><span id="stepName"></span></div>
-      <div class="track" role="progressbar" aria-label="Progresso do briefing" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1" id="track"><div class="bar" id="bar"></div></div>
+      <div class="progress-row"><b id="stepLabel">Etapa 1</b><span id="stepName"></span></div>
+      <div class="track" role="progressbar" aria-label="Progresso do briefing" aria-valuemin="1" aria-valuemax="9" aria-valuenow="1" id="track"><div class="bar" id="bar"></div></div>
     </div>
-    <div class="resume" id="resume" hidden>Retomamos de onde você parou. <button type="button" id="reset">Limpar e recomeçar</button></div>
+    <div class="resume" id="resume" hidden><span data-t="Retomamos de onde você parou, {n}."></span> <button type="button" id="reset">Limpar e recomeçar</button></div>
 
     <form id="form" novalidate autocomplete="on">
       <div class="hp" aria-hidden="true"><label>Não preencha este campo<input type="text" name="website" id="website" tabindex="-1" autocomplete="off"></label></div>
       <div id="panels"></div>
 
       <div class="send-error" id="sendError" role="alert" hidden>
-        <p>Não foi possível enviar agora. Suas respostas continuam salvas neste navegador. Tente novamente em instantes ou copie as respostas para enviar de outra forma.</p>
+        <p data-t="{n}, não foi possível enviar agora. Suas respostas continuam salvas neste navegador. Tente novamente em instantes ou copie as respostas para enviar de outra forma."></p>
         <div class="row">
           <button type="button" class="btn btn-primary btn-sm" id="retry">Tentar novamente</button>
           <button type="button" class="btn btn-ghost btn-sm" id="copy">Copiar respostas</button>
@@ -251,8 +269,8 @@ footer .wrap{display:grid;gap:6px}
 
     <div class="done" id="done" hidden>
       <div class="check"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-      <h2 id="doneTitle" tabindex="-1">Recebemos suas informações!</h2>
-      <p>Vamos analisar as respostas e organizar a estrutura do site e das landing pages. Se precisarmos confirmar algum conteúdo, material ou detalhe técnico, entraremos em contato pelo WhatsApp informado.</p>
+      <h2 id="doneTitle" tabindex="-1" data-t="{n}, recebemos suas informações!"></h2>
+      <p data-t="Vamos analisar as respostas e organizar a estrutura do site e das landing pages do seu projeto. Se precisarmos confirmar algum conteúdo, material ou detalhe técnico, entraremos em contato pelo WhatsApp informado."></p>
     </div>
   </div>
 </section>
@@ -260,9 +278,8 @@ footer .wrap{display:grid;gap:6px}
 
 <footer><div class="wrap">
   <p>© <span id="year">2026</span> Gabriel Diniz Tráfego</p>
-  <p>Privacidade: os dados enviados são usados somente para o desenvolvimento do seu projeto.</p>
+  <p data-t="Privacidade: os dados enviados são usados somente para o desenvolvimento do projeto de {n}."></p>
 </div></footer>
-
 <script>
 (function(){
 "use strict";
@@ -272,67 +289,112 @@ const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.quer
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const SPEC=/\s*\(especificar\)/;
 const reduce=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const KEY="gdt-briefing-v1";
+const KEY="gdt-briefing-v2";
+
+/* ---------- personalização com o nome ---------- */
+function firstName(){
+  const v=((S.a.nome)||"").trim(); if(!v) return "";
+  const t=v.split(/\s+/); let n=t[0];
+  if(/\.$/.test(n)&&t[1]) n+=" "+t[1];
+  return n.charAt(0).toUpperCase()+n.slice(1);
+}
+// {n} = primeiro nome. Sem nome, a frase continua natural (sem o nome).
+function fill(t){
+  const n=firstName();
+  if(n) return t.replace(/\{n\}/g,n);
+  return t.replace(/^\{n\},\s*(\S)/,(m,c)=>c.toUpperCase()).replace(/,?\s*\{n\}/g,"");
+}
+function renderNames(){
+  $$("[data-t]").forEach(el=>{el.textContent=fill(el.dataset.t);});
+  $("#welcome").textContent=firstName()?fill($("#welcome").dataset.t):"";
+}
 
 /* ---------- definição do formulário ---------- */
-const AREAS=["Direito Civil","Direito de Família e Sucessões","Direito Trabalhista","Direito Previdenciário","Direito Empresarial","Direito Tributário","Direito do Consumidor","Direito Imobiliário","Direito Criminal","Direito Médico e da Saúde","Outra (especificar)"];
+const OUTRA="Outra (especificar)", OUTRO="Outro (especificar)";
+const YNN=["Sim","Não","Não sei"];
 const STEPS=[
- {title:"Sobre o escritório",fields:[
-  {id:"q1",n:1,q:"Nome do escritório",type:"text",req:1,auto:"organization"},
-  {id:"q2",n:2,q:"Nome e cargo do responsável pelo projeto",type:"text",req:1,hint:"Ex.: Maria Souza, sócia",auto:"name"},
-  {id:"q3",n:3,q:"WhatsApp do responsável",type:"tel",req:1,hint:"Com DDD.",auto:"tel"},
-  {id:"q4",n:4,q:"E-mail do responsável",type:"email",req:1,auto:"email"},
-  {id:"q5",n:5,q:"Em quais áreas do Direito o escritório atua?",type:"checks",req:1,options:AREAS},
-  {id:"q6",n:6,q:"Quais áreas devem ter mais destaque no site?",type:"textarea",req:1,hint:"Indique prioridades e, se possível, a ordem de importância."},
-  {id:"q7",n:7,q:"Em quais cidades ou regiões o escritório atende?",type:"text",req:1,hint:"Informe também se atende on-line."},
-  {id:"q8",n:8,q:"Quais profissionais devem aparecer no site?",type:"textarea",req:1,hint:"Nome completo, função, área de atuação e número da OAB com UF. Biografias e fotos podem ser enviadas depois."}
+ {title:"Você e o seu negócio",intro:"{n}, vamos começar por quem você é e pelo que o seu negócio faz.",fields:[
+  {id:"nome",q:"Seu nome",type:"text",req:1,auto:"name",hint:"Pode escrever o nome completo. Nas orientações usamos só o primeiro nome."},
+  {id:"negocio",q:"Nome do negócio, marca ou projeto",type:"text",req:1,auto:"organization",hint:"Se ainda não tem nome definido, escreva “a definir”."},
+  {id:"whatsapp",q:"Seu WhatsApp",type:"tel",req:1,auto:"tel",hint:"Com DDD. É por ele que vamos falar com você, {n}."},
+  {id:"email",q:"Seu e-mail",type:"email",req:1,auto:"email"},
+  {id:"segmento",q:"Qual é o segmento ou ramo de atuação?",type:"text",req:1,hint:"Ex.: odontologia, advocacia, restaurante, loja de roupas, consultoria, escola, indústria."},
+  {id:"descricao",q:"Em poucas palavras, o que o seu negócio faz?",type:"textarea",req:1,hint:"Como você explicaria para alguém que não o conhece."},
+  {id:"tempo",q:"Há quanto tempo o negócio existe?",type:"radio",req:1,options:["Ainda vai começar","Menos de 1 ano","De 1 a 3 anos","De 3 a 10 anos","Mais de 10 anos"]},
+  {id:"modelo",q:"Como o negócio atende os clientes?",type:"checks",req:1,options:["Presencial, em um local físico","Na casa ou no local do cliente","On-line","Por entrega ou envio",OUTRO]},
+  {id:"regiao",q:"Em quais cidades ou regiões o negócio atende?",type:"text",req:1,hint:"Se atende o Brasil todo ou só on-line, escreva isso."},
+  {id:"equipe",q:"Quem faz parte do negócio e deve aparecer no projeto?",type:"textarea",hint:"Nome, função e uma breve descrição. Fotos e biografias podem ser enviadas depois."}
  ]},
- {title:"Público e posicionamento",fields:[
-  {id:"q9",n:9,q:"Quem o escritório deseja alcançar prioritariamente?",type:"textarea",req:1,hint:"Ex.: pessoas físicas, empresas, profissionais de um segmento, público de uma região."},
-  {id:"q10",n:10,q:"Quais necessidades ou situações levam esse público a procurar o escritório?",type:"textarea",req:1,hint:"Descreva de forma geral, sem casos identificáveis."},
-  {id:"q11",n:11,q:"Como o escritório deseja ser percebido?",type:"checks",req:1,max:3,hint:"Escolha até 3 opções.",options:["Técnico e especializado","Confiável e transparente","Acolhedor e próximo","Tradicional e institucional","Moderno e acessível","Sofisticado e discreto","Didático e objetivo","Outra (especificar)"]},
-  {id:"q12",n:12,q:"Quais características do escritório ou da atuação importa apresentar?",type:"textarea",req:1,hint:"Ex.: trajetória, formação, especializações, estrutura, forma de trabalho. Apenas dados verificáveis e que possam ser divulgados."},
-  {id:"q13",n:13,q:"Quais dúvidas o público costuma ter antes de contratar um advogado?",type:"textarea",hint:"Perguntas que o escritório recebe com frequência. Serão usadas em seções de perguntas frequentes. Sem casos identificáveis."},
-  {id:"q14",n:14,q:"Existe algo que NÃO deve aparecer no site?",type:"textarea",hint:"Temas, termos ou estilos de comunicação a evitar."},
-  {id:"q15",n:15,q:"Há alguma mensagem ou orientação que precisa aparecer no site?",type:"textarea"}
+ {title:"Produtos e serviços",intro:"{n}, aqui queremos entender o que você oferece e por que escolhem o seu negócio.",fields:[
+  {id:"ofertas",q:"Quais são os principais produtos ou serviços?",type:"textarea",req:1},
+  {id:"destaque",q:"Quais deles devem ter mais destaque?",type:"textarea",req:1,hint:"Os que dão mais retorno ou que você mais quer vender. Se puder, indique a ordem."},
+  {id:"precos",q:"Como funcionam os preços ou o orçamento?",type:"textarea",hint:"Pode ser uma faixa, “sob consulta”, planos. Só publicamos o que você autorizar."},
+  {id:"diferenciais",q:"O que diferencia o seu negócio dos concorrentes?",type:"textarea",req:1},
+  {id:"concorrentes",q:"Quem são os principais concorrentes ou referências do mercado?",type:"textarea",hint:"Nomes ou links."},
+  {id:"provas",q:"O que o negócio tem para gerar confiança?",type:"checks",hint:"Apenas o que você pode divulgar.",options:["Depoimentos de clientes","Cases ou trabalhos realizados","Certificações ou registros profissionais","Prêmios ou reconhecimentos","Números (clientes atendidos, anos de mercado)","Parcerias ou marcas atendidas","Presença na imprensa","Ainda não tenho",OUTRA]}
  ]},
- {title:"Site institucional",fields:[
-  {id:"q16",n:16,q:"O escritório já possui um site?",type:"radio",req:1,options:["Sim — queremos reformular","Sim — queremos atualizar ou ampliar","Não — será desenvolvido do zero"]},
-  {id:"q17",n:17,q:"Qual é o endereço do site atual?",type:"text",show:a=>/^Sim/.test(a.q16||""),inputmode:"url"},
-  {id:"q18",n:18,q:"Quais páginas ou seções devem fazer parte do novo site?",type:"checks",req:1,options:["Página inicial","Sobre o escritório","Áreas de atuação","Página individual dos profissionais","Artigos ou conteúdos informativos","Contato e localização","Perguntas frequentes","Política de privacidade","Outra (especificar)"]},
-  {id:"q19",n:19,q:"Algum site de referência cuja organização ou visual agrade?",type:"textarea",hint:"Links e o que chamou atenção. Servem de inspiração, não de cópia."},
-  {id:"q20",n:20,q:"Quais canais de contato devem estar no site?",type:"checks",req:1,options:["WhatsApp","Telefone","E-mail","Formulário de contato","Endereço e mapa","Outro (especificar)"]},
-  {id:"q21",n:21,q:"Quais dados de contato devem aparecer no site?",type:"textarea",req:1,hint:"Razão social e CNPJ, endereço completo, telefone, e-mail público, horário de atendimento."},
-  {id:"q22",n:22,q:"Links das redes sociais e do Google Meu Negócio, se houver",type:"textarea"},
-  {id:"q23",n:23,q:"Quem responde pela proteção de dados (LGPD) no escritório?",type:"text",hint:"Será usado na Política de Privacidade. Se não souber, escreva “não sei”."}
+ {title:"Público e posicionamento",intro:"{n}, vamos definir com quem o seu projeto vai conversar.",fields:[
+  {id:"publico",q:"Quem você deseja alcançar prioritariamente?",type:"textarea",req:1,hint:"Perfil, idade, profissão, tipo de empresa, região. Quanto mais específico, melhor."},
+  {id:"necessidade",q:"Quais necessidades ou situações levam essas pessoas a procurar o seu negócio?",type:"textarea",req:1,hint:"Descreva de forma geral, sem casos identificáveis."},
+  {id:"duvidas",q:"Quais dúvidas ou receios elas costumam ter antes de contratar ou comprar?",type:"textarea",hint:"Serão usados em seções de perguntas frequentes."},
+  {id:"percepcao",q:"Como o seu negócio deve ser percebido?",type:"checks",req:1,max:3,hint:"Escolha até 3 opções.",options:["Profissional e confiável","Moderno e inovador","Acolhedor e próximo","Premium e sofisticado","Jovem e descontraído","Tradicional e sólido","Técnico e especializado","Simples e direto",OUTRA]},
+  {id:"tom",q:"Qual tom de voz combina com o negócio?",type:"radio",req:1,options:["Formal e sério","Equilibrado: profissional e próximo","Descontraído e informal"]},
+  {id:"mensagem",q:"Qual é a principal mensagem que o visitante deve levar do projeto?",type:"textarea"},
+  {id:"evitar",q:"Existe algo que NÃO deve aparecer no projeto?",type:"textarea",hint:"Temas, termos, estilos de comunicação ou imagens a evitar."},
+  {id:"obrigatorio",q:"Há alguma informação obrigatória, como avisos legais ou registros profissionais?",type:"textarea",hint:"Alguns segmentos exigem textos específicos. Se não souber, escreva “não sei”."}
  ]},
- {title:"Landing pages",intro:"Uma landing page é uma página focada em um único serviço, feita para levar o visitante a entrar em contato.",fields:[{id:"lp",type:"landing"}]},
- {title:"Identidade visual e materiais",fields:[
-  {id:"q24",n:24,q:"Quais materiais o escritório já possui e pode disponibilizar?",type:"checks",req:1,options:["Logotipo em boa resolução","Manual ou arquivos da identidade visual","Fotos profissionais do escritório","Fotos profissionais dos advogados","Biografias e currículos dos profissionais","Textos institucionais","Textos sobre as áreas de atuação","Artigos ou conteúdos já publicados","Vídeos institucionais","Ainda precisamos produzir ou organizar os materiais","Outro (especificar)"]},
-  {id:"q25",n:25,q:"Existe alguma preferência visual ou algo a evitar?",type:"textarea",hint:"Cores, estilo, imagens, símbolos."},
-  {id:"q26",n:26,q:"Onde estão os materiais?",type:"text",hint:"Link de pasta compartilhada. Não envie senhas nem documentos de clientes.",inputmode:"url"}
+ {title:"Objetivo e divulgação",intro:"{n}, aqui você conta o que espera do projeto e como pretende divulgá-lo.",fields:[
+  {id:"objetivos",q:"O que você quer que o site e as landing pages façam pelo negócio?",type:"checks",req:1,options:["Receber contatos pelo WhatsApp","Receber ligações","Captar contatos por formulário","Agendar horários ou reuniões","Vender on-line","Apresentar o negócio e ganhar credibilidade","Divulgar um lançamento ou campanha","Recrutar pessoas",OUTRO]},
+  {id:"meta",q:"Qual resultado mensal você gostaria de alcançar?",type:"text",hint:"Ex.: 30 contatos, 10 vendas, 15 agendamentos. “Não sei” é aceito."},
+  {id:"pos_contato",q:"O que acontece depois que alguém entra em contato?",type:"textarea",hint:"Quem responde, em quanto tempo e como o atendimento segue."},
+  {id:"anuncios",q:"Você pretende divulgar com anúncios pagos?",type:"radio",req:1,options:["Sim, já anuncio","Sim, quero começar","Não por enquanto","Não sei, preciso de orientação"]},
+  {id:"plataformas",q:"Em quais plataformas?",type:"checks",show:a=>/^Sim/.test(a.anuncios||""),options:["Google (pesquisa e Maps)","Instagram e Facebook","TikTok","YouTube","LinkedIn","Ainda não sei",OUTRA]},
+  {id:"verba",q:"Qual valor mensal pretende investir em anúncios?",type:"text",show:a=>/^Sim/.test(a.anuncios||""),hint:"Uma faixa aproximada. “Ainda não sei” é aceito."},
+  {id:"anuncios_antes",q:"Como foram os anúncios até agora?",type:"textarea",show:a=>/^Sim, já/.test(a.anuncios||""),hint:"O que funcionou, o que não funcionou e quem cuidava deles."}
  ]},
- {title:"Estrutura técnica",intro:"Pode responder em linguagem simples. Se não souber, “não sei” é uma resposta válida.",fields:[
-  {id:"q27",n:27,q:"O escritório já tem domínio (o endereço do site, como seuescritorio.com.br)?",type:"radio",req:1,options:["Sim","Não","Não sei"]},
-  {id:"q28",n:28,q:"Qual é o domínio, ou qual gostaria de usar?",type:"text"},
-  {id:"q29",n:29,q:"Quer e-mails profissionais no domínio (ex.: nome@seuescritorio.com.br)?",type:"radio",options:["Sim","Não","Não sei"]},
-  {id:"q30",n:30,q:"Quem cuida hoje do domínio, do site e das ferramentas digitais?",type:"text",hint:"Pessoa ou empresa. “Não sei” é aceito. Não envie senhas: os acessos serão combinados de forma segura."},
-  {id:"q31",n:31,q:"Alguma ferramenta que deva ser ligada ao site?",type:"checks",options:["Sistema onde guarda contatos de clientes (CRM)","Agenda ou sistema de agendamento","WhatsApp Business","Ferramenta de e-mail","Não há nada previsto","Não sei, preciso de orientação","Outro (especificar)"]},
-  {id:"q32",n:32,q:"Quer acompanhar quantas pessoas visitam as páginas e quantas entram em contato?",type:"radio",req:1,options:["Sim, queremos acompanhar","Já usamos alguma ferramenta para isso","Não sei, preciso de orientação"]}
+ {title:"Site",intro:"{n}, vamos organizar o site do seu negócio.",fields:[
+  {id:"site",q:"O negócio já possui um site?",type:"radio",req:1,options:["Sim — queremos reformular","Sim — queremos atualizar ou ampliar","Não — será desenvolvido do zero"]},
+  {id:"site_url",q:"Qual é o endereço do site atual?",type:"text",show:a=>/^Sim/.test(a.site||""),inputmode:"url"},
+  {id:"paginas",q:"Quais páginas ou seções devem fazer parte do novo site?",type:"checks",req:1,options:["Página inicial","Sobre o negócio","Produtos ou serviços","Equipe","Portfólio ou cases","Depoimentos","Blog ou conteúdos informativos","Perguntas frequentes","Contato e localização","Loja virtual","Política de privacidade",OUTRA]},
+  {id:"canais",q:"Quais canais de contato devem estar no site?",type:"checks",req:1,options:["WhatsApp","Telefone","E-mail","Formulário de contato","Endereço e mapa",OUTRO]},
+  {id:"contato_dados",q:"Quais dados de contato devem aparecer?",type:"textarea",req:1,hint:"Razão social e CNPJ, endereço completo, telefone, e-mail público, horário de atendimento."},
+  {id:"redes",q:"Links das redes sociais e do Google Meu Negócio, se houver",type:"textarea"},
+  {id:"idiomas",q:"O site precisa estar em outros idiomas?",type:"radio",options:["Só em português","Português e inglês","Outro idioma (informe nas observações)"]},
+  {id:"lgpd",q:"Quem responde pela proteção de dados (LGPD) no negócio?",type:"text",hint:"Será usado na Política de Privacidade. Se não souber, escreva “não sei”."}
  ]},
- {title:"Finalização",fields:[
-  {id:"q33",n:33,q:"Quem vai fornecer e validar as informações institucionais e jurídicas?",type:"text",req:1,hint:"Nome, função e contato. Se for a mesma pessoa do início, escreva “o mesmo”."},
-  {id:"q34",n:34,q:"Qual o prazo ou data desejada para publicação?",type:"text",req:1,hint:"Se houver datas diferentes por página, informe nas observações."},
-  {id:"q35",n:35,q:"Alguma observação importante que não foi contemplada?",type:"textarea"},
-  {id:"q36",n:36,q:"Confirmo que não incluí nomes de clientes, números de processos, senhas ou informações protegidas por sigilo profissional, e autorizo o uso destas informações para o desenvolvimento do site e das landing pages.",type:"confirm",req:1}
+ {title:"Landing pages",intro:"{n}, uma landing page é uma página focada em uma única oferta, feita para levar o visitante a entrar em contato ou comprar.",fields:[{id:"lp",type:"landing"}]},
+ {title:"Identidade visual e materiais",intro:"{n}, aqui reunimos o que já existe e o que você gosta visualmente.",fields:[
+  {id:"materiais",q:"Quais materiais o negócio já possui e pode disponibilizar?",type:"checks",req:1,options:["Logotipo em boa resolução","Manual ou arquivos da identidade visual","Fotos profissionais do negócio ou dos produtos","Fotos profissionais da equipe","Vídeos institucionais","Textos institucionais","Textos sobre produtos ou serviços","Depoimentos de clientes","Catálogo, cardápio ou tabela de preços","Cases ou portfólio","Ainda precisamos produzir ou organizar os materiais",OUTRO]},
+  {id:"cores",q:"Quais são as cores da marca, se houver?",type:"text",hint:"Nomes das cores ou códigos, como #2F6BFF."},
+  {id:"estilo",q:"Como você imagina o visual do projeto?",type:"textarea",hint:"Cores, estilo, imagens, símbolos. O que você gosta e o que prefere evitar."},
+  {id:"ref_visual",q:"Algum site ou marca cujo visual ou organização agrade?",type:"textarea",hint:"Links e o que chamou a atenção. Servem de inspiração, não de cópia."},
+  {id:"materiais_link",q:"Onde estão os materiais?",type:"text",hint:"Link de pasta compartilhada. Não envie senhas nem documentos de terceiros.",inputmode:"url"}
+ ]},
+ {title:"Estrutura técnica",intro:"{n}, pode responder em linguagem simples. “Não sei” é uma resposta válida.",fields:[
+  {id:"dominio_tem",q:"O negócio já tem domínio (o endereço do site, como seunegocio.com.br)?",type:"radio",req:1,options:YNN},
+  {id:"dominio",q:"Qual é o domínio, ou qual gostaria de usar?",type:"text"},
+  {id:"emails_prof",q:"Quer e-mails profissionais no domínio (ex.: nome@seunegocio.com.br)?",type:"radio",options:YNN},
+  {id:"resp_tec",q:"Quem cuida hoje do domínio, do site e das ferramentas digitais?",type:"text",hint:"Pessoa ou empresa. “Não sei” é aceito. Não envie senhas: os acessos serão combinados de forma segura."},
+  {id:"ferramentas",q:"Alguma ferramenta que deva ser ligada ao site?",type:"checks",options:["Sistema de contatos de clientes (CRM)","Agenda ou sistema de agendamento","WhatsApp Business","Ferramenta de e-mail marketing","Meio de pagamento ou loja on-line","Sistema de gestão do negócio","Não há nada previsto","Não sei, preciso de orientação",OUTRA]},
+  {id:"metricas",q:"Quer acompanhar quantas pessoas visitam as páginas e quantas entram em contato?",type:"radio",req:1,options:["Sim, queremos acompanhar","Já usamos alguma ferramenta para isso","Não sei, preciso de orientação"]}
+ ]},
+ {title:"Finalização",intro:"{n}, falta pouco! Só mais alguns detalhes.",fields:[
+  {id:"validador",q:"Quem vai fornecer e validar as informações do negócio?",type:"text",req:1,hint:"Nome, função e contato. Se for você mesmo, escreva “sou eu”."},
+  {id:"prazo",q:"Qual o prazo ou data desejada para publicação?",type:"text",req:1,hint:"Se houver datas diferentes por página, informe nas observações."},
+  {id:"obs",q:"Alguma observação importante que não foi contemplada?",type:"textarea"},
+  {id:"confirma",q:"Confirmo que não incluí senhas, dados pessoais de terceiros ou informações confidenciais, e autorizo o uso destas informações para o desenvolvimento do site e das landing pages.",type:"confirm",req:1}
  ]}
 ];
+// numeração sequencial das perguntas
+(function(){let c=0;STEPS.forEach(s=>s.fields.forEach(f=>{if(f.type!=="landing") f.n=++c;}));})();
+const ALL=STEPS.flatMap(s=>s.fields);
 const LP_FIELDS=[
- {k:"tema",l:"a",q:"Tema ou serviço jurídico desta página",type:"text",req:1,hint:"Ex.: Direito Empresarial"},
- {k:"publico",l:"b",q:"Quem a página quer alcançar e qual necessidade jurídica ela aborda?",type:"textarea",req:1,hint:"Sem clientes ou casos identificáveis."},
- {k:"acao",l:"c",q:"Qual ação o visitante deve realizar?",type:"checks",req:1,options:["Entrar em contato pelo WhatsApp","Preencher um formulário","Solicitar um agendamento","Ligar para o escritório","Outra (especificar)"]},
- {k:"info",l:"d",q:"Há informações específicas para esta página?",type:"textarea",hint:"Ex.: etapas gerais do atendimento, dúvidas frequentes sobre o serviço. O conteúdo jurídico será validado pelo advogado responsável."},
- {k:"destino",l:"e",q:"Para onde os contatos desta página devem ir?",type:"text",req:1,hint:"WhatsApp, e-mail, agenda ou sistema. Informe número ou endereço."}
+ {k:"tema",l:"a",q:"Produto, serviço ou oferta desta página",type:"text",req:1,hint:"Ex.: clareamento dental, consultoria tributária, plano anual."},
+ {k:"publico",l:"b",q:"Quem a página quer alcançar e qual necessidade ou desejo ela atende?",type:"textarea",req:1,hint:"Sem pessoas ou casos identificáveis."},
+ {k:"oferta",l:"c",q:"Qual é a oferta ou o principal benefício?",type:"textarea",hint:"O que faz a pessoa agir: condição especial, avaliação gratuita, prazo, garantia."},
+ {k:"acao",l:"d",q:"Qual ação o visitante deve realizar?",type:"checks",req:1,options:["Entrar em contato pelo WhatsApp","Preencher um formulário","Solicitar um agendamento","Ligar para o negócio","Comprar on-line","Baixar um material",OUTRA]},
+ {k:"info",l:"e",q:"Há informações específicas para esta página?",type:"textarea",hint:"Ex.: etapas do atendimento, dúvidas frequentes, depoimentos, avisos legais."},
+ {k:"destino",l:"f",q:"Para onde os contatos desta página devem ir?",type:"text",req:1,hint:"WhatsApp, e-mail, agenda ou sistema. Informe número ou endereço."}
 ];
 
 /* ---------- estado ---------- */
@@ -363,8 +425,13 @@ function isEmpty(v){
 }
 
 /* ---------- renderização ---------- */
+function hintHTML(f,name){
+  if(!f.hint) return "";
+  const t=f.hint.includes("{n}")?` data-t="${esc(f.hint)}"`:"";
+  return `<p class="hint" id="${name}__h"${t}>${esc(fill(f.hint))}</p>`;
+}
 function renderField(f,name,label){
-  const hint=f.hint?`<p class="hint" id="${name}__h">${esc(f.hint)}</p>`:"";
+  const hint=hintHTML(f,name);
   const desc=(f.hint?name+"__h ":"")+(f.max?name+"__note ":"")+name+"__err";
   const mark=f.req?`<span class="req" aria-hidden="true"> *</span><span class="sr"> (obrigatória)</span>`:` <span class="optional">(opcional)</span>`;
   const text=`${label?esc(label)+". ":""}${esc(f.q)}${f.type==="confirm"?"":mark}`;
@@ -406,7 +473,6 @@ function renderLp(){
 }
 
 function renderAll(){
-  let n=0;
   $("#panels").innerHTML=STEPS.map((s,si)=>{
     let inner="";
     s.fields.forEach(f=>{
@@ -415,9 +481,9 @@ function renderAll(){
           <div id="lpBody"><div id="lpList"></div><button type="button" class="btn btn-ghost lp-add" id="lpAdd">+ Adicionar outra landing page</button></div>`;
       } else inner+=renderField(f,f.id,f.n);
     });
-    return `<section class="panel" id="panel${si}" data-step="${si}" aria-labelledby="ph${si}" hidden><h2 id="ph${si}" tabindex="-1">${esc(s.title)}</h2>${s.intro?`<p class="intro">${esc(s.intro)}</p>`:`<p class="intro"></p>`}${inner}</section>`;
+    return `<section class="panel" id="panel${si}" data-step="${si}" aria-labelledby="ph${si}" hidden><h2 id="ph${si}" tabindex="-1">${esc(s.title)}</h2><p class="intro" data-t="${esc(s.intro)}"></p>${inner}</section>`;
   }).join("");
-  STEPS.forEach(s=>s.fields.forEach(f=>{if(f.type!=="landing") setField(f,f.id,S.a[f.id]);}));
+  ALL.forEach(f=>{if(f.type!=="landing") setField(f,f.id,S.a[f.id]);});
   $("#lpSkip").checked=!!S.lp.skip;
   renderLp();
   applyConditions();
@@ -449,42 +515,51 @@ function setField(f,name,val){
   }
 }
 function collect(){
-  STEPS.forEach(s=>s.fields.forEach(f=>{if(f.type!=="landing"&&$(`[data-name="${f.id}"]`)) S.a[f.id]=readField(f,f.id);}));
+  ALL.forEach(f=>{if(f.type!=="landing"&&$(`[data-name="${f.id}"]`)) S.a[f.id]=readField(f,f.id);});
   const skip=$("#lpSkip"); if(skip) S.lp.skip=skip.checked;
   const blocks=$$(".lp-block");
   if(blocks.length) S.lp.items=blocks.map((b,i)=>{const o={};LP_FIELDS.forEach(f=>o[f.k]=readField(f,`lp${i}_${f.k}`));return o;});
 }
 function applyConditions(){
-  STEPS.forEach(s=>s.fields.forEach(f=>{
+  ALL.forEach(f=>{
     if(!f.show) return;
     const w=$(`[data-name="${f.id}"]`); if(!w) return;
-    const vis=f.show(S.a); w.hidden=!vis;
-  }));
+    w.hidden=!f.show(S.a);
+  });
 }
 const visible=f=>!f.show||f.show(S.a);
+
+/* ---------- nome: campo inicial e pergunta 1 andam juntos ---------- */
+function setNome(v,from){
+  S.a.nome=v;
+  if(from!=="hero") $("#heroNome").value=v;
+  if(from!=="field"){const el=$('[name="nome"]');if(el) el.value=v;}
+  renderNames();
+  $("#nomeErr").textContent="";
+}
 
 /* ---------- validação ---------- */
 const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 function validateValue(f,val){
   if(f.type==="checks"){
     const sel=(val&&val.sel)||[];
-    if(f.req&&!sel.length) return "Selecione pelo menos uma opção.";
+    if(f.req&&!sel.length) return "{n}, selecione pelo menos uma opção.";
     const sp=f.options.find(o=>SPEC.test(o));
     if(sp&&sel.includes(sp)&&!(val.other||"").trim()) return "Descreva a opção marcada no campo “Especifique”.";
     if(f.max&&sel.length>f.max) return `Selecione no máximo ${f.max} opções.`;
     return "";
   }
-  if(f.type==="radio") return f.req&&!val?"Selecione uma opção.":"";
+  if(f.type==="radio") return f.req&&!val?"{n}, selecione uma opção.":"";
   if(f.type==="confirm") return f.req&&!val?"Marque esta confirmação para enviar.":"";
   const v=(val||"").trim();
-  if(!v) return f.req?"Preencha este campo.":"";
+  if(!v) return f.req?"{n}, falta preencher este campo.":"";
   if(f.type==="email"&&!EMAIL_RE.test(v)) return "Informe um e-mail válido, como nome@exemplo.com.br.";
   if(f.type==="tel"&&v.replace(/\D/g,"").length<10) return "Informe um telefone com DDD, com pelo menos 10 dígitos.";
   return "";
 }
 function setError(name,msg){
   const w=$(`[data-name="${name}"]`),e=$(`#${name}__err`); if(!w||!e) return;
-  e.textContent=msg||"";
+  e.textContent=msg?fill(msg):"";
   const ctrl=$(`#${name}`)||null;
   if(ctrl) ctrl.setAttribute("aria-invalid",msg?"true":"false");
   else $$(`[name="${name}__other"]`).forEach(o=>msg&&!o.hidden&&!o.value.trim()?o.setAttribute("aria-invalid","true"):o.removeAttribute("aria-invalid"));
@@ -522,10 +597,9 @@ function showStep(n,opts){
   $("#stepLabel").textContent=`Etapa ${n+1} de ${STEPS.length}`;
   $("#stepName").textContent=STEPS[n].title;
   $("#bar").style.width=((n+1)/STEPS.length*100)+"%";
-  const t=$("#track");t.setAttribute("aria-valuenow",n+1);t.setAttribute("aria-valuetext",`Etapa ${n+1} de ${STEPS.length}: ${STEPS[n].title}`);
+  const t=$("#track");t.setAttribute("aria-valuemax",STEPS.length);t.setAttribute("aria-valuenow",n+1);t.setAttribute("aria-valuetext",`Etapa ${n+1} de ${STEPS.length}: ${STEPS[n].title}`);
   $("#back").hidden=(n===0);
-  const last=n===STEPS.length-1;
-  $("#next").textContent=last?"Enviar briefing":"Continuar";
+  $("#next").textContent=n===STEPS.length-1?"Enviar briefing":"Continuar";
   $("#sendError").hidden=true;
   save();
   if(!opts.silent){
@@ -571,8 +645,8 @@ function buildItems(){
   return items;
 }
 function toText(items){
-  const name=(items.find(i=>i.n==="1")||{}).a||"";
-  const out=[`BRIEFING — ${name}`];
+  const name=(items.find(i=>i.n==="1")||{}).a||"", biz=(items.find(i=>i.n==="2")||{}).a||"";
+  const out=[`BRIEFING — ${name}${biz?" ("+biz+")":""}`];
   let last=null;
   items.forEach(it=>{
     if(it.sec!==last){out.push("",`== ${it.sec} ==`,"");last=it.sec;}
@@ -585,7 +659,6 @@ function toText(items){
 let sending=false;
 async function submit(){
   if(sending) return;
-  // valida todas as etapas; leva o usuário à primeira com erro
   for(let i=0;i<STEPS.length;i++){
     const errs=validateStep(i);
     if(errs.length){ if(i!==S.step) showStep(i,{silent:true}); setTimeout(()=>focusError(errs[0].name),50); return; }
@@ -631,6 +704,7 @@ const form=$("#form");
 form.addEventListener("input",e=>{
   const t=e.target;
   const w=t.closest&&t.closest("[data-name]"); if(w&&t.type!=="checkbox"&&t.type!=="radio") setError(w.dataset.name,"");
+  if(t.name==="nome") setNome(t.value,"field");
   scheduleSave();
 });
 form.addEventListener("change",e=>{
@@ -640,7 +714,7 @@ form.addEventListener("change",e=>{
     if(o){o.hidden=!t.checked; if(t.checked) o.focus(); else {o.value="";o.removeAttribute("aria-invalid");}}
   }
   if(t.type==="checkbox"&&w){
-    const f=STEPS.flatMap(s=>s.fields).find(x=>x.id===w.dataset.fid);
+    const f=ALL.find(x=>x.id===w.dataset.fid);
     if(f&&f.max&&t.checked&&$$(`input[name="${t.name}"]:checked`).length>f.max){
       t.checked=false;
       const o=$(`[name="${t.name}__other"]`); if(o&&t.dataset.specify) o.hidden=true;
@@ -679,17 +753,30 @@ $("#reset").addEventListener("click",()=>{
   try{localStorage.removeItem(KEY);}catch(e){}
   location.reload();
 });
-$("#start").addEventListener("click",e=>{
-  e.preventDefault();
+
+// campo de nome no início da página
+$("#heroNome").addEventListener("input",e=>{setNome(e.target.value,"hero");scheduleSave();});
+function start(){
+  if(!firstName()){
+    $("#nomeErr").textContent="Digite o seu nome para começar.";
+    $("#heroNome").setAttribute("aria-invalid","true");$("#heroNome").focus();return;
+  }
+  $("#heroNome").removeAttribute("aria-invalid");
   $("#briefing").scrollIntoView({behavior:reduce()?"auto":"smooth",block:"start"});
   history.replaceState(null,"","#briefing");
-});
+  setTimeout(()=>{const f=$('[name="nome"]');const target=(f&&f.value.trim())?$(`#ph${S.step}`):f; if(target) target.focus({preventScroll:true});},reduce()?0:500);
+}
+$("#start").addEventListener("click",start);
+$("#heroNome").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();start();}});
+$("#heroNome").addEventListener("input",()=>$("#heroNome").removeAttribute("aria-invalid"));
 window.addEventListener("pagehide",()=>{try{collect();save();}catch(e){}});
 $("#year").textContent=new Date().getFullYear();
 
 /* ---------- início ---------- */
 load();
 renderAll();
+$("#heroNome").value=S.a.nome&&typeof S.a.nome==="string"?S.a.nome:"";
+renderNames();
 showStep(S.step,{silent:true});
 if(S.restored) $("#resume").hidden=false;
 })();

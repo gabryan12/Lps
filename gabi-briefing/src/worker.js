@@ -134,7 +134,9 @@ async function handleBriefing(request, env) {
   if (items === "too_big") return json({ ok: false, error: "too_big" }, 413);
   if (!items) return json({ ok: false, error: "invalid_items" }, 400);
 
-  const officeName = clip(items.find((i) => i.n === "1")?.a.replace(/\s+/g, " ") ?? "", 80);
+  const person = items.find((i) => i.n === "1")?.a.replace(/\s+/g, " ") ?? "";
+  const business = items.find((i) => i.n === "2")?.a.replace(/\s+/g, " ") ?? "";
+  const officeName = clip(business ? `${clip(person, 40)} — ${clip(business, 40)}` : person, 90);
   const emailAnswer = oneLine(items.find((i) => i.n === "4")?.a);
   const replyTo = EMAIL_RE.test(emailAnswer) ? emailAnswer : null;
 
