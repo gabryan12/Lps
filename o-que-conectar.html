@@ -1,0 +1,68 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>O que conectar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f3ee;--card:#fffdf9;--ink:#1d1a16;--muted:#6b6358;--line:#e3dcd0;--accent:#b4532a;--ok:#2f7a4f;--warn:#a86b00;--chip:#efe8dc}
+@media (prefers-color-scheme:dark){:root{--bg:#16130f;--card:#1f1b16;--ink:#f1ebe2;--muted:#a59a8a;--line:#332c24;--accent:#e08559;--ok:#6cc08f;--warn:#e0a640;--chip:#2a241d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:32px 16px 64px}
+h1{font:600 clamp(28px,6vw,40px)/1.1 Fraunces,serif;margin:0 0 8px}h2{font:600 20px Fraunces,serif;margin:36px 0 4px}
+.lead{color:var(--muted);margin:0 0 16px}.bar{height:8px;background:var(--chip);border-radius:9px;overflow:hidden;margin:20px 0 6px}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.count{font-size:13px;color:var(--muted)}
+.how{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;margin:16px 0;font-size:14px}
+.how a{color:var(--accent);font-weight:600}
+ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+li.done{opacity:.55}li.done b{text-decoration:line-through}
+input[type=checkbox]{width:20px;height:20px;margin-top:2px;accent-color:var(--ok)}
+b{font-weight:600}.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--muted);margin-left:6px;vertical-align:2px}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+p.d{margin:4px 0 0;color:var(--muted);font-size:14px}
+code{font:13px ui-monospace,Menlo,monospace;background:var(--chip);padding:2px 6px;border-radius:6px;word-break:break-all}
+button.cp{font:600 12px Inter;border:1px solid var(--line);background:transparent;color:var(--accent);border-radius:6px;padding:2px 8px;margin-left:4px;cursor:pointer}
+footer{margin-top:40px;font-size:13px;color:var(--muted)}
+</style></head><body><main>
+<h1>O que conectar</h1>
+<p class="lead">Checklist da imersão (Dias 1 e 2) para a sessão na nuvem.</p>
+<div class="bar"><i id="bar"></i></div><div class="count" id="count"></div>
+<div class="how">Conectores se ligam em <a href="https://claude.ai/customize/connectors" target="_blank" rel="noopener">claude.ai/customize/connectors</a>. Depois, <b>abra uma sessão nova</b>: a sessão só lê os conectores quando começa.</div>
+
+<h2>0. Antes de tudo: Cloudflare</h2>
+<ul>
+<li><input type="checkbox" data-k="cfauth"><div><b>Reautorizar o Cloudflare</b><span class="tag warn">pede login de novo</span><p class="d">Os dois conectores (Cloudflare Developer Platform e cloudflare-api) estão pedindo autorização outra vez.</p></div></li>
+<li><input type="checkbox" data-k="cfsub"><div><b>Criar o endereço workers.dev</b><p class="d">Abra dash.cloudflare.com › Workers &amp; Pages uma vez; a Cloudflare cria o subdomínio sozinha. Sem ele, nenhuma página vai ao ar.</p></div></li>
+</ul>
+
+<h2>1. Pelo catálogo</h2>
+<ul>
+<li><input type="checkbox" data-k="drive"><div><b>Google Drive</b><span class="tag warn">falta login</span><p class="d">Já instalado; só autorizar. Busca de arquivos (P10).</p></div></li>
+<li><input type="checkbox" data-k="gmail"><div><b>Gmail</b><span class="tag">não instalado</span><p class="d">Panorama do dia (P11) e as rotinas “Seu dia em 60 segundos” e “Caixa de entrada zerada”.</p></div></li>
+<li><input type="checkbox" data-k="cal"><div><b>Google Agenda</b><span class="tag">não instalado</span><p class="d">Panorama do dia (P11) e “Seu dia em 60 segundos”.</p></div></li>
+<li><input type="checkbox" data-k="fc"><div><b>Firecrawl</b><span class="tag">não instalado</span><p class="d">Pesquisa da /tendencias e sua skill de pesquisa (P23). Conta grátis em firecrawl.dev.</p></div></li>
+</ul>
+
+<h2>2. Conector personalizado</h2>
+<p class="lead">Em Adicionar › Adicionar conector personalizado.</p>
+<ul>
+<li><input type="checkbox" data-k="meta"><div><b>Meta Ads</b><span class="tag">prioridade</span><p class="d"><code>https://mcp.facebook.com/ads</code><button class="cp" data-c="https://mcp.facebook.com/ads">copiar</button><br>Entre com a conta do Facebook que administra os anúncios. O endereço não abre no navegador, é normal.</p></div></li>
+<li><input type="checkbox" data-k="hf"><div><b>Higgsfield</b><span class="tag">bônus</span><p class="d"><code>https://mcp.higgsfield.ai/mcp</code><button class="cp" data-c="https://mcp.higgsfield.ai/mcp">copiar</button><br>Imagens para as páginas.</p></div></li>
+<li><input type="checkbox" data-k="apify"><div><b>Apify</b><span class="tag warn">sem endereço na fonte</span><p class="d">Crie a conta em apify.com (US$ 5 grátis por mês). Na aula ele é extensão do app desktop e pode não funcionar na nuvem. A prospecção depende dele.</p></div></li>
+</ul>
+
+<h2>3. Não é conector, mas precisa liberar</h2>
+<ul>
+<li><input type="checkbox" data-k="dom"><div><b>Domínio do site da aula</b><p class="d"><code>skills.escoladeautomacao.com.br</code><button class="cp" data-c="skills.escoladeautomacao.com.br">copiar</button><br>Menu do ambiente no topo da sessão › Edit › Network access › Allowed domains. Libera tendencias, carrossel-viral, carrossel-viral-arte e nanobanana. Ou envie os arquivos .skill no chat.</p></div></li>
+<li><input type="checkbox" data-k="gem"><div><b>GEMINI_API_KEY</b><span class="tag">opcional</span><p class="d">Crie em aistudio.google.com/apikey. Fotos por IA da nanobanana (~US$ 0,07 por foto). Nunca cole a chave no chat.</p></div></li>
+<li><input type="checkbox" data-k="el"><div><b>Chave da ElevenLabs</b><span class="tag">opcional, paga</span><p class="d">Só para editar vídeo com a video-use.</p></div></li>
+</ul>
+
+<div class="how"><b>Por onde começar:</b> Cloudflare, Meta Ads, Gmail, Google Agenda, Google Drive e Firecrawl. Depois, numa sessão nova, peça: “liste os conectores que você enxerga”.</div>
+<footer>As marcações ficam só neste navegador.</footer>
+</main>
+<script>
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox]'));
+var st={};try{st=JSON.parse(localStorage.getItem('oqc')||'{}')}catch(e){}
+function upd(){var n=0;boxes.forEach(function(b){b.closest('li').classList.toggle('done',b.checked);if(b.checked)n++});document.getElementById('bar').style.width=(n/boxes.length*100)+'%';document.getElementById('count').textContent=n+' de '+boxes.length+' prontos'}
+boxes.forEach(function(b){if(st[b.dataset.k])b.checked=true;b.addEventListener('change',function(){st[b.dataset.k]=b.checked;try{localStorage.setItem('oqc',JSON.stringify(st))}catch(e){}upd()})});
+document.querySelectorAll('.cp').forEach(function(btn){btn.addEventListener('click',function(){var t=btn.dataset.c;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){btn.textContent='copiado'},function(){btn.textContent='selecione'});setTimeout(function(){btn.textContent='copiar'},1500)})});
+upd();
+</script></body></html>
