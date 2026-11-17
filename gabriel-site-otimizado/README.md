@@ -4,7 +4,7 @@
 
 - **Fontes dentro do site.** O Inter e o Inter Tight agora vêm de `dist/assets/fonts/` (arquivos `.woff2`, só o conjunto latino) e são pré-carregados. O site não pede mais nada ao Google Fonts, o que tirava cerca de meio segundo do primeiro carregamento.
 - **Globo mais leve.** No computador, de 75 para 38 quadros (de 2,7 MB para 1,4 MB). O giro continua na mesma velocidade, e a mistura entre quadros mantém o visual (diferença média de 1,2 em 255 por pixel). No celular já eram 38. A pasta do computador mudou de `assets/globo` para `assets/globo-d` de propósito: os arquivos de `assets/` ficam 1 ano no cache do navegador, e o nome novo evita misturar quadros antigos com novos para quem já visitou o site.
-- **Abertura mais rápida.** A tela de abertura é liberada quando os primeiros quadros chegam (12 no computador, 10 no celular). O resto carrega em segundo plano.
+- **Abertura sem contador.** O contador de 0 a 100% foi retirado. Agora o globo surge em cerca de 0,6 s e o título e o botão entram logo em seguida, assim que os primeiros quadros chegam (12 no computador, 10 no celular). Com internet muito lenta, espera no máximo 2,5 s. O resto dos quadros carrega em segundo plano. Antes, a abertura levava cerca de 2,8 s.
 - **CSS e JavaScript menores.** O `build.py` agora minifica os dois com o esbuild (precisa do Node.js). CSS de 43,8 para 37,6 KB e JavaScript de 24,7 para 15,5 KB. Sem Node, ele copia os arquivos como estão.
 - **Acessibilidade.** Os três painéis de serviços usavam `<article role="tabpanel">`, combinação que o padrão ARIA não permite. Viraram `<div role="tabpanel">`, sem mudar o visual.
 

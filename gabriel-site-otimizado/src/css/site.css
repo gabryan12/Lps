@@ -149,9 +149,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .loading .cookie { display: none !important; }
 .hero-globe { position: absolute; z-index: 2; left: 50%; top: 50%; width: min(94vh, 62vw); transform: translate(-50%, -50%) scale(calc(1 + var(--p) * 0.1)); opacity: var(--gl, 0); }
 .hero.done .hero-globe { opacity: 1; transition: opacity .8s; }
-.hero-count { position: absolute; z-index: 1; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: flex-start; font-family: var(--fh); font-weight: 800; font-size: min(54vh, 34vw); line-height: 0.8; letter-spacing: -0.06em; font-variant-numeric: tabular-nums; opacity: 0.6; color: transparent; background: linear-gradient(180deg, rgba(238, 241, 251, 0.85), rgba(95, 120, 255, 0.55)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; pointer-events: none; transition: opacity 1.1s ease, transform 1.4s cubic-bezier(.2,.7,.1,1); }
-.hero-count sup { position: absolute; left: 100%; top: 0.08em; font-size: 0.26em; letter-spacing: 0; margin-left: 0.12em; font-weight: 600; }
-.hero.done .hero-count { opacity: 0; transform: translate(-50%, -50%) scale(1.18); }
 .globe { width: 100%; height: auto; aspect-ratio: 960 / 872;
   -webkit-mask-image: radial-gradient(closest-side, #000 64%, transparent 100%); mask-image: radial-gradient(closest-side, #000 64%, transparent 100%); }
 .hero-copy { position: absolute; inset: 0; z-index: 3; max-width: 1280px; margin-inline: auto; padding: 0 var(--gutter); pointer-events: none; }
@@ -192,7 +189,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   .hero-sticky { position: relative; top: 0; height: calc(100svh - var(--hh)); min-height: 560px; padding: 0; overflow: hidden; }
   .hero-sticky::before { opacity: 0.85; }
   .hero-globe { top: 45%; width: min(138vw, 76svh); }
-  .hero-count { top: 45%; font-size: 54vw; }
   .hero-copy { padding: 0; }
   .hl { left: var(--gutter); top: 44%; transform: translateY(-50%); width: calc(100% - var(--gutter) * 2); text-align: left; }
   .vb { font-size: clamp(2rem, 8.6vw, 3.2rem); }

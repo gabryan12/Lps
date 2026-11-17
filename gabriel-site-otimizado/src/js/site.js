@@ -384,29 +384,26 @@
     size(); update();
     window.addEventListener("resize", function () { size(); update(); });
     window.addEventListener("scroll", update, { passive: true });
-    var root = document.documentElement, cnt = $("#count"), globeEl = $(".hero-globe");
+    var root = document.documentElement, globeEl = $(".hero-globe");
     function finish() {
       root.classList.remove("loading");
       h.classList.add("done", "go");
       h.style.removeProperty("--gl");
       window.setTimeout(function () { h.classList.add("settled"); }, 2600);
     }
-    if (reduce || window.scrollY > 60) { if (cnt) cnt.textContent = "100"; drawNums(0); finish(); if (reduce) return; }
+    if (reduce || window.scrollY > 60) { drawNums(0); finish(); if (reduce) return; }
     else {
+      /* Abertura rápida, sem contador: o globo surge em ~0,6 s e o texto entra assim que os primeiros quadros chegam
+         (no máximo 2,5 s de espera, mesmo com internet lenta). */
       root.classList.add("loading");
-      var t0 = performance.now(), shown = 0, done = false;
-      (function count(now) {
+      var t0 = performance.now(), done = false;
+      (function wait(now) {
         var el = (now - t0) / 1000;
-        var target = clamp(el / 2.6, 0, 1);
-        target = 1 - Math.pow(1 - target, 2.2);
-        var cap = 0.25 + 0.75 * (window.__globeProgress || 0);
-        if (el > 6) cap = 1;
-        shown += (Math.min(target, cap) - shown) * 0.25;
-        var v = Math.min(100, Math.round(shown * 100 + 0.2));
-        if (cnt) cnt.textContent = v;
-        h.style.setProperty("--gl", Math.pow(shown, 0.8).toFixed(3));
-        if (v >= 100 && !done) { done = true; window.setTimeout(finish, 450); return; }
-        window.requestAnimationFrame(count);
+        var ready = (window.__globeProgress || 0) >= 1;
+        var k = clamp(el / 0.6, 0, 1);
+        h.style.setProperty("--gl", Math.pow(ready ? k : Math.min(k, 0.25), 0.8).toFixed(3));
+        if (!done && ((ready && el >= 0.6) || el > 2.5)) { done = true; finish(); return; }
+        window.requestAnimationFrame(wait);
       })(t0);
     }
     var last = 0, acc = 0;
