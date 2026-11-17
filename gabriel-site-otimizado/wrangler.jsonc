@@ -1,0 +1,16 @@
+{
+  // Site institucional gabrieldiniztrafego.com.br (somente arquivos estáticos)
+  "name": "gabriel-site",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // O site responde em todo o domínio, MAS o Worker do briefing já usa /forms e /forms/*.
+  // A Cloudflare dá prioridade à rota mais específica, então /forms continua intacto.
+  "routes": [
+    { "pattern": "gabrieldiniztrafego.com.br/*", "zone_name": "gabrieldiniztrafego.com.br" },
+    { "pattern": "www.gabrieldiniztrafego.com.br/*", "zone_name": "gabrieldiniztrafego.com.br" }
+  ]
+}
