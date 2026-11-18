@@ -2,7 +2,8 @@
 
 Site estático em Cloudflare Workers. A página inicial é uma página só (rolagem). O **blog** é a única parte com páginas separadas.
 
-- **Como usar, publicar e escrever artigos:** leia o [`PASSO-A-PASSO.md`](PASSO-A-PASSO.md).
+- **Publicar artigos do seu computador (o caminho recomendado):** leia o [`COMO-PUBLICAR-ARTIGOS.md`](COMO-PUBLICAR-ARTIGOS.md). São 3 arquivos: `_MODELO-DE-ARTIGO.md`, `previa.bat` e `publicar.bat`.
+- **Outras opções (GitHub, painel `/admin/`):** [`PASSO-A-PASSO.md`](PASSO-A-PASSO.md), seções 3 em diante. Não são usadas hoje.
 - **Origem e licença do globo:** [`FONTE-DO-GLOBO.md`](FONTE-DO-GLOBO.md) (precisa ser preenchido).
 
 ## Estrutura

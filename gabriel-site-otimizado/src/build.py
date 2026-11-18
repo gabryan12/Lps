@@ -166,7 +166,7 @@ def ler_artigo(caminho):
     a["fontes"] = [{"t": str(x.get("titulo", "")).strip(), "u": str(x.get("url", "")).strip()} for x in (f.get("fontes") or []) if isinstance(x, dict)]
     a["rel"] = [str(x).strip() for x in (f.get("relacionados") or [])]
     a["antigos"] = [str(x).strip().strip("/") for x in (f.get("slugs_antigos") or [])]
-    a["corpo"] = m.group(2).strip()
+    a["corpo"] = re.sub(r"<!--.*?-->", "", m.group(2), flags=re.S).strip()   # comentarios do modelo (<!-- -->) nao vao para o site
     pub = not a["rascunho"]
     falha = erro if pub else aviso   # rascunho só avisa
     q = nome + (" (rascunho)" if a["rascunho"] else "")

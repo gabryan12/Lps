@@ -2,6 +2,8 @@
 
 Este guia é para quem não programa. Nada daqui foi publicado: você aprova primeiro.
 
+> **Para publicar artigos do dia a dia, use o [`COMO-PUBLICAR-ARTIGOS.md`](COMO-PUBLICAR-ARTIGOS.md)** (`previa.bat` e `publicar.bat`). As seções 3 e 3.x abaixo (GitHub e painel `/admin/`) são opcionais e hoje não são usadas.
+
 ## O que tem nesta pasta
 
 | Item | Para que serve |
