@@ -14,21 +14,19 @@
   function set(k, v) { try { window.localStorage.setItem(k, v); } catch (e) { /* sem armazenamento */ } }
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
 
-  /* Medição: eventos entram na camada de dados; o GTM só carrega depois do "Aceitar" */
-  window.dataLayer = window.dataLayer || [];
+  /* Medição: só existe depois do "Aceitar". O consentimento e o carregamento do GTM ficam no script do <head> (window.__consent).
+     Sem consentimento, nada é enviado ao dataLayer e nenhum script do Google é pedido. */
+  var CONSENT = window.__consent || { get: function () { return null; }, accepted: function () { return false; }, accept: function () {}, decline: function () {}, reset: function () {}, push: function () {} };
   function track(ev, p) {
     var o = { event: ev };
     if (p) { for (var k in p) { if (Object.prototype.hasOwnProperty.call(p, k)) o[k] = p[k]; } }
-    window.dataLayer.push(o);
+    CONSENT.push(o);
   }
-  function loadTracking() {
-    if (!C.gtmId || window.__gtmLoaded) return;
-    window.__gtmLoaded = true;
-    window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(C.gtmId);
-    document.head.appendChild(s);
+  function articleTitle(a) {
+    var t = a && a.getAttribute("data-artigo");
+    if (t) return t;
+    var el = $("[data-artigo-titulo]");
+    return el ? el.getAttribute("data-artigo-titulo") : "";
   }
 
   /* WhatsApp, telefone e e-mail */
@@ -37,7 +35,11 @@
     a.href = waUrl(a.getAttribute("data-wa"));
     a.target = "_blank";
     a.rel = "noopener";
-    a.addEventListener("click", function () { var p = { local: a.getAttribute("data-local") || "" }; var art = a.getAttribute("data-artigo"); if (art) p.artigo = art; track("click_whatsapp", p); });
+    a.addEventListener("click", function () {
+      var loc = a.getAttribute("data-local") || "";
+      if (loc === "topo") loc = "hero";
+      track("cta_agendar_conversa", { cta_location: loc, page_path: location.pathname, article_title: articleTitle(a) });
+    });
   });
   $$("[data-tel]").forEach(function (a) { a.textContent = C.telefone; a.href = "tel:+" + C.whatsapp; });
   $$("[data-email]").forEach(function (a) { a.textContent = C.email; a.href = "mailto:" + C.email; });
@@ -496,10 +498,10 @@
   /* Aviso de cookies */
   var ck = $("#cookie");
   if (ck) {
-    var choice = get("cookies");
-    if (choice === "aceito") { loadTracking(); }
-    else if (!choice) { ck.hidden = false; }
-    $("#ck-ok").addEventListener("click", function () { set("cookies", "aceito"); ck.hidden = true; loadTracking(); });
-    $("#ck-no").addEventListener("click", function () { set("cookies", "recusado"); ck.hidden = true; });
+    if (!CONSENT.get()) { ck.hidden = false; }      /* já escolheu (aceitou ou recusou): não mostra de novo */
+    $("#ck-ok").addEventListener("click", function () { CONSENT.accept(); ck.hidden = true; });
+    $("#ck-no").addEventListener("click", function () { CONSENT.decline(); ck.hidden = true; });
+    var pf = $("#ck-prefs");
+    if (pf) { pf.addEventListener("click", function () { CONSENT.reset(); ck.hidden = false; $("#ck-ok").focus(); }); }
   }
 })();

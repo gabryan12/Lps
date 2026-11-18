@@ -101,6 +101,15 @@ Painel → **Configurações → Caixa do autor**. O texto é um só: muda em to
 - **Sitemap** gerado a cada publicação: início, privacidade, termos, blog, categorias e artigos (com a data de atualização real). Não inclui `/forms/`, rascunhos nem páginas com `noindex`.
 - **Cabeçalhos** (`_headers`): `robots.txt` em UTF-8, cache longo para arquivos versionados e curto para HTML, `noindex` no painel.
 
+## 4b. Google Tag Manager e cookies
+
+- O contêiner **GTM-KCSP6484** (com a tag do GA4 dentro) só carrega **depois** que a pessoa clica em **Aceitar**. Antes disso, e se ela clicar em **Recusar** ou ignorar o aviso, o site não pede nada ao Google.
+- A escolha fica gravada no navegador da pessoa. Quem aceitou tem o GTM carregado logo no início das próximas visitas; quem recusou não vê o aviso de novo.
+- Rodapé: o link **Preferências de cookies** deixa a pessoa mudar de ideia (apaga a escolha e mostra o aviso de novo).
+- Cada clique em **Agendar conversa** (e nos botões de WhatsApp) manda ao `dataLayer`, só com consentimento: `cta_agendar_conversa` com `cta_location`, `page_path` e `article_title`. Nenhum dado pessoal.
+- Para trocar o contêiner, mude `gtm_id` em `conteudo/site.yml`.
+- No GTM você precisa de um **gatilho de evento personalizado** com o nome `cta_agendar_conversa` e variáveis do dataLayer para os 3 campos, ligados a uma tag de evento do GA4.
+
 ## 5. Depois de publicar: conferir
 
 1. **Search Console**: adicione `https://gabrieldiniztrafego.com.br` e envie `https://gabrieldiniztrafego.com.br/sitemap.xml`.

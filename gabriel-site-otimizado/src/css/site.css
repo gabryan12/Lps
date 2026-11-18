@@ -596,3 +596,6 @@ a.chip[aria-current="page"] { background: var(--ink); color: var(--paper); borde
 .nf .lead { margin: 14px auto 28px; max-width: 34em; }
 .nf-act { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .previa-faixa { position: fixed; z-index: 60; left: 0; right: 0; bottom: 0; background: #ffd84d; color: #111; text-align: center; font: 600 12px/1 var(--f); padding: 5px 10px; }
+
+.linklike { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.linklike:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; }

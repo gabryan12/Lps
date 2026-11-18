@@ -97,7 +97,7 @@ def emitir(pasta, nome, ext, texto, loader):
 
 def conteudo_js():
     c = {"whatsapp": S["whatsapp"], "telefone": S["telefone"], "email": S["email"],
-         "empresa": S.get("empresa") or {}, "gtmId": S.get("gtm_id") or "", "links": S["links"],
+         "empresa": S.get("empresa") or {}, "links": S["links"],
          "provas": SITE_CFG.get("provas") or {"numeros": [], "depoimentos": [], "casos": []}}
     return "window.SITE_CONTENT = " + json.dumps(c, ensure_ascii=False) + ";\n"
 
@@ -224,12 +224,24 @@ LINKS = S["links"]
 def empresa_p():
     e = S.get("empresa") or {}
     return '<p data-empresa>%s · CNPJ <span class="mono">%s</span></p>' % (esc(e["razao"]), esc(e["cnpj"])) if e.get("razao") and e.get("cnpj") else ""
+GTM_ID = str(S.get("gtm_id") or "").strip()
+if GTM_ID and not re.fullmatch(r"GTM-[A-Z0-9]{4,12}", GTM_ID): erro("gtm_id inválido em site.yml: %s (o formato é GTM-XXXXXXX)." % GTM_ID)
+# Consentimento + carregamento do GTM. Nada do Google é pedido antes do "Aceitar". Sem <noscript> do GTM (ele carregaria sem consentimento).
+CONSENT_JS = """(function(){var ID=%s,K="cookies",on=false;
+function get(){try{return window.localStorage.getItem(K)}catch(e){return null}}
+function set(v){try{window.localStorage.setItem(K,v)}catch(e){}}
+function del(){try{window.localStorage.removeItem(K)}catch(e){}}
+function load(){if(on||!ID)return;on=true;var w=window;w.dataLayer=w.dataLayer||[];w.dataLayer.push({"gtm.start":Date.now(),event:"gtm.js"});var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtm.js?id="+encodeURIComponent(ID);document.head.appendChild(s)}
+window.__consent={get:get,accepted:function(){return get()==="aceito"},accept:function(){set("aceito");load()},decline:function(){set("recusado")},reset:del,
+push:function(o){if(get()==="aceito"){(window.dataLayer=window.dataLayer||[]).push(o)}}};
+if(get()==="aceito")load()})();""" % json.dumps(GTM_ID)
 COMUM = {
     "base": "/", "home": "/", "blog": "/blog/", "priv": "/privacidade/", "termos": "/termos/",
     "css": CSS_URL, "content_js": CONTENT_URL, "site_js": SITE_JS_URL,
     "tel_href": tel_href(), "tel_text": esc(S["telefone"]), "email": esc(S["email"]),
     "link_instagram": esc(LINKS["instagram"]), "link_linkedin": esc(LINKS["linkedin"]), "link_gmn": esc(LINKS["gmn"]),
     "empresa_p": empresa_p(), "site_nome": esc(S["nome"]),
+    "consent_script": "<script>" + CONSENT_JS.replace("\n", "") + "</script>",
     "previa_banner": '<div class="previa-faixa" role="note">PRÉVIA PRIVADA: esta cópia mostra os rascunhos e não é indexada pelo Google.</div>' if PREVIA else "",
 }
 def jsonld(objs):
@@ -435,7 +447,7 @@ for a in PUBLICADOS:
         rel_html = '<section class="related" aria-labelledby="rel-h"><h2 id="rel-h">Artigos relacionados</h2><div class="posts">%s</div></section>' % "".join(cartao(x, 3) for x in rel)
     msg = "Olá, Gabriel! Li o artigo “%s” e quero agendar uma conversa." % a["titulo"]
     atr = 'data-wa="%s" data-local="artigo" data-artigo="%s"' % (esc(msg), esc(a["titulo"]))
-    corpo = ('<main id="conteudo"><article class="sec art-pg"><div class="wrap art1">'
+    corpo = ('<main id="conteudo"><article class="sec art-pg" data-artigo-titulo="%s"><div class="wrap art1">'
              '<nav class="crumb" aria-label="Você está em"><a href="/">Início</a> › <a href="/blog/">Blog</a> › <a href="/blog/categoria/%s/">%s</a> › <span aria-current="page">%s</span></nav>'
              '<header><div class="art-meta">%s · <time datetime="%s">Publicado em %s</time></div><h1>%s</h1></header>'
              '<section class="resposta" aria-labelledby="resp-h"><h2 id="resp-h">Resposta direta</h2><p>%s</p></section>'
@@ -443,7 +455,7 @@ for a in PUBLICADOS:
              '<div class="art-end"><h2>Quer aplicar isso no seu negócio?</h2><p>A primeira conversa é sem compromisso.</p><a class="btn btn-cobalt btn-lg" href="/#contato" %s>Agendar conversa</a></div>'
              '</div></article></main>'
              '<a class="fab" href="/#contato" %s>Agendar conversa</a>') % (
-        cat["slug"], esc(cat["nome"]), esc(a["titulo"]), esc(cat["nome"]), a["publicado"].isoformat(), br(a["publicado"]), esc(a["titulo"]),
+        esc(a["titulo"]), cat["slug"], esc(cat["nome"]), esc(a["titulo"]), esc(cat["nome"]), a["publicado"].isoformat(), br(a["publicado"]), esc(a["titulo"]),
         esc(a["resposta"]), caixa_autor(True, a), figura, corpo_html, faq_html, fontes_html, rel_html, caixa_autor(False, a), atr, atr)
     # schema
     url_abs = URL + a["url"]

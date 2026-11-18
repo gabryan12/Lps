@@ -1,0 +1,1 @@
+window.SITE_CONTENT={whatsapp:"5521989227990",telefone:"(21) 98922-7990",email:"sagatrafego@gmail.com",empresa:{razao:"",cnpj:""},links:{instagram:"https://www.instagram.com/gabrieldiniztrafego/",linkedin:"https://www.linkedin.com/in/gabriel-diniz-trafego-pago-a0abb8259/",gmn:"https://share.google/5qsY0mw24iTJKilTg"},provas:{numeros:[],depoimentos:[],casos:[]}};

@@ -32,6 +32,10 @@ O Worker `gabriel-site` responde em todo o domínio; o briefing (`/forms/`) é o
 - **Globo no celular**: imagem parada (poster) na primeira tela e sequência de 19 quadros só depois do carregamento. O computador não mudou.
 - **Link do Google Meu Negócio**: `https://share.google/5qsY0mw24iTJKilTg` (o antigo `maps.app.goo.gl/...` foi trocado).
 
+## Google Tag Manager e consentimento (resumo técnico)
+
+Contêiner `GTM-KCSP6484` (campo `gtm_id` em `conteudo/site.yml`). Um script curto no `<head>` (gerado no build) guarda a escolha em `localStorage` (`cookies` = `aceito` ou `recusado`, com try/catch) e só injeta o GTM se for `aceito`. Sem `<noscript>` do GTM, sem ID `G-` no código, sem Meta Pixel. Os cliques em "Agendar conversa" vão ao `dataLayer` como `cta_agendar_conversa` (`cta_location`, `page_path`, `article_title`), só com consentimento. O `/forms/` não tem GTM.
+
 ## Globo no celular (resumo técnico)
 
 Imagem parada de 15 KB (`width`/`height` definidos, `fetchpriority="high"`, pré-carregada no `<head>`); a sequência (19 quadros, 600 px, nomes com hash, 296 KB) só começa a baixar depois da página carregada, com o navegador ocioso e o globo visível. Com "reduzir movimento", Save-Data ou conexão 2G, fica só a imagem parada. O giro pausa quando o globo sai da tela. Para regerar: `python3 src/tools/gerar-globo-mobile.py 2`.
@@ -39,7 +43,7 @@ Imagem parada de 15 KB (`width`/`height` definidos, `fetchpriority="high"`, pré
 ## Pendências suas
 
 - Razão social e CNPJ (`conteudo/site.yml`, campo `empresa`).
-- ID do Google Tag Manager (`conteudo/site.yml`, campo `gtm_id`).
+- No Google Tag Manager: criar o gatilho do evento `cta_agendar_conversa` e as variáveis `cta_location`, `page_path` e `article_title`.
 - Provas reais (depoimentos, números, casos) em `conteudo/site.yml`, campo `provas`; a seção fica escondida enquanto estiver vazia.
 - Revisão das páginas de Privacidade e Termos por um advogado antes de divulgar o site em anúncios.
 - Preencher o `FONTE-DO-GLOBO.md` (origem e licença do vídeo do globo).
