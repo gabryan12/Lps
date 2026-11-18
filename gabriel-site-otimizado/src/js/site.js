@@ -34,7 +34,7 @@
   $$("[data-wa]").forEach(function (a) {
     a.href = waUrl(a.getAttribute("data-wa"));
     a.target = "_blank";
-    a.rel = "noopener";
+    a.rel = "noopener noreferrer";
     a.addEventListener("click", function () {
       var loc = a.getAttribute("data-local") || "";
       if (loc === "topo") loc = "hero";
@@ -43,7 +43,7 @@
   });
   $$("[data-tel]").forEach(function (a) { a.textContent = C.telefone; a.href = "tel:+" + C.whatsapp; });
   $$("[data-email]").forEach(function (a) { a.textContent = C.email; a.href = "mailto:" + C.email; });
-  $$("[data-link]").forEach(function (a) { var u = (C.links || {})[a.getAttribute("data-link")]; if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener"; } });
+  $$("[data-link]").forEach(function (a) { var u = (C.links || {})[a.getAttribute("data-link")]; if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; } });
   $$("[data-year]").forEach(function (n) { n.textContent = new Date().getFullYear(); });
   $$("[data-empresa]").forEach(function (n) {
     var e = C.empresa || {};
@@ -465,6 +465,40 @@
     window.addEventListener("scroll", function () { dirty = true; }, { passive: true });
     window.addEventListener("resize", function () { dirty = true; });
     window.requestAnimationFrame(loop);
+  })();
+
+  /* Botões flutuantes: voltar ao topo (só depois de rolar), redes e WhatsApp */
+  (function fl() {
+    var g = $("#fl"), top = $("#fl-top");
+    if (!g) return;
+    var small = window.matchMedia("(max-width: 900px)");
+    function scrolled() { var on = window.pageYOffset > 500; if (top.hidden === on) top.hidden = !on; }
+    window.addEventListener("scroll", scrolled, { passive: true }); scrolled();
+    top.addEventListener("click", function () {
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+      var h = $("#conteudo") || document.body; h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true });
+    });
+    /* celular: sobe acima do aviso de cookies; some quando o botão principal está na tela e com o menu aberto */
+    var ckb = $("#cookie");
+    function lift() {
+      var open = ckb && !ckb.hidden && small.matches && ckb.getBoundingClientRect().height > 0;
+      g.classList.toggle("ck", !!open);
+      g.style.bottom = open ? (window.innerHeight - ckb.getBoundingClientRect().top + 12) + "px" : "";
+    }
+    if (ckb) {
+      new MutationObserver(lift).observe(ckb, { attributes: true, attributeFilter: ["hidden"] });
+      if ("ResizeObserver" in window) new ResizeObserver(lift).observe(ckb);   /* o aviso só ganha tamanho quando a abertura termina */
+    }
+    window.addEventListener("resize", lift); lift();
+    if ("IntersectionObserver" in window) {
+      var seen = new Set();
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
+        g.classList.toggle("off", small.matches && seen.size > 0);
+      }, { threshold: 0.2 });
+      $$(".hero-cta .btn-cobalt, .ct-act .btn, .art-end .btn").forEach(function (n) { io.observe(n); });
+    }
   })();
 
   /* Aviso de cookies */

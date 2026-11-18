@@ -299,8 +299,8 @@ home_ctx = {
 def sobre_html():
     return lerf(SRC, "pages", "_sobre.html")
 home_body = lerf(SRC, "pages", "index.html").replace("{{sobre}}", sobre_html())
-pagina("", None, "Gabriel Diniz | Tráfego & IA: anúncios, sites e IA",
-       "Gestor de tráfego e IA no Rio de Janeiro. Anúncios, sites e projetos de IA para vender mais. Atendimento on-line em todo o Brasil.",
+pagina("", None, "Gabriel Diniz | Tráfego & IA: projetos, anúncios e sites",
+       "Gestor de tráfego e IA no Rio de Janeiro. Projetos e sistemas com IA, anúncios e sites feitos para vender. Atendimento on-line em todo o Brasil.",
        "/", {"body": home_body, "ctx": {k: v for k, v in home_ctx.items() if k not in ("head_extra",)}}, loading=True,
        head_extra=home_ctx["head_extra"], schema=[org(), person()], lastmod=D["home"])
 for nome, titulo, desc in (
@@ -455,10 +455,9 @@ for a in PUBLICADOS:
              '<section class="resposta" aria-labelledby="resp-h"><h2 id="resp-h">Resposta direta</h2><p>%s</p></section>'
              '%s%s<div class="art-body">%s</div>%s%s%s%s'
              '<div class="art-end"><h2>Quer aplicar isso no seu negócio?</h2><p>A primeira conversa é sem compromisso.</p><a class="btn btn-cobalt btn-lg" href="/#contato" %s>Agendar conversa</a></div>'
-             '</div></article></main>'
-             '<a class="fab" href="/#contato" %s>Agendar conversa</a>') % (
+             '</div></article></main>') % (
         esc(a["titulo"]), cat["slug"], esc(cat["nome"]), esc(a["titulo"]), esc(cat["nome"]), a["publicado"].isoformat(), br(a["publicado"]), esc(a["titulo"]),
-        esc(a["resposta"]), caixa_autor(True, a), figura, corpo_html, faq_html, fontes_html, rel_html, caixa_autor(False, a), atr, atr)
+        esc(a["resposta"]), caixa_autor(True, a), figura, corpo_html, faq_html, fontes_html, rel_html, caixa_autor(False, a), atr)
     # schema
     url_abs = URL + a["url"]
     crumbs = [("Início", URL + "/"), ("Blog", URL + "/blog/"), (cat["nome"], URL + "/blog/categoria/%s/" % cat["slug"]), (a["titulo"], url_abs)]
