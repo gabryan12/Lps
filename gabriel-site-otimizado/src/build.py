@@ -223,7 +223,9 @@ def tel_href(): return "tel:+" + S["whatsapp"]
 LINKS = S["links"]
 def empresa_p():
     e = S.get("empresa") or {}
-    return '<p data-empresa>%s · CNPJ <span class="mono">%s</span></p>' % (esc(e["razao"]), esc(e["cnpj"])) if e.get("razao") and e.get("cnpj") else ""
+    if not e.get("cnpj"):
+        return ""
+    return '<p data-empresa>%sCNPJ <span class="mono">%s</span></p>' % ((esc(e["razao"]) + " · ") if e.get("razao") else "", esc(e["cnpj"]))
 GTM_ID = str(S.get("gtm_id") or "").strip()
 if GTM_ID and not re.fullmatch(r"GTM-[A-Z0-9]{4,12}", GTM_ID): erro("gtm_id inválido em site.yml: %s (o formato é GTM-XXXXXXX)." % GTM_ID)
 # Consentimento + carregamento do GTM. Nada do Google é pedido antes do "Aceitar". Sem <noscript> do GTM (ele carregaria sem consentimento).

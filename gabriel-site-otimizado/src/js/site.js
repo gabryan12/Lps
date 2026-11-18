@@ -47,7 +47,7 @@
   $$("[data-year]").forEach(function (n) { n.textContent = new Date().getFullYear(); });
   $$("[data-empresa]").forEach(function (n) {
     var e = C.empresa || {};
-    if (e.razao && e.cnpj) { n.innerHTML = esc(e.razao) + " · CNPJ <span class=\"mono\">" + esc(e.cnpj) + "</span>"; }
+    if (e.cnpj) { n.innerHTML = (e.razao ? esc(e.razao) + " · " : "") + "CNPJ <span class=\"mono\">" + esc(e.cnpj) + "</span>"; }
     else if (PREVIEW) { n.innerHTML = "<span class=\"ph\">Razão social e CNPJ entram aqui</span>"; }
     else { n.remove(); }
   });
@@ -466,34 +466,6 @@
     window.addEventListener("resize", function () { dirty = true; });
     window.requestAnimationFrame(loop);
   })();
-
-  /* Formulário */
-  var form = $("#form-contato");
-  if (form) {
-    var msg = $("#form-msg");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (form.website && form.website.value) return;
-      var nome = form.nome.value.trim(), tel = form.whats.value.replace(/\D/g, ""), mail = form.email.value.trim(), txt = form.mensagem.value.trim();
-      function bad(t) { msg.className = "form-msg err"; msg.textContent = t; }
-      if (!nome) return bad("Escreva o seu nome.");
-      if (tel.length < 10) return bad("Escreva o WhatsApp com DDD, por exemplo (21) 90000-0000.");
-      if (mail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return bad("Confira o e-mail: falta algo, como o @ ou o final .com.");
-      if (!txt) return bad("Conte em poucas palavras o que você precisa.");
-      track("envio_formulario", {});
-      if (C.formEndpoint) {
-        msg.className = "form-msg"; msg.textContent = "Enviando...";
-        var ctl = new AbortController(); var to = window.setTimeout(function () { ctl.abort(); }, 20000);
-        fetch(C.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome: nome, whatsapp: tel, email: mail, mensagem: txt }), signal: ctl.signal })
-          .then(function (r) { if (!r.ok) throw new Error("x"); msg.className = "form-msg ok"; msg.textContent = "Recebi sua mensagem. Respondo pelo WhatsApp."; form.reset(); })
-          .catch(function () { bad("Não consegui enviar agora. Tente de novo ou chame no WhatsApp."); })
-          .then(function () { window.clearTimeout(to); });
-      } else {
-        msg.className = "form-msg ok";
-        msg.textContent = "Prévia: na versão publicada, esta mensagem chega no e-mail do Gabriel.";
-      }
-    });
-  }
 
   /* Aviso de cookies */
   var ck = $("#cookie");

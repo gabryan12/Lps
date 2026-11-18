@@ -42,7 +42,7 @@ Imagem parada de 15 KB (`width`/`height` definidos, `fetchpriority="high"`, pré
 
 ## Pendências suas
 
-- Razão social e CNPJ (`conteudo/site.yml`, campo `empresa`).
+- Razão social (opcional, `conteudo/site.yml`, campo `empresa.razao`). O CNPJ já está no rodapé.
 - No Google Tag Manager: criar o gatilho do evento `cta_agendar_conversa` e as variáveis `cta_location`, `page_path` e `article_title`.
 - Provas reais (depoimentos, números, casos) em `conteudo/site.yml`, campo `provas`; a seção fica escondida enquanto estiver vazia.
 - Revisão das páginas de Privacidade e Termos por um advogado antes de divulgar o site em anúncios.

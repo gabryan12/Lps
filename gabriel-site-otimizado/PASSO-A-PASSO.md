@@ -22,7 +22,8 @@ Este guia é para quem não programa. Nada daqui foi publicado: você aprova pri
    - o **globo** na abertura;
    - a seção **Sobre** (menu → Sobre);
    - o **Blog** e o artigo de exemplo (marcado como rascunho);
-   - o botão **Agendar conversa** e o botão lateral no artigo.
+   - o botão **Agendar conversa**, o cabeçalho com descrições, o menu no celular e o rodapé em 3 colunas;
+   - o botão lateral no artigo.
 4. A faixa amarela embaixo ("PRÉVIA PRIVADA") só existe na prévia.
 
 ## 2. Publicar do jeito que você já faz (manual)

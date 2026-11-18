@@ -15,7 +15,7 @@ site:
     gmn: https://share.google/5qsY0mw24iTJKilTg
   empresa:
     razao: ""
-    cnpj: ""
+    cnpj: "50.160.206/0001-57"
   gtm_id: GTM-KCSP6484   # contêiner do Google Tag Manager (a tag do GA4 fica dentro dele). So carrega depois do "Aceitar".
 categorias:
   - {nome: "Tráfego", slug: trafego, descricao: "Artigos sobre anúncios no Google e na Meta, estrutura de campanha e como acompanhar os contatos que chegam."}
