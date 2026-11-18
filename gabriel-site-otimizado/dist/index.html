@@ -11,6 +11,7 @@
 <meta property="og:title" content="Gabriel Diniz | Tráfego & IA: anúncios, sites e projetos de IA">
 <meta property="og:description" content="Gestor de tráfego e IA no Rio de Janeiro. Anúncios, sites e projetos com IA para profissionais e empresas que querem vender mais. Atendimento on-line em todo o Brasil.">
 <link rel="canonical" href="https://gabrieldiniztrafego.com.br/">
+<link rel="preload" as="image" type="image/webp" href="/assets/globo-m2/g00-ec47e317.webp" fetchpriority="high" media="(max-width: 900px)">
 <link rel="preload" href="/assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.className+=" loading";setTimeout(function(){document.documentElement.classList.remove("loading")},9000)</script>
@@ -53,7 +54,13 @@
 <section class="hero-track hero" aria-labelledby="h1">
 <div class="hero-sticky">
   <div class="vb vb-back hl-a" aria-hidden="true"><span class="ln" style="--d:.45"><span>anúncios</span></span></div>
-  <div class="hero-globe"><canvas id="globe" class="globe" aria-hidden="true"></canvas></div>
+  <div class="hero-globe">
+    <picture>
+      <source media="(min-width: 901px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img class="globe-poster" id="globe-poster" src="/assets/globo-m2/g00-ec47e317.webp" width="600" height="545" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <canvas id="globe" class="globe" aria-hidden="true"></canvas>
+  </div>
   <div class="hero-copy">
     <h1 id="h1" class="sr-only">Inovação em projetos e sistemas, anúncios e sites que vendem.</h1>
     <div class="vb-front">
@@ -287,6 +294,7 @@
 </div>
 
 <script>window.SITE_BASE="/";window.SITE_PRETTY=true;</script>
+<script>window.GLOBO_M={"dir": "/assets/globo-m2/", "f": ["g00-ec47e317.webp", "g01-8e230d74.webp", "g02-b6175c83.webp", "g03-b4234bba.webp", "g04-f30058de.webp", "g05-15ece69f.webp", "g06-97958d24.webp", "g07-df926294.webp", "g08-6b68c524.webp", "g09-7fa2d799.webp", "g10-c65450e5.webp", "g11-096c0b5f.webp", "g12-1574c2f6.webp", "g13-801237f2.webp", "g14-2950d9e2.webp", "g15-9e7bf35e.webp", "g16-1ad9fc65.webp", "g17-4e7851d0.webp", "g18-058ad59d.webp"]};</script>
 <script src="/js/content.js"></script>
 
 <script src="/js/site.js"></script>

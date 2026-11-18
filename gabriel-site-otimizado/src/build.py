@@ -97,6 +97,19 @@ for name, out_prev, out_prod, depth, title, desc, index_ok, ld in PAGES:
         "pretty": pretty, "draft": DRAFT if PREVIEW else "",
         **links,
     }
+    # globo do celular (só na página inicial): poster, pré-carregamento e lista de quadros versionados
+    man_path = os.path.join(SRC, "assets", "globo-m2", "manifest.json")
+    if name == "index" and os.path.exists(man_path):
+        man = json.load(open(man_path, encoding="utf-8"))
+        gdir = base + "assets/globo-m2/"
+        sub["globo_poster"] = gdir + man["poster"]
+        sub["globo_w"], sub["globo_h"] = str(man["largura"]), str(man["altura"])
+        sub["head_extra"] = ('<link rel="preload" as="image" type="image/webp" href="%s" fetchpriority="high" media="(max-width: 900px)">'
+                             % (gdir + man["poster"]))
+        sub["globo_script"] = "<script>window.GLOBO_M=" + json.dumps({"dir": gdir, "f": man["quadros"]}) + ";</script>"
+    else:
+        sub.setdefault("globo_poster", ""); sub.setdefault("globo_w", ""); sub.setdefault("globo_h", "")
+        sub.setdefault("head_extra", ""); sub.setdefault("globo_script", "")
     for k, v in sub.items():
         html = html.replace("{{" + k + "}}", v)
     assert "{{" not in html, (name, html.split("{{")[1][:40])

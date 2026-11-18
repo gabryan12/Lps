@@ -184,20 +184,24 @@
     var cv = $("#globe");
     if (!cv) return;
     var mobile = window.matchMedia("(max-width: 900px)").matches;
-    var N = 38;                              /* computador e celular usam 38 quadros (o computador tinha 75: metade dos quadros, mesmo giro) */
+    /* celular: sequência leve (19 quadros, 600 px, nomes versionados) vinda de window.GLOBO_M; computador: 38 quadros, como antes */
+    var G = mobile && window.GLOBO_M ? window.GLOBO_M : null;
+    var conn = navigator.connection || {};
+    var lite = reduce || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");   /* movimento reduzido, Save-Data ou conexão lenta: só a imagem parada */
+    var N = G ? G.f.length : 38;
     var F = Math.round(N * 0.18);            /* quadros dissolvidos na emenda do ciclo */
-    var dir = BASE + "assets/" + (mobile ? "globo-m" : "globo-d") + "/";
-    cv.width = mobile ? 600 : 960; cv.height = mobile ? 545 : 872;
+    var dir = G ? G.dir : BASE + "assets/globo-d/";
+    cv.width = G ? 600 : 960; cv.height = G ? 545 : 872;
     var ctx = cv.getContext("2d");
     var frames = new Array(N);
-    var BASE_FPS = 1.8;       /* velocidade parada: um ciclo a cada ~17 s */
+    var BASE_FPS = G ? 0.9 : 1.8;            /* velocidade parada: um ciclo a cada ~17 s (o celular tem metade dos quadros, então metade do passo) */
     var pos = 0, lastT = 0, lastY = window.scrollY, vel = 0, boost = 0;
-    function name(i) { return ("00" + i).slice(-3) + ".webp"; }
+    function name(i) { return G ? G.f[i] : ("00" + i).slice(-3) + ".webp"; }
     var got = 0, READY = mobile ? 10 : 12;   /* a abertura libera a tela com poucos quadros; o resto carrega em segundo plano */
     function load(i) {
       return new Promise(function (res) {
         var im = new Image();
-        im.onload = function () { frames[i] = im; got++; window.__globeProgress = Math.min(1, got / READY); res(); };
+        im.onload = function () { frames[i] = im; got++; if (!G) window.__globeProgress = Math.min(1, got / READY); res(); };
         im.onerror = function () { res(); };
         im.src = dir + name(i);
       });
@@ -227,6 +231,7 @@
       ctx.globalAlpha = 1;
     }
     function tick(t) {
+      if (!vis) { lastT = 0; window.requestAnimationFrame(tick); return; }   /* fora da tela: não gasta processador */
       var dt = lastT ? Math.min(0.05, (t - lastT) / 1000) : 0.016;
       lastT = t;
       var y = window.scrollY, dy = Math.abs(y - lastY);
@@ -246,10 +251,54 @@
       draw();
       window.requestAnimationFrame(tick);
     }
+    var vis = true, onVisible = null;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        vis = es[0].isIntersecting;
+        if (vis && onVisible) { var f = onVisible; onVisible = null; f(); }
+      }, { rootMargin: "200px" }).observe(cv);
+    }
+    function whenVisible(fn) { if (vis) fn(); else onVisible = fn; }
+    function whenIdle(fn) {
+      function go() { (window.requestIdleCallback || function (f) { window.setTimeout(f, 300); })(fn, { timeout: 2500 }); }
+      if (document.readyState === "complete") go(); else window.addEventListener("load", go, { once: true });
+    }
     window.__globeProgress = 0;
+    if (G) {
+      /* CELULAR: a primeira tela é a imagem parada (poster, no HTML). Ela libera a abertura assim que carrega.
+         A sequência só começa a baixar depois da primeira renderização e da página carregada, e só se o globo estiver visível. */
+      var po = $("#globe-poster"), posterOk = function () { window.__globeProgress = 1; };
+      if (!po || (po.complete && po.naturalWidth)) posterOk();
+      else { po.addEventListener("load", posterOk); po.addEventListener("error", posterOk); }
+      if (lite) return;
+      window.requestAnimationFrame(function () { window.requestAnimationFrame(function () {
+        whenIdle(function () { whenVisible(function () {
+          var live = false;
+          function contiguous() { var c = 0; while (c < N && frames[c]) c++; return c; }
+          function goLive() {
+            if (live) return; live = true;
+            pos = 0; draw();
+            cv.parentNode.classList.add("live");
+            window.requestAnimationFrame(tick);
+          }
+          load(0).then(function () {              /* o quadro 0 é o próprio poster, já no cache */
+            var i = 1;
+            function next() {
+              if (i >= N) { goLive(); return; }
+              var batch = [];
+              for (var n = 0; n < 5 && i < N; n++, i++) batch.push(load(i));
+              Promise.all(batch).then(function () { if (contiguous() >= 6) goLive(); window.setTimeout(next, 30); });
+            }
+            next();
+          });
+        }); });
+      }); });
+      return;
+    }
+    /* COMPUTADOR: igual a antes (só a regra de "imagem parada" vale também aqui) */
     load(0).then(function () {
       pos = 0; draw();
-      if (reduce) return;
+      if (lite) return;
       var i = 1;
       function next() {
         if (i >= N) return;
@@ -400,9 +449,11 @@
       (function wait(now) {
         var el = (now - t0) / 1000;
         var ready = (window.__globeProgress || 0) >= 1;
-        var k = clamp(el / 0.6, 0, 1);
-        h.style.setProperty("--gl", Math.pow(ready ? k : Math.min(k, 0.25), 0.8).toFixed(3));
-        if (!done && ((ready && el >= 0.6) || el > 2.5)) { done = true; finish(); return; }
+        var seqM = window.GLOBO_M && window.matchMedia("(max-width: 900px)").matches;   /* celular: o poster já está na tela desde a primeira pintura */
+        var T = seqM ? 0.08 : 0.6;
+        var k = clamp(el / T, 0, 1);
+        if (!seqM) h.style.setProperty("--gl", Math.pow(ready ? k : Math.min(k, 0.25), 0.8).toFixed(3));
+        if (!done && ((ready && el >= T) || el > 2.5)) { done = true; finish(); return; }
         window.requestAnimationFrame(wait);
       })(t0);
     }

@@ -3,7 +3,13 @@
 <section class="hero-track hero" aria-labelledby="h1">
 <div class="hero-sticky">
   <div class="vb vb-back hl-a" aria-hidden="true"><span class="ln" style="--d:.45"><span>anúncios</span></span></div>
-  <div class="hero-globe"><canvas id="globe" class="globe" aria-hidden="true"></canvas></div>
+  <div class="hero-globe">
+    <picture>
+      <source media="(min-width: 901px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img class="globe-poster" id="globe-poster" src="{{globo_poster}}" width="{{globo_w}}" height="{{globo_h}}" alt="" fetchpriority="high" decoding="async">
+    </picture>
+    <canvas id="globe" class="globe" aria-hidden="true"></canvas>
+  </div>
   <div class="hero-copy">
     <h1 id="h1" class="sr-only">Inovação em projetos e sistemas, anúncios e sites que vendem.</h1>
     <div class="vb-front">

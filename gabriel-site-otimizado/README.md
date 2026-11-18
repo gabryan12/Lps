@@ -8,6 +8,9 @@
 - **CSS e JavaScript menores.** O `build.py` agora minifica os dois com o esbuild (precisa do Node.js). CSS de 43,8 para 37,6 KB e JavaScript de 24,7 para 15,5 KB. Sem Node, ele copia os arquivos como estão.
 - **Acessibilidade.** Os três painéis de serviços usavam `<article role="tabpanel">`, combinação que o padrão ARIA não permite. Viraram `<div role="tabpanel">`, sem mudar o visual.
 
+- **Globo leve no celular.** O celular agora mostra primeiro uma **imagem parada** (poster, 15 KB) do globo, que é a imagem principal da página (`width`/`height` definidos, `fetchpriority="high"` e pré-carregada no `<head>`). A abertura é liberada assim que o poster carrega. A sequência de giro (19 quadros em vez de 38, 600 px de largura, 296 KB em vez de 593 KB) só começa a baixar **depois da página carregada, quando o navegador está ocioso e o globo está visível**. Com "reduzir movimento", economia de dados (Save-Data) ou conexão 2G, fica só a imagem parada. O giro também pausa quando o globo sai da tela. Os arquivos têm nome com hash (`g00-ec47e317.webp`) e cache de 1 ano. No computador nada mudou.
+- **Origem e licença do globo:** veja `FONTE-DO-GLOBO.md` (precisa ser preenchido).
+
 Como publicar esta versão: dentro da pasta `gabriel-site-otimizado`, rode `npx wrangler deploy` (mesmo Worker `gabriel-site`, ele só atualiza os arquivos).
 
 Atenção: se um dia trocar uma imagem do globo mantendo o mesmo nome, quem já visitou continua vendo a antiga por até 1 ano. Mude o nome do arquivo ou da pasta.
