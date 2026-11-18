@@ -24,7 +24,7 @@ categorias:
   - {nome: "Google Meu Negócio", slug: google-meu-negocio, descricao: "Artigos sobre o perfil da empresa no Google, avaliações e como ser encontrado por quem está perto."}
 datas:                  # lastmod do sitemap das paginas fixas (mude so quando editar de verdade)
   home: 2026-11-18
-  privacidade: 2026-11-17
+  privacidade: 2026-11-18
   termos: 2026-11-17
 provas:                 # a secao de resultados fica escondida enquanto estiver vazia
   numeros: []
