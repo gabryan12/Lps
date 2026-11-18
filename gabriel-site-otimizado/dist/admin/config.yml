@@ -1,0 +1,91 @@
+# Painel de edicao do blog (Sveltia CMS). Entra com uma conta do GitHub.
+# ANTES DE USAR: troque "gabryan12/gabriel-site" pelo repositorio onde esta este projeto (veja o PASSO-A-PASSO.md).
+backend:
+  name: github
+  repo: gabryan12/gabriel-site
+  branch: main
+
+site_url: https://gabrieldiniztrafego.com.br
+display_url: https://gabrieldiniztrafego.com.br
+locale: pt
+publish_mode: simple
+media_folder: conteudo/imagens
+public_folder: /conteudo/imagens
+
+collections:
+  - name: artigos
+    label: Artigos do blog
+    label_singular: Artigo
+    folder: conteudo/blog
+    create: true
+    extension: md
+    format: yaml-frontmatter
+    slug: "{{slug}}"
+    identifier_field: titulo
+    summary: "{{titulo}}"
+    sortable_fields: [publicado, titulo]
+    view_groups:
+      - {label: Categoria, field: categoria}
+    fields:
+      - {name: rascunho, label: Rascunho (não publicar ainda), widget: boolean, default: true, hint: "Deixe marcado enquanto estiver escrevendo. Desmarque para publicar."}
+      - {name: titulo, label: Título do artigo (H1), widget: string, hint: "Ideal: até 60 caracteres, para aparecer inteiro no Google."}
+      - {name: titulo_seo, label: Título para o Google (opcional), widget: string, required: false, hint: "Só preencha se o título acima for longo. Até 60 caracteres."}
+      - {name: slug, label: Endereço do artigo (slug), widget: string, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', "Use só letras minúsculas, números e hífen. Ex.: como-medir-resultado-de-anuncios"], hint: "Vira /blog/<slug>/. Depois de publicado, evite mudar. Se mudar, anote o antigo em 'Endereços antigos'."}
+      - {name: resumo, label: Resumo (uma frase), widget: text, hint: "Até 160 caracteres. Aparece na lista do blog e no Google."}
+      - name: categoria
+        label: Categoria
+        widget: select
+        options: ["Tráfego", "IA", "Sites e SEO", "Google Meu Negócio"]
+      - {name: publicado, label: Data de publicação, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", picker_utc: false}
+      - {name: atualizado, label: Data de atualização, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", picker_utc: false, hint: "Só mude esta data quando revisar ou editar o artigo de verdade."}
+      - {name: capa, label: Imagem de capa, widget: image, required: false, hint: "Horizontal, de preferência 1200 x 675. O site converte para WebP sozinho."}
+      - {name: capa_alt, label: Texto alternativo da capa, widget: string, required: false, hint: "Descreva a imagem em uma frase. Obrigatório se houver capa."}
+      - {name: resposta_direta, label: Resposta direta (40 a 60 palavras), widget: text, hint: "Responda a pergunta do título logo de cara, sem enrolar."}
+      - name: faq
+        label: Perguntas frequentes (3 a 5)
+        widget: list
+        required: false
+        min: 3
+        max: 5
+        summary: "{{fields.pergunta}}"
+        fields:
+          - {name: pergunta, label: Pergunta, widget: string}
+          - {name: resposta, label: Resposta, widget: text}
+      - name: fontes
+        label: Fontes
+        widget: list
+        required: false
+        summary: "{{fields.titulo}}"
+        fields:
+          - {name: titulo, label: Título da fonte, widget: string}
+          - {name: url, label: Endereço (URL), widget: string}
+      - name: relacionados
+        label: Artigos relacionados (2 a 4)
+        widget: relation
+        collection: artigos
+        search_fields: [titulo]
+        value_field: "{{slug}}"
+        display_fields: [titulo]
+        multiple: true
+        min: 2
+        max: 4
+        required: false
+      - name: slugs_antigos
+        label: Endereços antigos (para redirecionar)
+        widget: list
+        required: false
+        field: {name: slug_antigo, label: Slug antigo, widget: string}
+      - {name: body, label: Texto do artigo, widget: markdown, hint: "Use ## para títulos e ### para subtítulos. Não use # (o título já é o H1)."}
+
+  - name: configuracoes
+    label: Configurações
+    files:
+      - name: autor
+        label: Caixa do autor
+        file: conteudo/autor.yml
+        fields:
+          - {name: nome, label: Nome, widget: string}
+          - {name: funcao, label: Função, widget: string}
+          - {name: frase, label: Texto da caixa do autor (também usado no Google), widget: text}
+          - {name: link_texto, label: Texto do link, widget: string}
+          - {name: link_url, label: Endereço do link, widget: string}

@@ -11,18 +11,18 @@
 </ul>
 <ul>
 <li><a href="{{home}}#contato" data-wa="Olá, Gabriel! Vim pelo seu site e quero conversar." data-local="rodape">WhatsApp</a></li>
-<li><a data-tel href="#">telefone</a></li>
-<li><a data-email href="#">e-mail</a></li>
+<li><a data-tel href="{{tel_href}}">{{tel_text}}</a></li>
+<li><a data-email href="mailto:{{email}}">{{email}}</a></li>
 </ul>
 <ul>
-<li><a data-link="gmn" href="#">Google Meu Negócio</a></li>
-<li><a data-link="instagram" href="#">Instagram</a></li>
-<li><a data-link="linkedin" href="#">LinkedIn</a></li>
+<li><a data-link="gmn" href="{{link_gmn}}" target="_blank" rel="noopener">Google Meu Negócio</a></li>
+<li><a data-link="instagram" href="{{link_instagram}}" target="_blank" rel="noopener">Instagram</a></li>
+<li><a data-link="linkedin" href="{{link_linkedin}}" target="_blank" rel="noopener">LinkedIn</a></li>
 </ul>
 </div>
 </div>
 <div class="ftr-bot">
-<p data-empresa></p>
+{{empresa_p}}
 <p>© <span data-year>2026</span> Gabriel Diniz · <a href="{{priv}}">Política de privacidade</a> · <a href="{{termos}}">Termos de uso</a></p>
 </div>
 </div></footer>
@@ -30,11 +30,10 @@
 <p>Uso cookies para medir quantas pessoas visitam o site e entram em contato (Google Analytics, Tag Manager e Pixel da Meta). Você pode recusar e continuar navegando do mesmo jeito. <a href="{{priv}}">Saiba mais</a></p>
 <div class="cookie-act"><button class="btn btn-ink" type="button" id="ck-ok">Aceitar</button><button class="btn btn-ghost" type="button" id="ck-no">Recusar</button></div>
 </div>
-{{preview_bar}}
-<script>window.SITE_BASE="{{base}}";{{pretty}}</script>
+{{previa_banner}}
+<script>window.SITE_BASE="{{base}}";</script>
 {{globo_script}}
-<script src="{{base}}js/content.js"></script>
-{{preview_js}}
-<script src="{{base}}js/site.js"></script>
+<script src="{{content_js}}"></script>
+<script src="{{site_js}}"></script>
 </body>
 </html>

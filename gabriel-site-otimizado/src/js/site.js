@@ -37,7 +37,7 @@
     a.href = waUrl(a.getAttribute("data-wa"));
     a.target = "_blank";
     a.rel = "noopener";
-    a.addEventListener("click", function () { track("click_whatsapp", { local: a.getAttribute("data-local") || "" }); });
+    a.addEventListener("click", function () { var p = { local: a.getAttribute("data-local") || "" }; var art = a.getAttribute("data-artigo"); if (art) p.artigo = art; track("click_whatsapp", p); });
   });
   $$("[data-tel]").forEach(function (a) { a.textContent = C.telefone; a.href = "tel:+" + C.whatsapp; });
   $$("[data-email]").forEach(function (a) { a.textContent = C.email; a.href = "mailto:" + C.email; });
@@ -76,7 +76,7 @@
   }
   var pt = $("#prev-toggle");
   if (pt) {
-    pt.addEventListener("click", function () { set("exemplos", examplesOn() ? "off" : "on"); paintToggle(); renderProofs(); renderBlog(); });
+    pt.addEventListener("click", function () { set("exemplos", examplesOn() ? "off" : "on"); paintToggle(); renderProofs(); });
     paintToggle();
   }
 
@@ -112,72 +112,47 @@
     t.style.setProperty("--mx", (e.clientX - r.left) + "px"); t.style.setProperty("--my", (e.clientY - r.top) + "px");
   }, { passive: true });
 
-  /* Blog */
-  function postUrl(slug) { return BASE + "blog/" + slug + (window.SITE_PRETTY ? "/" : ".html"); }
-  function fmtDate(s) {
-    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || "");
-    if (!m) return "";
-    return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString("pt-BR", { day: "numeric", month: "long", year: "numeric" });
-  }
-  var catClass = { "Tráfego": "c1", "IA": "c2", "Sites e SEO": "c3", "Google Meu Negócio": "c4" };
-  var state = { cat: "", q: "", shown: 9 };
-  function allPosts() { return examplesOn() ? EX.posts : (C.posts || []); }
-  function cardHtml(p) {
-    var th = p.imagem ? "<img src=\"" + esc(p.imagem) + "\" alt=\"\" loading=\"lazy\">" : "";
-    return "<article class=\"post\"><a href=\"" + postUrl(esc(p.slug)) + "\"><div class=\"post-th " + (catClass[p.categoria] || "c2") + "\">" + th + "</div>" +
-      "<div class=\"post-meta\">" + esc(p.categoria) + " · " + esc(fmtDate(p.data)) + "</div><h3>" + esc(p.titulo) + "</h3><p>" + esc(p.resumo) + "</p><span class=\"more\">Ler artigo</span></a></article>";
-  }
-  function renderBlog() {
-    var box = $("#posts");
-    if (!box) return;
-    var list = allPosts();
-    var lim = +box.getAttribute("data-limit") || 0;
-    if (lim) {
-      var rel = box.closest(".related");
-      if (rel) rel.hidden = !list.length;
-      box.innerHTML = list.slice(0, lim).map(cardHtml).join("");
-      return;
+  /* Blog: reforços em JavaScript. A lista, as categorias e a paginação já funcionam sem ele. */
+  (function blog() {
+    var box = $("#posts"), nav = $("#pager");
+    function sem(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+    /* Carregar mais: busca a próxima página e acrescenta os cartões */
+    if (box && nav) {
+      var nxt = nav.querySelector("a[rel=next]");
+      if (nxt) {
+        var wrap = document.createElement("div"); wrap.className = "more-wrap";
+        var btn = document.createElement("button"); btn.type = "button"; btn.className = "btn btn-ghost"; btn.textContent = "Carregar mais artigos";
+        wrap.appendChild(btn); nav.parentNode.insertBefore(wrap, nav); nav.hidden = true;
+        var url = nxt.getAttribute("href");
+        btn.addEventListener("click", function () {
+          btn.disabled = true;
+          fetch(url, { credentials: "same-origin" }).then(function (r) { return r.ok ? r.text() : Promise.reject(); }).then(function (t) {
+            var d = new DOMParser().parseFromString(t, "text/html");
+            $$("#posts > .post", d).forEach(function (c) { box.appendChild(document.importNode(c, true)); });
+            var n2 = d.querySelector("#pager a[rel=next]");
+            if (n2) { url = n2.getAttribute("href"); btn.disabled = false; } else { wrap.parentNode.removeChild(wrap); }
+          }).catch(function () { nav.hidden = false; wrap.parentNode.removeChild(wrap); });
+        });
+      }
     }
-    var empty = $("#blog-empty"), tools = $("#blog-tools"), more = $("#blog-more");
-    if (!list.length) {
-      box.innerHTML = ""; if (empty) empty.hidden = false; if (tools) tools.hidden = true; if (more) more.hidden = true; return;
+    /* Busca por assunto: usa a lista de todos os artigos (blog/indice.json) */
+    var form = $("#blog-busca");
+    if (form) {
+      form.hidden = false;
+      var q = $("#blog-q"), res = $("#busca-res"), idx = null, pend = false;
+      function mostrar() {
+        var t = sem(q.value).trim();
+        if (!t) { res.innerHTML = ""; return; }
+        var f = (idx || []).filter(function (p) { return sem(p.t + " " + p.r + " " + p.c).indexOf(t) > -1; }).slice(0, 8);
+        res.innerHTML = f.length ? f.map(function (p) { return "<a href=\"" + esc(p.u) + "\"><b>" + esc(p.t) + "</b><span>" + esc(p.c) + " · " + esc(p.d) + "</span></a>"; }).join("") : "<p>Nenhum artigo encontrado. Tente outra palavra.</p>";
+      }
+      function carregar() {
+        if (idx || pend) return; pend = true;
+        fetch(BASE + "blog/indice.json", { credentials: "same-origin" }).then(function (r) { return r.json(); }).then(function (j) { idx = j; mostrar(); }).catch(function () { pend = false; });
+      }
+      q.addEventListener("focus", carregar); q.addEventListener("input", function () { carregar(); mostrar(); });
     }
-    if (empty) empty.hidden = true; if (tools) tools.hidden = false;
-    var q = state.q.trim().toLowerCase();
-    var f = list.filter(function (p) {
-      return (!state.cat || p.categoria === state.cat) && (!q || (p.titulo + " " + p.resumo + " " + p.categoria).toLowerCase().indexOf(q) > -1);
-    });
-    if (!f.length) {
-      box.innerHTML = "<p class=\"lead\">Nenhum artigo encontrado. Tente outra busca ou escolha Todos.</p>";
-      if (more) more.hidden = true; return;
-    }
-    box.innerHTML = f.slice(0, state.shown).map(cardHtml).join("");
-    if (more) more.hidden = f.length <= state.shown;
-  }
-  if ($("#posts")) {
-    var si = $("#blog-q");
-    if (si) si.addEventListener("input", function () { state.q = si.value; state.shown = 9; renderBlog(); });
-    $$(".chip").forEach(function (b) {
-      b.addEventListener("click", function () {
-        state.cat = b.getAttribute("data-cat") || ""; state.shown = 9;
-        $$(".chip").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-        renderBlog();
-      });
-    });
-    $$("[data-topic]").forEach(function (a) {
-      a.addEventListener("click", function (e) {
-        e.preventDefault();
-        var cat = a.getAttribute("data-topic");
-        state.cat = cat; state.shown = 9;
-        $$(".chip").forEach(function (x) { x.setAttribute("aria-pressed", (x.getAttribute("data-cat") || "") === cat ? "true" : "false"); });
-        renderBlog();
-        var t = $("#blog-tools"); if (t) t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-      });
-    });
-    var mb2 = $("#blog-more button");
-    if (mb2) mb2.addEventListener("click", function () { state.shown += 9; renderBlog(); });
-    renderBlog();
-  }
+  })();
 
   /* Globo: gira sem parar, devagar. Ao rolar a página, gira mais rápido e com mais força. */
   (function globe() {

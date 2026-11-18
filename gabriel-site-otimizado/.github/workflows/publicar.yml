@@ -1,0 +1,50 @@
+# Publica o site na Cloudflare sempre que um artigo ou o site for alterado no GitHub (branch main).
+# Precisa de 2 segredos no repositório (Settings > Secrets and variables > Actions):
+#   CLOUDFLARE_API_TOKEN   token da Cloudflare com permissão de editar Workers (veja o PASSO-A-PASSO.md)
+#   CLOUDFLARE_ACCOUNT_ID  ID da conta Cloudflare
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conteudo/**"
+      - "src/**"
+      - "wrangler.jsonc"
+      - "requirements.txt"
+  workflow_dispatch:
+
+concurrency:
+  group: publicar-site
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar dependências do build
+        run: pip install -r requirements.txt
+
+      - name: Gerar o site (falha se faltar algo obrigatório em um artigo)
+        run: python3 src/build.py
+
+      - name: Publicar na Cloudflare
+        run: npx --yes wrangler@4 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

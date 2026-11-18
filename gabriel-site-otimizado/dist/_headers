@@ -2,9 +2,44 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
+
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+
 /css/*
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=31536000, immutable
+
 /js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/
+  Cache-Control: public, max-age=300, must-revalidate
+
+/privacidade/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/termos/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/blog/*
+  Cache-Control: public, max-age=300, must-revalidate
+  X-Robots-Tag: noindex, follow
+
+/blog/indice.json
+  Content-Type: application/json; charset=utf-8
+
+# /forms/ e servido por outro Worker (gabi-briefing); esta regra so vale se o endereco cair neste site.
+/forms/*
+  X-Robots-Tag: noindex, nofollow
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-cache

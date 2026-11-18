@@ -1,0 +1,32 @@
+# Dados do site em um so lugar (o painel de edicao altera este arquivo).
+# O site gera o rodape, o menu, o schema e o content.js a partir daqui.
+site:
+  url: https://gabrieldiniztrafego.com.br     # endereco oficial, SEM www
+  nome: "Gabriel Diniz | Tráfego & IA"
+  nome_curto: Gabriel Diniz
+  telefone: "(21) 98922-7990"
+  whatsapp: "5521989227990"
+  email: sagatrafego@gmail.com
+  cidade: Rio de Janeiro
+  estado: RJ
+  links:
+    instagram: https://www.instagram.com/gabrieldiniztrafego/
+    linkedin: https://www.linkedin.com/in/gabriel-diniz-trafego-pago-a0abb8259/
+    gmn: https://share.google/5qsY0mw24iTJKilTg
+  empresa:
+    razao: ""
+    cnpj: ""
+  gtm_id: ""            # exemplo: GTM-XXXXXXX (so carrega depois do "Aceitar")
+categorias:
+  - {nome: "Tráfego", slug: trafego, descricao: "Artigos sobre anúncios no Google e na Meta, estrutura de campanha e como acompanhar os contatos que chegam."}
+  - {nome: "IA", slug: ia, descricao: "Artigos sobre como aplicar inteligência artificial na rotina de atendimento, vendas e operação do seu negócio."}
+  - {nome: "Sites e SEO", slug: sites-e-seo, descricao: "Artigos sobre sites que geram contatos, páginas de venda e como aparecer melhor nas buscas."}
+  - {nome: "Google Meu Negócio", slug: google-meu-negocio, descricao: "Artigos sobre o perfil da empresa no Google, avaliações e como ser encontrado por quem está perto."}
+datas:                  # lastmod do sitemap das paginas fixas (mude so quando editar de verdade)
+  home: 2026-11-18
+  privacidade: 2026-11-17
+  termos: 2026-11-17
+provas:                 # a secao de resultados fica escondida enquanto estiver vazia
+  numeros: []
+  depoimentos: []
+  casos: []

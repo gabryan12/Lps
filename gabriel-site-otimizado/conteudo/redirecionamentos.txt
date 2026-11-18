@@ -1,0 +1,3 @@
+# Redirecionamentos manuais (301). Um por linha:  /origem/  /destino/
+# Quando mudar o endereco (slug) de um artigo, o mais simples e preencher "slugs_antigos" no proprio artigo.
+# Nunca use /forms/ aqui.

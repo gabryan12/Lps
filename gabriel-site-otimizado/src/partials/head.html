@@ -6,16 +6,26 @@
 <title>{{title}}</title>
 <meta name="description" content="{{desc}}">
 {{robots}}
-<meta property="og:type" content="website">
+<meta property="og:type" content="{{og_type}}">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="{{title}}">
+<meta property="og:site_name" content="{{site_nome}}">
+<meta property="og:title" content="{{og_title}}">
 <meta property="og:description" content="{{desc}}">
-{{canonical}}
+<meta property="og:url" content="{{canonical_url}}">
+<meta property="og:image" content="{{og_image}}">
+<meta property="og:image:width" content="{{og_image_w}}">
+<meta property="og:image:height" content="{{og_image_h}}">
+<meta property="og:image:alt" content="{{og_image_alt}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{og_title}}">
+<meta name="twitter:description" content="{{desc}}">
+<meta name="twitter:image" content="{{og_image}}">
+<link rel="canonical" href="{{canonical_url}}">
 {{head_extra}}
 <link rel="preload" href="{{base}}assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{base}}assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<script>document.documentElement.className+=" loading";setTimeout(function(){document.documentElement.classList.remove("loading")},9000)</script>
-<link rel="stylesheet" href="{{base}}css/site.css">
+{{loading_script}}
+<link rel="stylesheet" href="{{css}}">
 {{jsonld}}
 </head>
 <body>
@@ -41,10 +51,10 @@
 <p class="menu-s">A primeira conversa é sem compromisso.</p>
 <a class="btn btn-cobalt btn-lg menu-wa" href="{{home}}#contato" data-wa="Olá, Gabriel! Vim pelo seu site e quero agendar uma conversa." data-local="menu">Agendar conversa</a>
 <ul class="menu-ct">
-<li><a data-tel href="#">telefone</a></li>
-<li><a data-email href="#">e-mail</a></li>
-<li><a data-link="instagram" href="#">Instagram</a></li>
-<li><a data-link="linkedin" href="#">LinkedIn</a></li>
+<li><a data-tel href="{{tel_href}}">{{tel_text}}</a></li>
+<li><a data-email href="mailto:{{email}}">{{email}}</a></li>
+<li><a data-link="instagram" href="{{link_instagram}}" target="_blank" rel="noopener">Instagram</a></li>
+<li><a data-link="linkedin" href="{{link_linkedin}}" target="_blank" rel="noopener">LinkedIn</a></li>
 </ul>
 </aside>
 </div>
